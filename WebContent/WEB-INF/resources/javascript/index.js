@@ -144,6 +144,58 @@ function initialiseForm(whatToProcess, dataToProcess)
 }
 function uploadFormDataToSessionObjects(whatToProcess)
 {
+	var formData = new URLSearchParams();
+	var url_path;
+
+	$('input, select, textarea').each(
+		function(index){
+			var id = $(this).attr('id');
+			if(!id) return;   // skip select2 internal fields with no id
+			if($(this).is("select")) {
+				formData.append(id, $('#' + id + ' option:selected').val());
+			} else {
+				formData.append(id, $(this).val());
+			}
+		}
+	);
+
+	switch(whatToProcess.toUpperCase()) {
+	case 'RESET_MATCH':
+		url_path = 'reset_and_upload_match_setup_data';
+		break;
+	case 'SAVE_MATCH':
+		url_path = 'upload_match_setup_data';
+		break;
+	}
+
+	$.ajax({
+		headers: {'X-CSRF-TOKEN': $('meta[name="_csrf"]').attr('content')},
+		url : url_path,
+		data : formData.toString(),
+		contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+		processData: false,
+		type: 'POST',
+		success : function(data) {
+			switch(whatToProcess.toUpperCase()) {
+			case 'RESET_MATCH':
+				alert('Match has been reset');
+				processWaitingButtonSpinner('END_WAIT_TIMER');
+				break;
+			case 'SAVE_MATCH':
+				document.setup_form.method = 'post';
+				document.setup_form.action = 'back_to_match';
+				document.setup_form.submit();
+				break;
+			}
+		},
+		error : function(e) {
+			console.log('Error occured in uploadFormDataToSessionObjects with error description = ' + e);
+		}
+	});
+}
+
+/*function uploadFormDataToSessionObjects(whatToProcess)
+{
 	var formData = new FormData();
 	var url_path;
 
@@ -197,7 +249,7 @@ function uploadFormDataToSessionObjects(whatToProcess)
         }    
     });		
 	
-}
+}*/
 function processUserSelectionData(whatToProcess,dataToProcess){
 	
 	switch (whatToProcess) {
@@ -662,8 +714,8 @@ function processUserSelection(whichInput)
 		break;
 	case 'matchFileName':
 		if(document.getElementById('matchFileName').value) {
-			document.getElementById('matchFileName').value = 
-				document.getElementById('matchFileName').value.replace('.xml','') + '.xml';
+			document.getElementById('matchFileName').value =
+				document.getElementById('matchFileName').value.replace('.xml','').replace('.json','') + '.json';
 		}
 		break;
 	case 'save_match_btn': case 'reset_match_btn':
@@ -1588,7 +1640,6 @@ function processHockeyProcedures(whatToProcess, whichInput)
 			value_to_process = match_data.matchFileName + ',' + value_to_process;
 		}
 	}
-
 	$.ajax({    
         type : 'Get',     
         url : 'processHockeyProcedures.html',     
@@ -1609,10 +1660,10 @@ function processHockeyProcedures(whatToProcess, whichInput)
 				if(data){
 					if($('#matchFileTimeStamp').val() != data.matchFileTimeStamp) {
 						document.getElementById('matchFileTimeStamp').value = data.matchFileTimeStamp;
-						session_match = data;
+						/*session_match = data;
 						addItemsToList('LOAD_MATCH',data);
 						addItemsToList('LOAD_EVENTS',data);
-						document.getElementById('select_event_div').style.display = 'none';
+						document.getElementById('select_event_div').style.display = 'none';*/
 					}
 				}
 				break;
@@ -4682,7 +4733,7 @@ function addItemsToList(whatToProcess, dataToProcess)
 					switch (option.id) {
 					case 'overwrite': case 'goal': case 'card': case 'stats':
 						
-						option.setAttribute('data-toggle', 'dropdown');
+						option.setAttribute('data-bs-toggle', 'dropdown');
 						option.setAttribute('aria-haspopup', 'true');
 						option.setAttribute('aria-expanded', 'false');					
 						

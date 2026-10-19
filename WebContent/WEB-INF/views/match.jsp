@@ -25,7 +25,7 @@
 </head>
 <body onload="afterPageLoad('MATCH');">
 <form:form name="hockey_form" autocomplete="off" action="match" method="POST" 
-	modelAttribute="session_match" enctype="multipart/form-data">
+	modelAttribute="session_match">
 <div class="content py-5" style="background-color: #EAE8FF; color: #2E008B">
   <div class="container">
 	<div class="row">
@@ -43,7 +43,7 @@
 			    <div class="panel panel-default">
 			      <div class="panel-heading">
 			        <h5 class="panel-title">
-			          <a data-toggle="collapse" data-parent="#match_configuration" href="#load_setup_match">Configuration</a>
+			          <a data-bs-toggle="collapse" href="#load_setup_match">Configuration</a>
 			        </h5>
 			      </div>
 			      <div id="load_setup_match" class="panel-collapse collapse">

@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map.Entry;
+
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
 import javax.xml.parsers.ParserConfigurationException;
@@ -22,7 +24,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.xml.sax.SAXException;
 import com.hockey.model.Clock;
 import com.hockey.model.Configurations;
@@ -46,7 +47,7 @@ public class IndexController
 	@Autowired
 	HockeyService hockeyService;
 	
-	public static String expiry_date = "2023-12-31";
+	public static String expiry_date = "2026-12-31";
 	public static String current_date = "";
 	public static String error_message = "";
 	public static Clock session_clock = new Clock();
@@ -81,7 +82,7 @@ public class IndexController
 			@Override
 		    public boolean accept(File pathname) {
 		        String name = pathname.getName().toLowerCase();
-		        return name.endsWith(".xml") && pathname.isFile();
+		        return name.endsWith(".json") && pathname.isFile();
 		    }
 		}));
 		
@@ -111,7 +112,7 @@ public class IndexController
 			@Override
 		    public boolean accept(File pathname) {
 		        String name = pathname.getName().toLowerCase();
-		        return name.endsWith(".xml") && pathname.isFile();
+		        return name.endsWith(".json") && pathname.isFile();
 		    }
 		}));
 		model.addAttribute("session_match", session_match);
@@ -168,7 +169,7 @@ public class IndexController
 				@Override
 			    public boolean accept(File pathname) {
 			        String name = pathname.getName().toLowerCase();
-			        return name.endsWith(".xml") && pathname.isFile();
+			        return name.endsWith(".json") && pathname.isFile();
 			    }
 			}));
 
@@ -229,7 +230,7 @@ public class IndexController
 				@Override
 			    public boolean accept(File pathname) {
 			        String name = pathname.getName().toLowerCase();
-			        return name.endsWith(".xml") && pathname.isFile();
+			        return name.endsWith(".json") && pathname.isFile();
 			    }
 			}));
 			model.addAttribute("licence_expiry_message",
@@ -246,7 +247,7 @@ public class IndexController
 	
 	@RequestMapping(value = {"/upload_match_setup_data", "/reset_and_upload_match_setup_data"}
 		,method={RequestMethod.GET,RequestMethod.POST})    
-	public @ResponseBody String uploadFormDataToSessionObjects(MultipartHttpServletRequest request) 
+	public @ResponseBody String uploadFormDataToSessionObjects(HttpServletRequest request) 
 			throws IllegalAccessException, InvocationTargetException, JAXBException, IOException
 	{
 		if (request.getRequestURI().contains("upload_match_setup_data") 
@@ -334,6 +335,13 @@ public class IndexController
    					}
 	   			}
 	   		}
+			
+			System.out.println("params = " + request.getParameterMap().keySet());
+			System.out.println("matchFileName = " + session_match.getMatchFileName());
+			if (session_match.getMatchFileName() == null || session_match.getMatchFileName().isEmpty()) {
+			    return "{\"error\":\"matchFileName missing\"}";
+			}
+			
 
 			session_match.setHomeSquad(home_squad);
 			session_match.setAwaySquad(away_squad);
@@ -350,23 +358,25 @@ public class IndexController
 			session_match.setHomeOtherSquad(HockeyFunctions.getPlayersFromDB(hockeyService, HockeyUtil.HOME, session_match));
 			session_match.setAwayOtherSquad(HockeyFunctions.getPlayersFromDB(hockeyService, HockeyUtil.AWAY, session_match));
 
+//			new File(HockeyUtil.SPORTS_DIRECTORY + HockeyUtil.HOCKEY_DIRECTORY + HockeyUtil.MATCHES_DIRECTORY + session_match.getMatchFileName()).createNewFile();
+//			new File(HockeyUtil.SPORTS_DIRECTORY + HockeyUtil.HOCKEY_DIRECTORY + HockeyUtil.EVENT_DIRECTORY + session_match.getMatchFileName()).createNewFile();
+//			String json_file_name = session_match.getMatchFileName();
+			System.out.println("FILE - " + HockeyUtil.SPORTS_DIRECTORY + HockeyUtil.HOCKEY_DIRECTORY + HockeyUtil.MATCHES_DIRECTORY + session_match.getMatchFileName());
 			new File(HockeyUtil.SPORTS_DIRECTORY + HockeyUtil.HOCKEY_DIRECTORY + HockeyUtil.MATCHES_DIRECTORY + session_match.getMatchFileName()).createNewFile();
 			new File(HockeyUtil.SPORTS_DIRECTORY + HockeyUtil.HOCKEY_DIRECTORY + HockeyUtil.EVENT_DIRECTORY + session_match.getMatchFileName()).createNewFile();
 			
 			session_match = HockeyFunctions.populateMatchVariables(hockeyService, session_match);
 
-			JAXBContext.newInstance(Match.class).createMarshaller().marshal(session_match, 
-					new File(HockeyUtil.SPORTS_DIRECTORY + HockeyUtil.HOCKEY_DIRECTORY + HockeyUtil.MATCHES_DIRECTORY + session_match.getMatchFileName()));
-
-			JAXBContext.newInstance(EventFile.class).createMarshaller().marshal(session_event, 
-					new File(HockeyUtil.SPORTS_DIRECTORY + HockeyUtil.HOCKEY_DIRECTORY + HockeyUtil.EVENT_DIRECTORY + session_match.getMatchFileName()));
-
+			new ObjectMapper().writeValue(new File(HockeyUtil.SPORTS_DIRECTORY + HockeyUtil.HOCKEY_DIRECTORY + HockeyUtil.MATCHES_DIRECTORY + 
+					session_match.getMatchFileName()), session_match);
+			new ObjectMapper().writeValue(new File(HockeyUtil.SPORTS_DIRECTORY + HockeyUtil.HOCKEY_DIRECTORY + HockeyUtil.EVENT_DIRECTORY + 
+					session_match.getMatchFileName()), session_event);
 		}
 		session_match.setEvents(session_event.getEvents());
 		return objectMapper.writeValueAsString(session_match);
 	}
 	
-	@RequestMapping(value = {"/processHockeyProcedures"}, method={RequestMethod.GET,RequestMethod.POST})    
+	@RequestMapping(value = {"/processHockeyProcedures.html"}, method={RequestMethod.GET,RequestMethod.POST})    
 	public @ResponseBody String processHockeyProcedures(
 			@RequestParam(value = "whatToProcess", required = false, defaultValue = "") String whatToProcess,
 			@RequestParam(value = "valueToProcess", required = false, defaultValue = "") String valueToProcess)
@@ -374,21 +384,34 @@ public class IndexController
 						SAXException, ParserConfigurationException, CsvException
 	{	
 		Event this_event = new Event();
+//		if(!whatToProcess.equalsIgnoreCase(HockeyUtil.LOAD_TEAMS)) {
+//			if(valueToProcess.contains(",")) {
+//				if(session_match.getMatchFileName() == null || session_match.getMatchFileName().isEmpty()) {
+//					session_match = (Match) JAXBContext.newInstance(Match.class).createUnmarshaller().unmarshal(
+//							new File(HockeyUtil.SPORTS_DIRECTORY + HockeyUtil.HOCKEY_DIRECTORY + HockeyUtil.MATCHES_DIRECTORY+ valueToProcess.split(",")[0]));
+//					
+//					session_event = (EventFile) JAXBContext.newInstance(EventFile.class).createUnmarshaller().unmarshal(
+//							new File(HockeyUtil.SPORTS_DIRECTORY + HockeyUtil.HOCKEY_DIRECTORY + HockeyUtil.EVENT_DIRECTORY + valueToProcess.split(",")[0]));
+//					
+//					session_match.setEvents(session_event.getEvents());
+//					session_match = HockeyFunctions.populateMatchVariables(hockeyService,session_match);
+//				}
+//			}
+//		}
 		if(!whatToProcess.equalsIgnoreCase(HockeyUtil.LOAD_TEAMS)) {
-			if(valueToProcess.contains(",")) {
-				if(session_match.getMatchFileName() == null || session_match.getMatchFileName().isEmpty()) {
-					session_match = (Match) JAXBContext.newInstance(Match.class).createUnmarshaller().unmarshal(
-							new File(HockeyUtil.SPORTS_DIRECTORY + HockeyUtil.HOCKEY_DIRECTORY + HockeyUtil.MATCHES_DIRECTORY+ valueToProcess.split(",")[0]));
-					
-					session_event = (EventFile) JAXBContext.newInstance(EventFile.class).createUnmarshaller().unmarshal(
-							new File(HockeyUtil.SPORTS_DIRECTORY + HockeyUtil.HOCKEY_DIRECTORY + HockeyUtil.EVENT_DIRECTORY + valueToProcess.split(",")[0]));
-					
-					session_match.setEvents(session_event.getEvents());
-					session_match = HockeyFunctions.populateMatchVariables(hockeyService,session_match);
-				}
-			}
+		    if(valueToProcess.contains(",")) {
+		        String fileName = valueToProcess.split(",")[0];
+		        if((session_match.getMatchFileName() == null || session_match.getMatchFileName().isEmpty())
+		                && !fileName.equals("null") && !fileName.equals("undefined")) {
+		            String base = HockeyUtil.SPORTS_DIRECTORY + HockeyUtil.HOCKEY_DIRECTORY;
+		            session_match = objectMapper.readValue(new File(base + HockeyUtil.MATCHES_DIRECTORY + fileName), Match.class);
+		            session_match.setMatchFileName(fileName);
+		            session_event = objectMapper.readValue(new File(base + HockeyUtil.EVENT_DIRECTORY + fileName), EventFile.class);
+		            session_match.setEvents(session_event.getEvents());
+		            session_match = HockeyFunctions.populateMatchVariables(hockeyService, session_match);
+		        }
+		    }
 		}
-		
 		switch (whatToProcess.toUpperCase()) {
 		case HockeyUtil.LOG_STAT:
 
@@ -432,8 +455,8 @@ public class IndexController
 				}
 			}
 			
-			JAXBContext.newInstance(Match.class).createMarshaller().marshal(session_match, new File(HockeyUtil.SPORTS_DIRECTORY + 
-					HockeyUtil.HOCKEY_DIRECTORY + HockeyUtil.MATCHES_DIRECTORY + session_match.getMatchFileName()));
+			new ObjectMapper().writeValue(new File(HockeyUtil.SPORTS_DIRECTORY + HockeyUtil.HOCKEY_DIRECTORY + HockeyUtil.MATCHES_DIRECTORY + 
+					session_match.getMatchFileName()), session_match);
 			
 			switch (session_selected_broadcaster) {
 			case HockeyUtil.HOCKEY_KHELO_INDIA:
@@ -451,8 +474,8 @@ public class IndexController
 			session_match.setAwayPenaltiesHits(0);
 			session_match.setAwayPenaltiesMisses(0);
 
-			JAXBContext.newInstance(Match.class).createMarshaller().marshal(session_match, new File(HockeyUtil.SPORTS_DIRECTORY + 
-					HockeyUtil.HOCKEY_DIRECTORY + HockeyUtil.MATCHES_DIRECTORY + session_match.getMatchFileName()));
+			new ObjectMapper().writeValue(new File(HockeyUtil.SPORTS_DIRECTORY + HockeyUtil.HOCKEY_DIRECTORY + HockeyUtil.MATCHES_DIRECTORY + 
+					session_match.getMatchFileName()), session_match);
 			
 			return objectMapper.writeValueAsString(session_match);
 		
@@ -501,11 +524,10 @@ public class IndexController
 			session_event.getEvents().add(new Event(session_event.getEvents().size() + 1, 0, session_match.getClock().getMatchHalves(), 
 					0,whatToProcess, "replace", Integer.valueOf(valueToProcess.split(",")[1]),Integer.valueOf(valueToProcess.split(",")[2]),0));
 			
-			JAXBContext.newInstance(EventFile.class).createMarshaller().marshal(session_event, new File(HockeyUtil.SPORTS_DIRECTORY + 
-					HockeyUtil.HOCKEY_DIRECTORY + HockeyUtil.EVENT_DIRECTORY + session_match.getMatchFileName()));
-			
-			JAXBContext.newInstance(Match.class).createMarshaller().marshal(session_match, new File(HockeyUtil.SPORTS_DIRECTORY + 
-					HockeyUtil.HOCKEY_DIRECTORY + HockeyUtil.MATCHES_DIRECTORY + session_match.getMatchFileName()));
+			new ObjectMapper().writeValue(new File(HockeyUtil.SPORTS_DIRECTORY + HockeyUtil.HOCKEY_DIRECTORY + HockeyUtil.MATCHES_DIRECTORY + 
+					session_match.getMatchFileName()), session_match);
+			new ObjectMapper().writeValue(new File(HockeyUtil.SPORTS_DIRECTORY + HockeyUtil.HOCKEY_DIRECTORY + HockeyUtil.EVENT_DIRECTORY + 
+					session_match.getMatchFileName()), session_event);
 			
 			session_match.setEvents(session_event.getEvents());
 			
@@ -566,11 +588,10 @@ public class IndexController
 
 			session_match = HockeyFunctions.populateMatchVariables(hockeyService, session_match);
 			
-			JAXBContext.newInstance(EventFile.class).createMarshaller().marshal(session_event, new File(HockeyUtil.SPORTS_DIRECTORY + 
-					HockeyUtil.HOCKEY_DIRECTORY + HockeyUtil.EVENT_DIRECTORY + session_match.getMatchFileName()));
-			
-			JAXBContext.newInstance(Match.class).createMarshaller().marshal(session_match, new File(HockeyUtil.SPORTS_DIRECTORY + 
-					HockeyUtil.HOCKEY_DIRECTORY + HockeyUtil.MATCHES_DIRECTORY + session_match.getMatchFileName()));
+			new ObjectMapper().writeValue(new File(HockeyUtil.SPORTS_DIRECTORY + HockeyUtil.HOCKEY_DIRECTORY + HockeyUtil.MATCHES_DIRECTORY + 
+					session_match.getMatchFileName()), session_match);
+			new ObjectMapper().writeValue(new File(HockeyUtil.SPORTS_DIRECTORY + HockeyUtil.HOCKEY_DIRECTORY + HockeyUtil.EVENT_DIRECTORY + 
+					session_match.getMatchFileName()), session_event);
 			
 			session_match.setEvents(session_event.getEvents());
 			
@@ -584,8 +605,8 @@ public class IndexController
 				session_match.setEvents(new ArrayList<Event>());
 			
 			//DJ uncomment this and fix it
-//			session_match.getMatchStats().add(new MatchStats(session_match.getMatchStats().size() + 1, session_match.getHomeSquad().get(0).getPlayerId(), 
-//					session_match.getClock().getMatchHalves(),"Home_Goal", 1, session_match.getClock().getMatchTotalSeconds()));
+			session_match.getMatchStats().add(new MatchStats(session_match.getMatchStats().size() + 1, session_match.getHomeSquad().get(0).getPlayerId(), 
+					session_match.getClock().getMatchHalves(),"Home_Goal", 1, session_match.getClock().getMatchTotalMilliSeconds()));
 			
 			session_match.setHomeTeamScore(session_match.getHomeTeamScore() + 1);
 			
@@ -597,11 +618,10 @@ public class IndexController
 
 			session_match = HockeyFunctions.populateMatchVariables(hockeyService, session_match);
 			
-			JAXBContext.newInstance(EventFile.class).createMarshaller().marshal(session_event, new File(HockeyUtil.SPORTS_DIRECTORY + 
-					HockeyUtil.HOCKEY_DIRECTORY + HockeyUtil.EVENT_DIRECTORY + session_match.getMatchFileName()));
-			
-			JAXBContext.newInstance(Match.class).createMarshaller().marshal(session_match, new File(HockeyUtil.SPORTS_DIRECTORY + 
-					HockeyUtil.HOCKEY_DIRECTORY + HockeyUtil.MATCHES_DIRECTORY + session_match.getMatchFileName()));
+			new ObjectMapper().writeValue(new File(HockeyUtil.SPORTS_DIRECTORY + HockeyUtil.HOCKEY_DIRECTORY + HockeyUtil.MATCHES_DIRECTORY + 
+					session_match.getMatchFileName()), session_match);
+			new ObjectMapper().writeValue(new File(HockeyUtil.SPORTS_DIRECTORY + HockeyUtil.HOCKEY_DIRECTORY + HockeyUtil.EVENT_DIRECTORY + 
+					session_match.getMatchFileName()), session_event);
 			
 			session_match.setEvents(session_event.getEvents());
 			
@@ -615,8 +635,8 @@ public class IndexController
 				session_match.setEvents(new ArrayList<Event>());
 			
 			//DJ uncomment this and fix it
-//			session_match.getMatchStats().add(new MatchStats(session_match.getMatchStats().size() + 1, session_match.getAwaySquad().get(0).getPlayerId(), 
-//					session_match.getClock().getMatchHalves(),"AWAY_GOAL", 1, session_match.getClock().getMatchTotalSeconds()));
+			session_match.getMatchStats().add(new MatchStats(session_match.getMatchStats().size() + 1, session_match.getAwaySquad().get(0).getPlayerId(), 
+					session_match.getClock().getMatchHalves(),"AWAY_GOAL", 1, session_match.getClock().getMatchTotalMilliSeconds()));
 			
 			session_match.setAwayTeamScore(session_match.getAwayTeamScore() + 1);
 			
@@ -628,11 +648,10 @@ public class IndexController
 
 			session_match = HockeyFunctions.populateMatchVariables(hockeyService, session_match);
 			
-			JAXBContext.newInstance(EventFile.class).createMarshaller().marshal(session_event, new File(HockeyUtil.SPORTS_DIRECTORY + 
-					HockeyUtil.HOCKEY_DIRECTORY + HockeyUtil.EVENT_DIRECTORY + session_match.getMatchFileName()));
-			
-			JAXBContext.newInstance(Match.class).createMarshaller().marshal(session_match, new File(HockeyUtil.SPORTS_DIRECTORY + 
-					HockeyUtil.HOCKEY_DIRECTORY + HockeyUtil.MATCHES_DIRECTORY + session_match.getMatchFileName()));
+			new ObjectMapper().writeValue(new File(HockeyUtil.SPORTS_DIRECTORY + HockeyUtil.HOCKEY_DIRECTORY + HockeyUtil.MATCHES_DIRECTORY + 
+					session_match.getMatchFileName()), session_match);
+			new ObjectMapper().writeValue(new File(HockeyUtil.SPORTS_DIRECTORY + HockeyUtil.HOCKEY_DIRECTORY + HockeyUtil.EVENT_DIRECTORY + 
+					session_match.getMatchFileName()), session_event);
 		
 			session_match.setEvents(session_event.getEvents());
 			
@@ -699,11 +718,10 @@ public class IndexController
 				}
 			}
 			
-			JAXBContext.newInstance(EventFile.class).createMarshaller().marshal(session_event, new File(HockeyUtil.SPORTS_DIRECTORY + 
-					HockeyUtil.HOCKEY_DIRECTORY + HockeyUtil.EVENT_DIRECTORY + session_match.getMatchFileName()));
-			
-			JAXBContext.newInstance(Match.class).createMarshaller().marshal(session_match, new File(HockeyUtil.SPORTS_DIRECTORY + 
-					HockeyUtil.HOCKEY_DIRECTORY + HockeyUtil.MATCHES_DIRECTORY + session_match.getMatchFileName()));
+			new ObjectMapper().writeValue(new File(HockeyUtil.SPORTS_DIRECTORY + HockeyUtil.HOCKEY_DIRECTORY + HockeyUtil.MATCHES_DIRECTORY + 
+					session_match.getMatchFileName()), session_match);
+			new ObjectMapper().writeValue(new File(HockeyUtil.SPORTS_DIRECTORY + HockeyUtil.HOCKEY_DIRECTORY + HockeyUtil.EVENT_DIRECTORY + 
+					session_match.getMatchFileName()), session_event);
 			return objectMapper.writeValueAsString(session_match);
 		case "LOG_OVERWRITE_MATCH_STATS":
 		
@@ -728,11 +746,10 @@ public class IndexController
 				}
 			}
 
-			JAXBContext.newInstance(EventFile.class).createMarshaller().marshal(session_event, new File(HockeyUtil.SPORTS_DIRECTORY + 
-					HockeyUtil.HOCKEY_DIRECTORY + HockeyUtil.EVENT_DIRECTORY + session_match.getMatchFileName()));
-			
-			JAXBContext.newInstance(Match.class).createMarshaller().marshal(session_match, new File(HockeyUtil.SPORTS_DIRECTORY + 
-					HockeyUtil.HOCKEY_DIRECTORY + HockeyUtil.MATCHES_DIRECTORY + session_match.getMatchFileName()));
+			new ObjectMapper().writeValue(new File(HockeyUtil.SPORTS_DIRECTORY + HockeyUtil.HOCKEY_DIRECTORY + HockeyUtil.MATCHES_DIRECTORY + 
+					session_match.getMatchFileName()), session_match);
+			new ObjectMapper().writeValue(new File(HockeyUtil.SPORTS_DIRECTORY + HockeyUtil.HOCKEY_DIRECTORY + HockeyUtil.EVENT_DIRECTORY + 
+					session_match.getMatchFileName()), session_event);
 			
 			session_match = HockeyFunctions.populateMatchVariables(hockeyService, session_match);
 			session_match.setEvents(session_event.getEvents());
@@ -744,8 +761,8 @@ public class IndexController
 			session_match.setHomeTeamScore(Integer.valueOf(valueToProcess.split(",")[1]));
 			session_match.setAwayTeamScore(Integer.valueOf(valueToProcess.split(",")[2]));
 
-			JAXBContext.newInstance(Match.class).createMarshaller().marshal(session_match, new File(HockeyUtil.SPORTS_DIRECTORY + 
-					HockeyUtil.HOCKEY_DIRECTORY + HockeyUtil.MATCHES_DIRECTORY + session_match.getMatchFileName()));
+			new ObjectMapper().writeValue(new File(HockeyUtil.SPORTS_DIRECTORY + HockeyUtil.HOCKEY_DIRECTORY + HockeyUtil.MATCHES_DIRECTORY + 
+					session_match.getMatchFileName()), session_match);
 
 			return objectMapper.writeValueAsString(session_match);
 		
@@ -792,11 +809,10 @@ public class IndexController
 			}
 			
 	
-			JAXBContext.newInstance(EventFile.class).createMarshaller().marshal(session_event, new File(HockeyUtil.SPORTS_DIRECTORY + 
-					HockeyUtil.HOCKEY_DIRECTORY + HockeyUtil.EVENT_DIRECTORY + session_match.getMatchFileName()));
-			
-			JAXBContext.newInstance(Match.class).createMarshaller().marshal(session_match, new File(HockeyUtil.SPORTS_DIRECTORY + 
-					HockeyUtil.HOCKEY_DIRECTORY + HockeyUtil.MATCHES_DIRECTORY + session_match.getMatchFileName()));
+			new ObjectMapper().writeValue(new File(HockeyUtil.SPORTS_DIRECTORY + HockeyUtil.HOCKEY_DIRECTORY + HockeyUtil.MATCHES_DIRECTORY + 
+					session_match.getMatchFileName()), session_match);
+			new ObjectMapper().writeValue(new File(HockeyUtil.SPORTS_DIRECTORY + HockeyUtil.HOCKEY_DIRECTORY + HockeyUtil.EVENT_DIRECTORY + 
+					session_match.getMatchFileName()), session_event);
 		
 			session_match.setEvents(session_event.getEvents());
 			return objectMapper.writeValueAsString(session_match);
@@ -844,11 +860,10 @@ public class IndexController
 			}
 			
 	
-			JAXBContext.newInstance(EventFile.class).createMarshaller().marshal(session_event, new File(HockeyUtil.SPORTS_DIRECTORY + 
-					HockeyUtil.HOCKEY_DIRECTORY + HockeyUtil.EVENT_DIRECTORY + session_match.getMatchFileName()));
-			
-			JAXBContext.newInstance(Match.class).createMarshaller().marshal(session_match, new File(HockeyUtil.SPORTS_DIRECTORY + 
-					HockeyUtil.HOCKEY_DIRECTORY + HockeyUtil.MATCHES_DIRECTORY + session_match.getMatchFileName()));
+			new ObjectMapper().writeValue(new File(HockeyUtil.SPORTS_DIRECTORY + HockeyUtil.HOCKEY_DIRECTORY + HockeyUtil.MATCHES_DIRECTORY + 
+					session_match.getMatchFileName()), session_match);
+			new ObjectMapper().writeValue(new File(HockeyUtil.SPORTS_DIRECTORY + HockeyUtil.HOCKEY_DIRECTORY + HockeyUtil.EVENT_DIRECTORY + 
+					session_match.getMatchFileName()), session_event);
 		
 			session_match.setEvents(session_event.getEvents());
 			return objectMapper.writeValueAsString(session_match);	
@@ -868,7 +883,7 @@ public class IndexController
 							case HockeyUtil.ASSISTS: case HockeyUtil.SHOTS: case HockeyUtil.SHOTS_ON_TARGET: case HockeyUtil.OFF_SIDE: case HockeyUtil.FOULS:
 							case HockeyUtil.CORNERS_CONVERTED: case HockeyUtil.CORNERS: case HockeyUtil.SAVES:
 								this_event = session_event.getEvents().get(session_event.getEvents().size() - 1);
-								session_match.getMatchStats().remove(session_match.getMatchStats().get(session_match.getMatchStats().size() - 1));
+							//	session_match.getMatchStats().remove(session_match.getMatchStats().get(session_match.getMatchStats().size() - 1));
 								for(Player plyr : session_match.getHomeSquad()) {
 									if(plyr.getPlayerId() == this_event.getEventPlayerId()) {
 										switch (this_event.getEventType().toUpperCase()) {
@@ -934,12 +949,10 @@ public class IndexController
 			}
 			
 			
-			JAXBContext.newInstance(EventFile.class).createMarshaller().marshal(session_event, new File(HockeyUtil.SPORTS_DIRECTORY + 
-					HockeyUtil.HOCKEY_DIRECTORY + HockeyUtil.EVENT_DIRECTORY + session_match.getMatchFileName()));
-			
-			JAXBContext.newInstance(Match.class).createMarshaller().marshal(session_match, new File(HockeyUtil.SPORTS_DIRECTORY + 
-					HockeyUtil.HOCKEY_DIRECTORY + HockeyUtil.MATCHES_DIRECTORY + session_match.getMatchFileName()));
-
+			new ObjectMapper().writeValue(new File(HockeyUtil.SPORTS_DIRECTORY + HockeyUtil.HOCKEY_DIRECTORY + HockeyUtil.MATCHES_DIRECTORY + 
+					session_match.getMatchFileName()), session_match);
+			new ObjectMapper().writeValue(new File(HockeyUtil.SPORTS_DIRECTORY + HockeyUtil.HOCKEY_DIRECTORY + HockeyUtil.EVENT_DIRECTORY + 
+					session_match.getMatchFileName()), session_event);
 			session_match.setEvents(session_event.getEvents());
 			return objectMapper.writeValueAsString(session_match);
 			
@@ -951,21 +964,27 @@ public class IndexController
 				
 				session_match.setHomeSquad(hockeyService.getPlayers(HockeyUtil.TEAM, valueToProcess.split(",")[0]));
 				session_match.setAwaySquad(hockeyService.getPlayers(HockeyUtil.TEAM, valueToProcess.split(",")[1]));
+				
+				session_match.setHomeSubstitutes(hockeyService.getPlayers(HockeyUtil.TEAM, valueToProcess.split(",")[0]));
+				session_match.setAwaySubstitutes(hockeyService.getPlayers(HockeyUtil.TEAM, valueToProcess.split(",")[1]));
+				
+				session_match.setHomeOtherSquad(hockeyService.getPlayers(HockeyUtil.TEAM, valueToProcess.split(",")[0]));
+				session_match.setAwayOtherSquad(hockeyService.getPlayers(HockeyUtil.TEAM, valueToProcess.split(",")[1]));
 			}
 			
 			return objectMapper.writeValueAsString(session_match);
 
 		case HockeyUtil.LOAD_MATCH: case HockeyUtil.LOAD_SETUP:
 
-			session_match = (Match) JAXBContext.newInstance(Match.class).createUnmarshaller().unmarshal(new File(HockeyUtil.SPORTS_DIRECTORY 
-					+ HockeyUtil.HOCKEY_DIRECTORY + HockeyUtil.MATCHES_DIRECTORY + valueToProcess));
-			
+			session_match = new ObjectMapper().readValue(new File(HockeyUtil.SPORTS_DIRECTORY +HockeyUtil.HOCKEY_DIRECTORY + HockeyUtil.MATCHES_DIRECTORY + 
+					valueToProcess), Match.class);
+			session_match.setMatchFileName(valueToProcess);
 			switch (whatToProcess.toUpperCase()) {
 			case HockeyUtil.LOAD_MATCH:
 				
 				if(new File(HockeyUtil.SPORTS_DIRECTORY + HockeyUtil.HOCKEY_DIRECTORY + HockeyUtil.EVENT_DIRECTORY + valueToProcess).exists()) {
-					session_event = (EventFile) JAXBContext.newInstance(EventFile.class).createUnmarshaller().unmarshal(
-							new File(HockeyUtil.SPORTS_DIRECTORY + HockeyUtil.HOCKEY_DIRECTORY + HockeyUtil.EVENT_DIRECTORY + valueToProcess));
+					session_event = objectMapper.readValue(new File(HockeyUtil.SPORTS_DIRECTORY + HockeyUtil.HOCKEY_DIRECTORY
+					        + HockeyUtil.EVENT_DIRECTORY + valueToProcess), EventFile.class);
 				} else {
 					session_event = new EventFile();
 					new File(HockeyUtil.SPORTS_DIRECTORY + HockeyUtil.HOCKEY_DIRECTORY + HockeyUtil.EVENT_DIRECTORY + valueToProcess).createNewFile();
@@ -1017,4 +1036,10 @@ public class IndexController
 			return objectMapper.writeValueAsString(session_match);
 		}
 	}
+	private void saveMatchAndEvents() throws IOException {
+	    String base = HockeyUtil.SPORTS_DIRECTORY + HockeyUtil.HOCKEY_DIRECTORY;
+	    objectMapper.writeValue(new File(base + HockeyUtil.MATCHES_DIRECTORY + session_match.getMatchFileName()), session_match);
+	    objectMapper.writeValue(new File(base + HockeyUtil.EVENT_DIRECTORY + session_match.getMatchFileName()), session_event);
+	}
+	
 }
