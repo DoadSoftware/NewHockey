@@ -1240,28 +1240,6 @@ function processHockeyProcedures(whatToProcess, whichInput)
 				break;
 		}
 		break;
-	case 'POPULATE-FF-MATCHID':
-		switch ($('#selectedBroadcaster').val()) {
-			case 'I_LEAGUE':
-				value_to_process = 'D:/DOAD_In_House_Everest/Everest_Sports/Everest_I-League_2022/Scenes/MatchId.sum' ;
-				break;
-			case 'HOCKEY_KHELO_INDIA':
-				value_to_process = 'D:/DOAD_In_House_Everest/Everest_Sports/Everest_Khelo_India_2023/Scenes/FF_MatchId.sum' ;
-				break;
-			case 'SANTOSH_TROPHY':
-				value_to_process = 'D:/DOAD_In_House_Everest/Everest_Sports/Everest_SantoshTrophy_2023/Scenes/MatchID.sum';
-				break;
-			case 'VIZ_SANTOSH_TROPHY':
-				value_to_process = '/Default/GameIntro';
-				break;
-			case 'VIZ_TRI_NATION':
-				value_to_process = '/Default/FullFrames';
-				break;
-			case 'SUPER_CUP': case 'CONTINENTAL':
-				value_to_process = '/Default/FullFrames';
-				break;
-		}
-		break;
 	case 'POPULATE-LT-MATCHID':
 		switch ($('#selectedBroadcaster').val()) {
 			case 'VIZ_SANTOSH_TROPHY':

@@ -236,7 +236,7 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 				populateNameSuperCard(session_socket, valueToProcess.split(",")[1], Integer.valueOf(valueToProcess.split(",")[2]), valueToProcess.split(",")[3], Integer.valueOf(valueToProcess.split(",")[4]), match, session_selected_broadcaster);
 				break;
 			case "POPULATE-FF-MATCHID":
-				populateMatchId(session_socket,valueToProcess.split(",")[1], match, session_selected_broadcaster);
+				populateMatchId(session_socket,valueToProcess.split(",")[1], match, session_selected_broadcaster,1,hockeyService);
 				break;
 			case "POPULATE-FF-MATCHSTATS":
 				populateMatchStats(session_socket,valueToProcess.split(",")[1], hockeyService,match,clock, session_selected_broadcaster);
@@ -342,7 +342,8 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 				which_graphics_onscreen = "NAMESUPERDB";
 				break;
 			case "ANIMATE-IN-MATCHID":
-				processAnimation(session_socket, "In", "START", session_selected_broadcaster,2);
+//				processAnimation(session_socket, "In", "START", session_selected_broadcaster,2);
+				print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_FullFrame$In_Out START \0");
 				which_graphics_onscreen = "MATCHID";
 				break;
 			case "ANIMATE-IN-MATCHSTATS":
@@ -851,37 +852,43 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 			print_writer.println("LAYER1*EVEREST*GLOBAL PREVIEW OFF;");	
 		}
 	}
-	public void populateMatchId(Socket session_socket,String viz_scene, Match match, String session_selected_broadcaster) throws InterruptedException, IOException
+	public void populateMatchId(Socket session_socket,String viz_scene, Match match, String session_selected_broadcaster,int whichSide,HockeyService hockeyService) throws InterruptedException, IOException
 	{
 		if (match == null) {
 			this.status = "ERROR: Match is null";
 		}else {
-			print_writer = new PrintWriter(session_socket.getOutputStream(), true);
-			print_writer.println("LAYER2*EVEREST*TREEVIEW*Main*FUNCTION*TAG_CONTROL SET tHeader " + "HOCKEY" + ";");
-			print_writer.println("LAYER2*EVEREST*TREEVIEW*Main*FUNCTION*TAG_CONTROL SET vSubHeader 2;");
-			print_writer.println("LAYER2*EVEREST*TREEVIEW*Main*FUNCTION*TAG_CONTROL SET tSubText01 " + match.getMatchIdent() + ";");
 			
-			print_writer.println("LAYER2*EVEREST*TREEVIEW*Main*FUNCTION*TAG_CONTROL SET lgGameIcon " + icon_path + "HOCKEY" + 
-					HockeyUtil.PNG_EXTENSION + ";");
+			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$FF_Gfx*FUNCTION*Omo*vis_con SET 1 \0");
 			
-			print_writer.println("LAYER2*EVEREST*TREEVIEW*Main*FUNCTION*TAG_CONTROL SET tTeam01 " + match.getHomeTeam().getTeamName1() + ";");
-			print_writer.println("LAYER2*EVEREST*TREEVIEW*Main*FUNCTION*TAG_CONTROL SET tTeam02 " + match.getAwayTeam().getTeamName1() + ";");
+			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Match_Id$Data"
+					+ "$Match_Number_Out$Number$txt_Match_Number*GEOM*TEXT SET "+ match.getMatchIdent() +"\0");
 			
-			print_writer.println("LAYER2*EVEREST*TREEVIEW*Main*FUNCTION*TAG_CONTROL SET tBottomInfo " + "LIVE FROM " + match.getVenueName().toUpperCase() + ";");
+			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Match_Id$Data"
+					+ "$Logos_Vs$Left_Logo_Out$img_Logo_Left*TEXTURE*IMAGE SET "+ match.getHomeTeam().getTeamBadge() +"\0");
 			
-			print_writer.println("LAYER1*EVEREST*GLOBAL PREVIEW ON;");
-			print_writer.println("LAYER2*EVEREST*STAGE*DIRECTOR*In STOP;");
-			print_writer.println("LAYER2*EVEREST*STAGE*DIRECTOR*Out STOP;");
-			print_writer.println("LAYER2*EVEREST*STAGE*DIRECTOR*In SHOW 110.0;");
-			print_writer.println("LAYER2*EVEREST*STAGE*DIRECTOR*Out SHOW 0.0;");
-			print_writer.println("LAYER1*EVEREST*GLOBAL SNAPSHOT_PATH C:/Temp/Preview.png;");
-			print_writer.println("LAYER1*EVEREST*GLOBAL SNAPSHOT 1920 1080;");
-			TimeUnit.SECONDS.sleep(1);
-			print_writer.println("LAYER2*EVEREST*STAGE*DIRECTOR*Out SHOW 0.0;");
-			print_writer.println("LAYER2*EVEREST*STAGE*DIRECTOR*In SHOW 0.0;");
-			print_writer.println("LAYER1*EVEREST*GLOBAL PREVIEW OFF;");
+			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Match_Id$Data"
+					+ "$Logos_Vs$Right_Logo_Out$img_Logo_Right*TEXTURE*IMAGE SET "+ match.getAwayTeam().getTeamBadge() +"\0");
+			
+			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Match_Id$Data"
+					+ "$Date_Out*ACTIVE SET 0\0");
+			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Match_Id$Data"
+					+ "$Venue_Out$txt_Venue*GEOM*TEXT SET "+ "DEHRADUN" +"\0");
+			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Match_Id$Data"
+					+ "$Venue_Out$txt_Location*GEOM*TEXT SET "+ "IT PARK" +"\0");
+			
+			
+			for(VariousText vt : hockeyService.getVariousTexts()) {
+				if(vt.getVariousType().equalsIgnoreCase("MATCHIDENTFOOTER") && vt.getUseThis().equalsIgnoreCase("YES") ) {
+					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Match_Id$Data"
+							+ "$Venue_Out$txt_Venue*GEOM*TEXT SET "+ "DEHRADUN" +"\0");
+					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Match_Id$Data"
+							+ "$Venue_Out$txt_Location*GEOM*TEXT SET "+ "IT PARK" +"\0");
+				}
+			}
 		}
-	}
+	}	
+			
+	
 	public void populateSubstitute(Socket session_socket,String viz_scene,int Team_id,String Num_Of_Subs,List<Player> plyr,List<Team> team, Match match, String session_selected_broadcaster) throws InterruptedException, IOException
 	{
 		if (match == null) {
