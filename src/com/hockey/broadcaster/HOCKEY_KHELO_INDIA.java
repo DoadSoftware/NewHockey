@@ -1574,7 +1574,7 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
 									+ "$noname$Players$Player1*TRANSFORMATION*POSITION*X SET " + form.getFormOrds1X() + "\0");
 							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
-									+ "$noname$Players$Player1$img_Text1$txt_Name*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds1Y() + "\0");
+									+ "$noname$Players$Player1*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds1Y() + "\0");
 							
 							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
 									+ "$noname$Players$Player2*TRANSFORMATION*POSITION*X SET " + form.getFormOrds2X() + "\0");
@@ -1680,7 +1680,7 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
 									+ "$noname$Players$Player1*TRANSFORMATION*POSITION*X SET " + form.getFormOrds1X() + "\0");
 							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
-									+ "$noname$Players$Player1$img_Text1$txt_Name*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds1Y() + "\0");
+									+ "$noname$Players$Player1*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds1Y() + "\0");
 							
 							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
 									+ "$noname$Players$Player2*TRANSFORMATION*POSITION*X SET " + form.getFormOrds2X() + "\0");
@@ -1914,38 +1914,38 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 					row_id = row_id + 1;
 					
 					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
-							+ "$noname$Players$Player"+ row_id +"*TEXTURE*IMAGE SET " + HOCKEY_PHOTO_PATH + hs.getPhoto() + ".png" +"\0");
+							+ "$Players$Player"+ row_id +"*TEXTURE*IMAGE SET " + HOCKEY_PHOTO_PATH + hs.getPhoto() + ".png" +"\0");
 					
 					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
-							+ "$noname$Players$Player"+ row_id + "$img_Base1*TEXTURE*IMAGE SET "+ HOCKEY_BASE1 + match.getHomeTeam().getTeamBadge() +"\0");
+							+ "$Players$Player"+ row_id + "$img_Base1*TEXTURE*IMAGE SET "+ HOCKEY_BASE1 + match.getHomeTeam().getTeamBadge() +"\0");
 					
 					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
-							+ "$noname$Players$Player"+ row_id + "$img_Base2*TEXTURE*IMAGE SET "+ HOCKEY_BASE2 + match.getHomeTeam().getTeamBadge() +"\0");
+							+ "$Players$Player"+ row_id + "$img_Base2*TEXTURE*IMAGE SET "+ HOCKEY_BASE2 + match.getHomeTeam().getTeamBadge() +"\0");
 					
 					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
-							+ "$noname$Players$Player"+ row_id + "$img_Text1*TEXTURE*IMAGE SET "+ HOCKEY_TEXT1 + match.getHomeTeam().getTeamBadge() +"\0");	
+							+ "$Players$Player"+ row_id + "$img_Text1*TEXTURE*IMAGE SET "+ HOCKEY_TEXT1 + match.getHomeTeam().getTeamBadge() +"\0");	
 					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
-							+ "$noname$Players$Player"+ row_id + "$img_Text2*TEXTURE*IMAGE SET "+ HOCKEY_TEXT2 + match.getHomeTeam().getTeamBadge() +"\0");
+							+ "$Players$Player"+ row_id + "$img_Text2*TEXTURE*IMAGE SET "+ HOCKEY_TEXT2 + match.getHomeTeam().getTeamBadge() +"\0");
 					
 					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
-							+ "$noname$Players$Player"+ row_id + "$img_Text1$txt_Name*GEOM*TEXT SET "+ hs.getFull_name() +"\0");
+							+ "$Players$Player"+ row_id + "$img_Text1$txt_Name*GEOM*TEXT SET "+ hs.getFull_name() +"\0");
 					
 					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
-							+ "$noname$Players$Player"+ row_id + "$img_Text2$txt_Name*GEOM*TEXT SET "+ hs.getJersey_number() +"\0");
+							+ "$Players$Player"+ row_id + "$img_Text2$txt_Name*GEOM*TEXT SET "+ hs.getJersey_number() +"\0");
 					
 					
 					if(hs.getCaptainGoalKeeper().equalsIgnoreCase(HockeyUtil.CAPTAIN)) {
 						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
-								+ "$noname$Players$Player"+ row_id + "$img_Text2$txt_Name*GEOM*TEXT SET "+ "(C)" +"\0");
+								+ "$Players$Player"+ row_id + "$img_Text2$txt_Name*GEOM*TEXT SET "+ "(C)" +"\0");
 					}else if(hs.getCaptainGoalKeeper().equalsIgnoreCase(HockeyUtil.GOAL_KEEPER)) {
 						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
-								+ "$noname$Players$Player"+ row_id + "$img_Text2$txt_Name*GEOM*TEXT SET "+ "(GK)" +"\0");
+								+ "$Players$Player"+ row_id + "$img_Text2$txt_Name*GEOM*TEXT SET "+ "(GK)" +"\0");
 					}else if(hs.getCaptainGoalKeeper().equalsIgnoreCase("CAPTAIN_GOAL_KEEPER")) {
 						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
-								+ "$noname$Players$Player"+ row_id + "$img_Text2$txt_Name*GEOM*TEXT SET "+ "(C)(GK)" +"\0");
+								+ "$Players$Player"+ row_id + "$img_Text2$txt_Name*GEOM*TEXT SET "+ "(C)(GK)" +"\0");
 					}else {
 						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
-								+ "$noname$Players$Player"+ row_id + "$img_Text2$txt_Name*GEOM*TEXT SET "+ "" +"\0");
+								+ "$Players$Player"+ row_id + "$img_Text2$txt_Name*GEOM*TEXT SET "+ "" +"\0");
 					}
 					
 					
@@ -1953,57 +1953,57 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 						if(form.getFormId() == match.getHomeTeamFormationId()) {
 							
 							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
-									+ "$noname$Players$Player1*TRANSFORMATION*POSITION*X SET " + form.getFormOrds1X() + "\0");
+									+ "$Players$Player1*TRANSFORMATION*POSITION*X SET " + form.getFormOrds1X() + "\0");
 							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
-									+ "$noname$Players$Player1$img_Text1$txt_Name*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds1Y() + "\0");
+									+ "$Players$Player1*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds1Y() + "\0");
 							
 							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
-									+ "$noname$Players$Player2*TRANSFORMATION*POSITION*X SET " + form.getFormOrds2X() + "\0");
+									+ "$Players$Player2*TRANSFORMATION*POSITION*X SET " + form.getFormOrds2X() + "\0");
 							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
-									+ "$noname$Players$Player2*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds2Y() + "\0");
+									+ "$Players$Player2*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds2Y() + "\0");
 							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
-									+ "$noname$Players$Player3*TRANSFORMATION*POSITION*X SET " + form.getFormOrds3X() + "\0");
+									+ "$Players$Player3*TRANSFORMATION*POSITION*X SET " + form.getFormOrds3X() + "\0");
 							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
-									+ "$noname$Players$Player3*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds3Y() + "\0");
+									+ "$Players$Player3*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds3Y() + "\0");
 							
 							
 							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
-									+ "$noname$Players$Player4*TRANSFORMATION*POSITION*X SET " + form.getFormOrds4X() + "\0");
+									+ "$Players$Player4*TRANSFORMATION*POSITION*X SET " + form.getFormOrds4X() + "\0");
 							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
-									+ "$noname$Players$Player4*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds4Y() + "\0");
+									+ "$Players$Player4*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds4Y() + "\0");
 							
 							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
-									+ "$noname$Players$Player5*TRANSFORMATION*POSITION*X SET " + form.getFormOrds5X() + "\0");
+									+ "$Players$Player5*TRANSFORMATION*POSITION*X SET " + form.getFormOrds5X() + "\0");
 							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
-									+ "$noname$Players$Player5*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds5Y() + "\0");
+									+ "$Players$Player5*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds5Y() + "\0");
 							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
-									+ "$noname$Players$Player6*TRANSFORMATION*POSITION*X SET " + form.getFormOrds6X() + "\0");
+									+ "$Players$Player6*TRANSFORMATION*POSITION*X SET " + form.getFormOrds6X() + "\0");
 							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
-									+ "$noname$Players$Player6*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds6Y() + "\0");
+									+ "$Players$Player6*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds6Y() + "\0");
 							
 							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
-									+ "$noname$Players$Player7*TRANSFORMATION*POSITION*X SET " + form.getFormOrds7X() + "\0");
+									+ "$Players$Player7*TRANSFORMATION*POSITION*X SET " + form.getFormOrds7X() + "\0");
 							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
-									+ "$noname$Players$Player7*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds7Y() + "\0");
+									+ "$Players$Player7*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds7Y() + "\0");
 							
 							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
-									+ "$noname$Players$Player8*TRANSFORMATION*POSITION*X SET " + form.getFormOrds8Y() + "\0");
+									+ "$Players$Player8*TRANSFORMATION*POSITION*X SET " + form.getFormOrds8Y() + "\0");
 							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
-									+ "$noname$Players$Player8*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds8Y() + "\0");
+									+ "$Players$Player8*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds8Y() + "\0");
 							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
-									+ "$noname$Players$Player9*TRANSFORMATION*POSITION*X SET " + form.getFormOrds9X() + "\0");
+									+ "$Players$Player9*TRANSFORMATION*POSITION*X SET " + form.getFormOrds9X() + "\0");
 							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
-									+ "$noname$Players$Player9*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds9Y() + "\0");
+									+ "$Players$Player9*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds9Y() + "\0");
 							
 							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
-									+ "$noname$Players$Player10*TRANSFORMATION*POSITION*X SET " + form.getFormOrds10X() + "\0");
+									+ "$Players$Player10*TRANSFORMATION*POSITION*X SET " + form.getFormOrds10X() + "\0");
 							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
-									+ "$noname$Players$Player10*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds10Y() + "\0");
+									+ "$Players$Player10*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds10Y() + "\0");
 							
 							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
-									+ "$noname$Players$Player11*TRANSFORMATION*POSITION*X SET " + form.getFormOrds11X() + "\0");
+									+ "$Players$Player11*TRANSFORMATION*POSITION*X SET " + form.getFormOrds11X() + "\0");
 							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
-									+ "$noname$Players$Player11*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds11Y() + "\0");
+									+ "$Players$Player11*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds11Y() + "\0");
 							
 						}
 					}
@@ -2020,21 +2020,21 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 					row_id = row_id + 1;
 					
 					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
-							+ "$noname$Players$Player"+ row_id +"*TEXTURE*IMAGE SET " + HOCKEY_PHOTO_PATH + hs.getPhoto() + ".png" +"\0");
+							+ "$Players$Player"+ row_id +"*TEXTURE*IMAGE SET " + HOCKEY_PHOTO_PATH + hs.getPhoto() + ".png" +"\0");
 					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
-							+ "$noname$Players$Player"+ row_id + "$img_Base1*TEXTURE*IMAGE SET "+ HOCKEY_BASE1 + match.getAwayTeam().getTeamBadge() +"\0");
+							+ "$Players$Player"+ row_id + "$img_Base1*TEXTURE*IMAGE SET "+ HOCKEY_BASE1 + match.getAwayTeam().getTeamBadge() +"\0");
 					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
-							+ "$noname$Players$Player"+ row_id + "$img_Base2*TEXTURE*IMAGE SET "+ HOCKEY_BASE2 + match.getAwayTeam().getTeamBadge() +"\0");	
+							+ "$Players$Player"+ row_id + "$img_Base2*TEXTURE*IMAGE SET "+ HOCKEY_BASE2 + match.getAwayTeam().getTeamBadge() +"\0");	
 					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
-							+ "$noname$Players$Player"+ row_id + "$img_Text1*TEXTURE*IMAGE SET "+ HOCKEY_TEXT1 + match.getAwayTeam().getTeamBadge() +"\0");	
+							+ "$Players$Player"+ row_id + "$img_Text1*TEXTURE*IMAGE SET "+ HOCKEY_TEXT1 + match.getAwayTeam().getTeamBadge() +"\0");	
 					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
-							+ "$noname$Players$Player"+ row_id + "$img_Text2*TEXTURE*IMAGE SET "+ HOCKEY_TEXT2 + match.getAwayTeam().getTeamBadge() +"\0");	
+							+ "$Players$Player"+ row_id + "$img_Text2*TEXTURE*IMAGE SET "+ HOCKEY_TEXT2 + match.getAwayTeam().getTeamBadge() +"\0");	
 					
 					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
-							+ "$noname$Players$Player"+ row_id + "$img_Text1$txt_Name*GEOM*TEXT SET "+ hs.getFull_name() +"\0");
+							+ "$Players$Player"+ row_id + "$img_Text1$txt_Name*GEOM*TEXT SET "+ hs.getFull_name() +"\0");
 					
 					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
-							+ "$noname$Players$Player"+ row_id + "$img_Text2$txt_Name*GEOM*TEXT SET "+ hs.getJersey_number() +"\0");
+							+ "$Players$Player"+ row_id + "$img_Text2$txt_Name*GEOM*TEXT SET "+ hs.getJersey_number() +"\0");
 					
 					
 //					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
@@ -2075,73 +2075,73 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 					
 					if(hs.getCaptainGoalKeeper().equalsIgnoreCase(HockeyUtil.CAPTAIN)) {
 						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
-								+ "$noname$Players$Player"+ row_id + "$img_Text2$txt_Name*GEOM*TEXT SET "+ "(C)" +"\0");
+								+ "$Players$Player"+ row_id + "$img_Text2$txt_Name*GEOM*TEXT SET "+ "(C)" +"\0");
 					}else if(hs.getCaptainGoalKeeper().equalsIgnoreCase(HockeyUtil.GOAL_KEEPER)) {
 						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
-								+ "$noname$Players$Player"+ row_id + "$img_Text2$txt_Name*GEOM*TEXT SET "+ "(GK)" +"\0");
+								+ "$Players$Player"+ row_id + "$img_Text2$txt_Name*GEOM*TEXT SET "+ "(GK)" +"\0");
 					}else if(hs.getCaptainGoalKeeper().equalsIgnoreCase("CAPTAIN_GOAL_KEEPER")) {
 						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
-								+ "$noname$Players$Player"+ row_id + "$img_Text2$txt_Name*GEOM*TEXT SET "+ "(C)(GK)" +"\0");
+								+ "$Players$Player"+ row_id + "$img_Text2$txt_Name*GEOM*TEXT SET "+ "(C)(GK)" +"\0");
 					}else {
 						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
-								+ "$noname$Players$Player"+ row_id + "$img_Text2$txt_Name*GEOM*TEXT SET "+ "" +"\0");
+								+ "$Players$Player"+ row_id + "$img_Text2$txt_Name*GEOM*TEXT SET "+ "" +"\0");
 					}
 					
 					for(Formation form : formation) {
 						if(form.getFormId() == match.getAwayTeamFormationId()) {
 							
 							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
-									+ "$noname$Players$Player1*TRANSFORMATION*POSITION*X SET " + form.getFormOrds1X() + "\0");
+									+ "$Players$Player1*TRANSFORMATION*POSITION*X SET " + form.getFormOrds1X() + "\0");
 							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
-									+ "$noname$Players$Player1$img_Text1$txt_Name*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds1Y() + "\0");
+									+ "$Players$Player1*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds1Y() + "\0");
 							
 							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
-									+ "$noname$Players$Player2*TRANSFORMATION*POSITION*X SET " + form.getFormOrds2X() + "\0");
+									+ "$Players$Player2*TRANSFORMATION*POSITION*X SET " + form.getFormOrds2X() + "\0");
 							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
-									+ "$noname$Players$Player2*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds2Y() + "\0");
+									+ "$Players$Player2*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds2Y() + "\0");
 							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
-									+ "$noname$Players$Player3*TRANSFORMATION*POSITION*X SET " + form.getFormOrds3X() + "\0");
+									+ "$Players$Player3*TRANSFORMATION*POSITION*X SET " + form.getFormOrds3X() + "\0");
 							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
-									+ "$noname$Players$Player3*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds3Y() + "\0");
+									+ "$Players$Player3*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds3Y() + "\0");
 							
 							
 							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
-									+ "$noname$Players$Player4*TRANSFORMATION*POSITION*X SET " + form.getFormOrds4X() + "\0");
+									+ "$Players$Player4*TRANSFORMATION*POSITION*X SET " + form.getFormOrds4X() + "\0");
 							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
-									+ "$noname$Players$Player4*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds4Y() + "\0");
+									+ "$Players$Player4*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds4Y() + "\0");
 							
 							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
-									+ "$noname$Players$Player5*TRANSFORMATION*POSITION*X SET " + form.getFormOrds5X() + "\0");
+									+ "$Players$Player5*TRANSFORMATION*POSITION*X SET " + form.getFormOrds5X() + "\0");
 							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
-									+ "$noname$Players$Player5*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds5Y() + "\0");
+									+ "$Players$Player5*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds5Y() + "\0");
 							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
-									+ "$noname$Players$Player6*TRANSFORMATION*POSITION*X SET " + form.getFormOrds6X() + "\0");
+									+ "$Players$Player6*TRANSFORMATION*POSITION*X SET " + form.getFormOrds6X() + "\0");
 							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
-									+ "$noname$Players$Player6*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds6Y() + "\0");
+									+ "$Players$Player6*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds6Y() + "\0");
 							
 							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
-									+ "$noname$Players$Player7*TRANSFORMATION*POSITION*X SET " + form.getFormOrds7X() + "\0");
+									+ "$Players$Player7*TRANSFORMATION*POSITION*X SET " + form.getFormOrds7X() + "\0");
 							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
-									+ "$noname$Players$Player7*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds7Y() + "\0");
+									+ "$Players$Player7*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds7Y() + "\0");
 							
 							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
-									+ "$noname$Players$Player8*TRANSFORMATION*POSITION*X SET " + form.getFormOrds8Y() + "\0");
+									+ "$Players$Player8*TRANSFORMATION*POSITION*X SET " + form.getFormOrds8Y() + "\0");
 							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
-									+ "$noname$Players$Player8*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds8Y() + "\0");
+									+ "$Players$Player8*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds8Y() + "\0");
 							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
-									+ "$noname$Players$Player9*TRANSFORMATION*POSITION*X SET " + form.getFormOrds9X() + "\0");
+									+ "$Players$Player9*TRANSFORMATION*POSITION*X SET " + form.getFormOrds9X() + "\0");
 							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
-									+ "$noname$Players$Player9*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds9Y() + "\0");
+									+ "$Players$Player9*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds9Y() + "\0");
 							
 							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
-									+ "$noname$Players$Player10*TRANSFORMATION*POSITION*X SET " + form.getFormOrds10X() + "\0");
+									+ "$Players$Player10*TRANSFORMATION*POSITION*X SET " + form.getFormOrds10X() + "\0");
 							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
-									+ "$noname$Players$Player10*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds10Y() + "\0");
+									+ "$Players$Player10*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds10Y() + "\0");
 							
 							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
-									+ "$noname$Players$Player11*TRANSFORMATION*POSITION*X SET " + form.getFormOrds11X() + "\0");
+									+ "$Players$Player11*TRANSFORMATION*POSITION*X SET " + form.getFormOrds11X() + "\0");
 							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
-									+ "$noname$Players$Player11*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds11Y() + "\0");
+									+ "$Players$Player11*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds11Y() + "\0");
 							
 						}
 					}
