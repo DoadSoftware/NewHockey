@@ -548,9 +548,8 @@ public class IndexController
 				case HockeyUtil.SHOTS_ON_TARGET: case HockeyUtil.SHOTS: case HockeyUtil.CORNERS_CONVERTED: case HockeyUtil.CORNERS:
 				case HockeyUtil.ASSISTS: case HockeyUtil.OFF_SIDE: case HockeyUtil.FOULS:
 					
-					//DJ uncomment this and fix it
-//					session_match.getMatchStats().add(new MatchStats(session_match.getMatchStats().size() + 1, Integer.valueOf(valueToProcess.split(",")[2]), 
-//							session_match.getClock().getMatchHalves(),valueToProcess.split(",")[1], 1, session_match.getClock().getMatchTotalSeconds()));
+					session_match.getMatchStats().add(new MatchStats(session_match.getMatchStats().size() + 1, Integer.valueOf(valueToProcess.split(",")[2]), 
+							session_match.getClock().getMatchHalves(),valueToProcess.split(",")[1], 1, session_match.getClock().getMatchTotalMilliSeconds()));
 					
 					for(Player plyr : session_match.getHomeSquad()) {
 						if(plyr.getPlayerId() == Integer.valueOf(valueToProcess.split(",")[2])) {
@@ -605,7 +604,6 @@ public class IndexController
 			if(session_match.getEvents() == null || session_match.getEvents().size() <= 0) 
 				session_match.setEvents(new ArrayList<Event>());
 			
-			//DJ uncomment this and fix it
 			session_match.getMatchStats().add(new MatchStats(session_match.getMatchStats().size() + 1, session_match.getHomeSquad().get(0).getPlayerId(), 
 					session_match.getClock().getMatchHalves(),"Home_Goal", 1, session_match.getClock().getMatchTotalMilliSeconds()));
 			
@@ -635,7 +633,6 @@ public class IndexController
 			if(session_match.getEvents() == null || session_match.getEvents().size() <= 0) 
 				session_match.setEvents(new ArrayList<Event>());
 			
-			//DJ uncomment this and fix it
 			session_match.getMatchStats().add(new MatchStats(session_match.getMatchStats().size() + 1, session_match.getAwaySquad().get(0).getPlayerId(), 
 					session_match.getClock().getMatchHalves(),"AWAY_GOAL", 1, session_match.getClock().getMatchTotalMilliSeconds()));
 			
@@ -991,9 +988,10 @@ public class IndexController
 					new File(HockeyUtil.SPORTS_DIRECTORY + HockeyUtil.HOCKEY_DIRECTORY + HockeyUtil.EVENT_DIRECTORY + valueToProcess).createNewFile();
 				}
 
-				if(new File(HockeyUtil.SPORTS_DIRECTORY + HockeyUtil.HOCKEY_DIRECTORY + HockeyUtil.CLOCK_XML).exists()) {
-					session_match.setClock((Clock) JAXBContext.newInstance(Clock.class).createUnmarshaller().unmarshal(
-							new File(HockeyUtil.SPORTS_DIRECTORY + HockeyUtil.HOCKEY_DIRECTORY + HockeyUtil.CLOCK_XML)));
+				if(new File(HockeyUtil.SPORTS_DIRECTORY + HockeyUtil.HOCKEY_DIRECTORY + HockeyUtil.CLOCK_JSON).exists()) {
+					session_clock = new ObjectMapper().readValue(new File(HockeyUtil.SPORTS_DIRECTORY 
+							+ HockeyUtil.HOCKEY_DIRECTORY + HockeyUtil.CLOCK_JSON), Clock.class);
+					session_match.setClock(session_clock);
 				} else {
 					session_match.setClock(new Clock());
 				}
@@ -1014,9 +1012,9 @@ public class IndexController
 			return objectMapper.writeValueAsString(session_match);			
 
 		case "READ_CLOCK":
-			if(new File(HockeyUtil.SPORTS_DIRECTORY + HockeyUtil.HOCKEY_DIRECTORY + HockeyUtil.CLOCK_XML).exists()) {
-				session_clock = (Clock) JAXBContext.newInstance(Clock.class).createUnmarshaller().unmarshal(
-						new File(HockeyUtil.SPORTS_DIRECTORY + HockeyUtil.HOCKEY_DIRECTORY + HockeyUtil.CLOCK_XML));
+			if(new File(HockeyUtil.SPORTS_DIRECTORY + HockeyUtil.HOCKEY_DIRECTORY + HockeyUtil.CLOCK_JSON).exists()) {
+				session_clock = new ObjectMapper().readValue(new File(HockeyUtil.SPORTS_DIRECTORY 
+						+ HockeyUtil.HOCKEY_DIRECTORY + HockeyUtil.CLOCK_JSON), Clock.class);
 				session_match.setClock(session_clock);
 				
 				switch (session_selected_broadcaster) {
