@@ -991,9 +991,11 @@ public class IndexController
 					new File(HockeyUtil.SPORTS_DIRECTORY + HockeyUtil.HOCKEY_DIRECTORY + HockeyUtil.EVENT_DIRECTORY + valueToProcess).createNewFile();
 				}
 
-				if(new File(HockeyUtil.SPORTS_DIRECTORY + HockeyUtil.HOCKEY_DIRECTORY + HockeyUtil.CLOCK_XML).exists()) {
-					session_match.setClock((Clock) JAXBContext.newInstance(Clock.class).createUnmarshaller().unmarshal(
-							new File(HockeyUtil.SPORTS_DIRECTORY + HockeyUtil.HOCKEY_DIRECTORY + HockeyUtil.CLOCK_XML)));
+				if(new File(HockeyUtil.SPORTS_DIRECTORY + HockeyUtil.HOCKEY_DIRECTORY + HockeyUtil.CLOCK_JSON).exists()) {
+					session_clock = new ObjectMapper().readValue(new File(HockeyUtil.SPORTS_DIRECTORY + 
+							HockeyUtil.HOCKEY_DIRECTORY + HockeyUtil.CLOCK_JSON), Clock.class);
+					
+					session_match.setClock(session_clock);
 				} else {
 					session_match.setClock(new Clock());
 				}
@@ -1014,9 +1016,11 @@ public class IndexController
 			return objectMapper.writeValueAsString(session_match);			
 
 		case "READ_CLOCK":
-			if(new File(HockeyUtil.SPORTS_DIRECTORY + HockeyUtil.HOCKEY_DIRECTORY + HockeyUtil.CLOCK_XML).exists()) {
-				session_clock = (Clock) JAXBContext.newInstance(Clock.class).createUnmarshaller().unmarshal(
-						new File(HockeyUtil.SPORTS_DIRECTORY + HockeyUtil.HOCKEY_DIRECTORY + HockeyUtil.CLOCK_XML));
+			if(new File(HockeyUtil.SPORTS_DIRECTORY + HockeyUtil.HOCKEY_DIRECTORY + HockeyUtil.CLOCK_JSON).exists()) {
+				session_clock = new ObjectMapper().readValue(new File(HockeyUtil.SPORTS_DIRECTORY + 
+						HockeyUtil.HOCKEY_DIRECTORY + HockeyUtil.CLOCK_JSON), Clock.class);
+//				session_clock = (Clock) JAXBContext.newInstance(Clock.class).createUnmarshaller().unmarshal(
+//						new File(HockeyUtil.SPORTS_DIRECTORY + HockeyUtil.HOCKEY_DIRECTORY + HockeyUtil.CLOCK_JSON));
 				session_match.setClock(session_clock);
 				
 				switch (session_selected_broadcaster) {
