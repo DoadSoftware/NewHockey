@@ -365,6 +365,13 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 			addItemsToList('PLAYINGXI-OPTIONS',null);
 			break;
 		case 117:
+			$("#select_event_div").hide();
+			$("#match_configuration").hide();
+			$("#hockey_div").hide();
+			addItemsToList('PLAYINGXI-OPTIONS_SUB',null);
+			break;	
+			
+		/*case 117:
 			switch ($('#selectedBroadcaster').val()){
 				case 'I_LEAGUE':
 					$("#select_event_div").hide();
@@ -379,13 +386,16 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 					processHockeyProcedures('BUG_DB_GRAPHICS-OPTIONS');
 					break;
 			}
-			break;
+			break;*/
 		case 118:
 			processHockeyProcedures('POPULATE-L3-SCOREUPDATE');
 			break;
 		case 119:
+			processHockeyProcedures('POPULATE-FF-MATCHSUMMARY');
+			break;	
+		/*case 119:
 			processHockeyProcedures('POPULATE-L3-MATCHSTATUS');
-			break;
+			break;*/
 		case 120:
 			$("#select_event_div").hide();
 			$("#match_configuration").hide();
@@ -827,8 +837,8 @@ function processUserSelection(whichInput)
 	case 'populate_scorebug_subs_btn': case 'populate_single_substitution_btn': case 'populate_playingxi_changeon_btn': case 'populate_points_table_btn': case 'populate_homesub_btn': 
 	case 'populate_Away_btn': case 'populate_awaysub_btn': case 'populate_sub_btn': case 'populate_heatmap_btn': case 'populate_Top_Stats_btn': case 'populate_fixtures_btn':
 	case 'populate_subchange_on_btn': case 'populate_double_promo_btn': case 'populate_ltmatch_promo_btn': case 'populate_scorebug_match_promo_btn': case 'populate_points_table2_btn':
-	case 'populate_result_promo_btn': case 'populate_scorebug_goalScorer_btn':
-	
+	case 'populate_result_promo_btn': case 'populate_scorebug_goalScorer_btn': case 'populate_playingxisub_btn':
+
 		processWaitingButtonSpinner('START_WAIT_TIMER');
 		switch ($(whichInput).attr('name')) {
 		case 'populate_subchange_on_btn':
@@ -861,6 +871,9 @@ function processUserSelection(whichInput)
 		case 'populate_playingxi_btn':
 			processHockeyProcedures('POPULATE-FF-PLAYINGXI');
 			break;
+		case 'populate_playingxisub_btn':
+			processHockeyProcedures('POPULATE-FF-PLAYINGXISUB');
+			break;	
 		case 'populate_playingxi_changeon_btn':
 			processHockeyProcedures('POPULATE-FF-PLAYINGXI_CHANGEON');
 			break;
@@ -1368,8 +1381,7 @@ function processHockeyProcedures(whatToProcess, whichInput)
 					$('#selectPlayingXI option:selected').val();
 				break;
 			case 'HOCKEY_KHELO_INDIA':
-				value_to_process = 'D:/DOAD_In_House_Everest/Everest_Sports/Everest_Khelo_India_2023/Scenes/FF_LineUp.sum' + ',' + 
-					$('#selectPlayingXI option:selected').val();
+				value_to_process =$('#selectPlayingXI option:selected').val();
 				break;
 			case 'SANTOSH_TROPHY':
 				value_to_process = 'D:/DOAD_In_House_Everest/Everest_Sports/Everest_SantoshTrophy_2023/Scenes/TeamLineUp_Subs.sum' + ',' + $('#selectPlayingXI option:selected').val();
@@ -1385,6 +1397,9 @@ function processHockeyProcedures(whatToProcess, whichInput)
 				break;	
 		}
 		break;
+	case 'POPULATE-FF-PLAYINGXISUB':
+		value_to_process =$('#selectPlayingXI option:selected').val();
+		break;	
 	case 'POPULATE-FF-PLAYINGXI_CHANGEON':
 		switch ($('#selectedBroadcaster').val()) {
 			case 'SANTOSH_TROPHY':
@@ -1601,6 +1616,7 @@ function processHockeyProcedures(whatToProcess, whichInput)
 			case 'POPULATE-LT-MATCHID': case 'POPULATE-HOMESUB': case 'POPULATE-AWAYXI': case 'POPULATE-AWAYSUB': case 'POPULATE-FF-TEAMS': case 'POPULATE-FIXTURES':
 			case 'POPULATE-QUAIFIERS': case 'POPULATE-LT-PROMO': case 'POPULATE-POINTS_TABLE2': case 'POPULATE-PLAYOFFS': case 'POPULATE-LT-RESULT': case 'POPULATE-ROAD-TO-FINAL':
 			case 'POPULATE-CONTINENTAL_POINTS_TABLE': case 'POPULATE-SCOREBUG_STATS': case 'POPULATE-SCOREBUG-CARD': case 'POPULATE-SCOREBUG-GOAL_SCORER':
+			case 'POPULATE-FF-PLAYINGXISUB':	
 				if(confirm('Animate In?') == true){
 					switch(whatToProcess){
 					case 'POPULATE-SCOREBUG-GOAL_SCORER':
@@ -1648,9 +1664,12 @@ function processHockeyProcedures(whatToProcess, whichInput)
 					case 'POPULATE-DOUBLE_PROMO':
 						processHockeyProcedures('ANIMATE-IN-DOUBLE_PROMO');
 						break;
-					case 'POPULATE-FF-PLAYINGXI':
+					case 'POPULATE-FF-PLAYINGXI': 
 						processHockeyProcedures('ANIMATE-IN-PLAYINGXI');		
 						break;
+					case 'POPULATE-FF-PLAYINGXISUB':
+						processHockeyProcedures('ANIMATE-IN-PLAYINGXISUB');		
+						break;		
 					case 'POPULATE-FF-PLAYINGXI_CHANGEON':
 						processHockeyProcedures('ANIMATE-IN-PLAYINGXI_CHANGEON');		
 						break;
@@ -1716,7 +1735,7 @@ function processHockeyProcedures(whatToProcess, whichInput)
 			case 'POPULATE-SCOREBUG': case 'POPULATE-L3-NAMESUPER': case 'POPULATE-L3-NAMESUPER-PLAYER':  case 'POPULATE-L3-TOP_STATS':
 			case 'POPULATE-L3-BUG-DB': case 'POPULATE-L3-SCOREUPDATE':  case 'POPULATE-L3-NAMESUPER-CARD':
 			case 'POPULATE-L3-SUBSTITUTE':  case 'POPULATE-L3-STAFF':  case 'POPULATE-LT-BUG_REPLAY': case 'POPULATE-L3-SINGLE_SUBSTITUTE':
-			
+			case 'POPULATE-FF-MATCHSUMMARY':
 				if(confirm('Animate In?') == true){
 					switch(whatToProcess){
 					case 'POPULATE-SCOREBUG':
@@ -1740,6 +1759,9 @@ function processHockeyProcedures(whatToProcess, whichInput)
 					case 'POPULATE-L3-SCOREUPDATE':
 						processHockeyProcedures('ANIMATE-IN-SCOREUPDATE');
 						break;
+					case 'POPULATE-FF-MATCHSUMMARY':
+						processHockeyProcedures('ANIMATE-IN-MATCHSUMMARY');
+						break;	
 					case 'POPULATE-LT-BUG_REPLAY':
 						processHockeyProcedures('ANIMATE-IN-BUG_REPLAY');
 						break;
@@ -1890,8 +1912,7 @@ function addItemsToList(whatToProcess, dataToProcess)
 	case 'STAFF-OPTIONS': case 'MATCH-PROMO-OPTIONS':case 'AD-OPTIONS': case 'SUBSTITUTE-OPTIONS': case 'FORMATION-OPTIONS': case 'SCOREBUG-CARD-OPTIONS':
 	case 'SCOREBUG-SUBSTITUTION-OPTIONS': case 'SINGLE_SUBSTITUTE-OPTIONS': case 'HEATMAP_PEAKDISTACE-OPTION': case 'LT_MATCH-PROMO-OPTIONS': case 'SCOREBUGPROMO-OPTIONS':
 	case 'TOP_STATS-OPTIONS': case 'FIXTURES-OPTIONS': case 'POINT_TABLE-OPTIONS': case 'DOUBLE_PROMO-OPTIONS': case 'POINTS_TABLE2_OPTION': case 'RESULT_PROMO-OPTIONS':
-	case 'SCOREBUG-GOALSCORER-OPTIONS':
-			
+	case 'SCOREBUG-GOALSCORER-OPTIONS': case 'PLAYINGXI-OPTIONS_SUB':
 		switch ($('#selectedBroadcaster').val().toUpperCase()) {
 		case 'I_LEAGUE': case 'SANTOSH_TROPHY': case 'VIZ_SANTOSH_TROPHY': case 'VIZ_TRI_NATION': case 'SUPER_CUP': case 'CONTINENTAL':
 		case 'HOCKEY_KHELO_INDIA':
@@ -2568,7 +2589,7 @@ function addItemsToList(whatToProcess, dataToProcess)
 					row.insertCell(cellCount).appendChild(select);
 					cellCount = cellCount + 1;
 					break;	
-				case'PLAYINGXI-OPTIONS':
+				case'PLAYINGXI-OPTIONS': case 'PLAYINGXI-OPTIONS_SUB':
 					select = document.createElement('select');
 					select.id = 'selectPlayingXI';
 					select.name = select.id;
@@ -2660,6 +2681,22 @@ function addItemsToList(whatToProcess, dataToProcess)
 				    		option.type = 'button';
 				    		
 				    		option.name = 'populate_playingxi_btn';
+				    		option.value = 'Populate Teams LineUp';
+				    		
+				    		option.id = option.name;
+						    option.setAttribute('onclick',"processUserSelection(this)");
+						    
+						    div = document.createElement('div');
+						    div.append(option);
+						    
+						    row.insertCell(cellCount).appendChild(div);
+						    cellCount = cellCount + 1;
+							break;
+						case 'PLAYINGXI-OPTIONS_SUB':	
+							option = document.createElement('input');
+				    		option.type = 'button';
+				    		
+				    		option.name = 'populate_playingxisub_btn';
 				    		option.value = 'Populate Teams LineUp';
 				    		
 				    		option.id = option.name;
