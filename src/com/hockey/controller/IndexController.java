@@ -154,9 +154,10 @@ public class IndexController
 				session_socket = new Socket(vizIPAddresss, Integer.valueOf(vizPortNumber));
 				switch (session_selected_broadcaster.toUpperCase()) {
 				case HockeyUtil.HOCKEY_KHELO_INDIA:
-					session_selected_scenes.add(new Scene(HockeyUtil.HOCKEY_KHELO_INDIA_SCORE_BUG_SCENE_PATH,HockeyUtil.ONE)); // Front layer
-					session_selected_scenes.add(new Scene("",HockeyUtil.TWO));
+					session_selected_scenes.add(new Scene("","FULL-FRAMERS"));
+					session_selected_scenes.add(new Scene("","OVERLAYS"));
 					session_selected_scenes.get(0).scene_load(session_socket, session_selected_broadcaster);
+					session_selected_scenes.get(1).scene_load(session_socket, session_selected_broadcaster);
 					session_khelo_india = new HOCKEY_KHELO_INDIA();
 					session_khelo_india.scorebug = new ScoreBug();
 					break;

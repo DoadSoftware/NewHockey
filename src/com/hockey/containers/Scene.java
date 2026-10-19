@@ -51,21 +51,16 @@ public class Scene {
 		PrintWriter print_writer = new PrintWriter(socket.getOutputStream(), true);
 		switch (broadcaster.toUpperCase()) {
 		case HockeyUtil.HOCKEY_KHELO_INDIA:
-			switch(this.which_layer) {
-			case HockeyUtil.ONE:
-				//System.out.println("Secne : " + this.scene_path);
-				print_writer.println("LAYER1*EVEREST*SINGLE_SCENE LOAD " + this.scene_path + ";");
-				
-				print_writer.println("LAYER1*EVEREST*STAGE*DIRECTOR*In STOP;");
-				print_writer.println("LAYER1*EVEREST*STAGE*DIRECTOR*In SHOW 0.0;");
-				TimeUnit.MILLISECONDS.sleep(500);
+			switch (this.which_layer) {
+			case "FULL-FRAMERS":
+				print_writer.println("-1 RENDERER*BACK_LAYER SET_OBJECT SCENE*/Default/gfx_Fullframes\0");
+				print_writer.println("-1 RENDERER*BACK_LAYER*SCENE_DATA INITIALIZE \0");
+				print_writer.println("-1 RENDERER*BACK_LAYER*STAGE SHOW 0.0 \0");
 				break;
-			case HockeyUtil.TWO:
-				print_writer.println("LAYER2*EVEREST*SINGLE_SCENE LOAD " + this.scene_path + ";");
-				
-				print_writer.println("LAYER2*EVEREST*STAGE*DIRECTOR*In STOP;");
-				print_writer.println("LAYER2*EVEREST*STAGE*DIRECTOR*In SHOW 0.0;");
-				TimeUnit.MILLISECONDS.sleep(500);
+			case "OVERLAYS":
+				print_writer.println("-1 RENDERER*FRONT_LAYER SET_OBJECT SCENE*/Default/gfx_Overlays\0");
+				print_writer.println("-1 RENDERER*FRONT_LAYER*SCENE_DATA INITIALIZE \0");
+				print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE SHOW 0.0 \0");
 				break;
 			}
 			break;
