@@ -881,7 +881,7 @@ public class IndexController
 							case HockeyUtil.ASSISTS: case HockeyUtil.SHOTS: case HockeyUtil.SHOTS_ON_TARGET: case HockeyUtil.OFF_SIDE: case HockeyUtil.FOULS:
 							case HockeyUtil.CORNERS_CONVERTED: case HockeyUtil.CORNERS: case HockeyUtil.SAVES:
 								this_event = session_event.getEvents().get(session_event.getEvents().size() - 1);
-							//	session_match.getMatchStats().remove(session_match.getMatchStats().get(session_match.getMatchStats().size() - 1));
+								session_match.getMatchStats().remove(session_match.getMatchStats().get(session_match.getMatchStats().size() - 1));
 								for(Player plyr : session_match.getHomeSquad()) {
 									if(plyr.getPlayerId() == this_event.getEventPlayerId()) {
 										switch (this_event.getEventType().toUpperCase()) {

@@ -305,18 +305,10 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 			processHockeyProcedures('ANIMATE-AWAY_WIPE');
 			break;		
 		case 90:
-			switch ($('#selectedBroadcaster').val()){
-				case 'I_LEAGUE': case 'SANTOSH_TROPHY':
-					processHockeyProcedures('POPULATE-RED_CARD');
-					break;
-				case 'VIZ_TRI_NATION': case 'SUPER_CUP': case 'CONTINENTAL':
-					$("#select_event_div").hide();
-					$("#match_configuration").hide();
-					$("#hockey_div").hide();
-					addItemsToList('RED_CARD_OPTION',null);
-					break;
-			}
-			
+			$("#select_event_div").hide();
+			$("#match_configuration").hide();
+			$("#hockey_div").hide();
+			addItemsToList('RED_CARD_OPTION',null);
 			break;
 		case 88:
 			processHockeyProcedures('ANIMATE-OUT-RED_CARD');
@@ -418,18 +410,7 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 			addItemsToList('SUBSTITUTE-OPTIONS',null);
 			break;
 		case 122:
-			switch ($('#selectedBroadcaster').val()){
-			case 'I_LEAGUE':
-				//alert('I_LEAGUE');
-				processHockeyProcedures('POPULATE-L3-MATCHPROMO');
-				break;
-			 case 'SUPER_CUP': case 'CONTINENTAL':
-				$("#select_event_div").hide();
-				$("#match_configuration").hide();
-				$("#hockey_div").hide();
-				addItemsToList('FIXTURES-OPTIONS',null);
-				break;
-			}
+			processHockeyProcedures('POPULATE-L3-MATCHPROMO');
 			break;
 		case 123:
 			$("#select_event_div").hide();
@@ -444,19 +425,8 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 		case 83:
 			processHockeyProcedures('POPULATE-FF-MATCHSTATS');
 			break;	
-		case 82:
-			switch ($('#selectedBroadcaster').val()){
-				case 'I_LEAGUE': case 'SANTOSH_TROPHY':
-					//alert('I_LEAGUE');
-					processHockeyProcedures('POPULATE-LT-BUG_REPLAY');
-					break;
-				 case 'SUPER_CUP': case 'CONTINENTAL':
-					$("#select_event_div").hide();
-					$("#match_configuration").hide();
-					$("#hockey_div").hide();
-					processHockeyProcedures('RESULT_PROMO_GRAPHICS-OPTIONS');
-					break;
-			}
+		case 70:
+			processHockeyProcedures('POPULATE-LT-PENALTY_SCORES');
 			break;
 		case 81:
 			$("#select_event_div").hide();
@@ -504,7 +474,7 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 			$("#hockey_div").hide();
 			addItemsToList('TOP_STATS-OPTIONS',null);
 			break;
-		case 70:
+		case 7000:
 			switch ($('#selectedBroadcaster').val()){
 				case 'I_LEAGUE':
 					$("#select_event_div").hide();
@@ -575,14 +545,16 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 			break;
 			
 		case 84:
-			processHockeyProcedures('POPULATE-OFFICIALS');
+			processHockeyProcedures('POPULATE-QUARTER');
+			//processHockeyProcedures('POPULATE-OFFICIALS');
 			break;
 		case 78:
-			$("#select_event_div").hide();
+			/*$("#select_event_div").hide();
 			$("#match_configuration").hide();
 			$("#hockey_div").hide();
 			addItemsToList('HEATMAP_PEAKDISTACE-OPTION',null);
-			addItemsToList('POPULATE-PLAYER',null);
+			addItemsToList('POPULATE-PLAYER',null);*/
+			processHockeyProcedures('POPULATE-LAST_GOAL');
 			break;			
 		}
 		
@@ -1162,7 +1134,8 @@ function processHockeyProcedures(whatToProcess, whichInput)
 				break;
 			case 'HOCKEY_KHELO_INDIA':
 				value_to_process = 'D:/DOAD_In_House_Everest/Everest_Sports/Everest_Khelo_India_2023/Scenes/LT.sum' + ',' + $('#selectTeam option:selected').val() + ',' + 
-					$('#selectCaptainWicketKeeper option:selected').val() + ',' + $('#selectPlayer option:selected').val() ;
+					$('#selectCaptainWicketKeeper option:selected').val() + ',' + $('#selectPlayer option:selected').val() + ',' + $('#selectCards option:selected').val() + ',' + 
+					$('#selectPhoto option:selected').val();
 				
 				break;
 			case 'SANTOSH_TROPHY':
@@ -1180,12 +1153,8 @@ function processHockeyProcedures(whatToProcess, whichInput)
 		}
 		break;
 	case 'POPULATE-L3-NAMESUPER-CARD':
-		switch ($('#selectedBroadcaster').val()) {
-			case 'SUPER_CUP': case 'CONTINENTAL':
-				value_to_process = '/Default/LT' + ',' + $('#selectTeam option:selected').val() + ',' + 
-				$('#selectCaptainWicketKeeper option:selected').val() + ',' + $('#selectPlayer option:selected').val() ;
-				break;
-		}
+		value_to_process = $('#selectTeam option:selected').val() + ',' + 
+		$('#selectCaptainWicketKeeper option:selected').val() + ',' + $('#selectPlayer option:selected').val() ;
 		break;
 	case 'POPULATE-SCOREBUG-CARD':
 		switch ($('#selectedBroadcaster').val()) {
@@ -1471,14 +1440,7 @@ function processHockeyProcedures(whatToProcess, whichInput)
 		}
 		break;
 	case 'POPULATE-RED_CARD':
-		switch ($('#selectedBroadcaster').val()) {
-		case 'VIZ_TRI_NATION':
-			value_to_process = $('#selecthometeamredcard').val() + ',' + $('#selectawayteamredcard').val();
-			break;
-		case 'SUPER_CUP': case 'CONTINENTAL':
-			value_to_process = $('#selecthometeamredcard').val() + ',' + $('#selectawayteamredcard').val();
-			break;
-		}
+		value_to_process = $('#selecthometeamredcard').val() + ',' + $('#selectawayteamredcard').val();
 		break;
 	case 'POPULATE-EXTRA_TIME_BOTH':
 		switch ($('#selectedBroadcaster').val()) {
@@ -1615,10 +1577,22 @@ function processHockeyProcedures(whatToProcess, whichInput)
 			case 'POPULATE-DOUBLE_SUBS': case 'POPULATE-OFFICIALS': case 'POPULATE-HIGHLIGHT': case 'POPULATE-PENALTY': case 'POPULATE-FF-PLAYINGXI_CHANGEON':
 			case 'POPULATE-LT-MATCHID': case 'POPULATE-HOMESUB': case 'POPULATE-AWAYXI': case 'POPULATE-AWAYSUB': case 'POPULATE-FF-TEAMS': case 'POPULATE-FIXTURES':
 			case 'POPULATE-QUAIFIERS': case 'POPULATE-LT-PROMO': case 'POPULATE-POINTS_TABLE2': case 'POPULATE-PLAYOFFS': case 'POPULATE-LT-RESULT': case 'POPULATE-ROAD-TO-FINAL':
-			case 'POPULATE-CONTINENTAL_POINTS_TABLE': case 'POPULATE-SCOREBUG_STATS': case 'POPULATE-SCOREBUG-CARD': case 'POPULATE-SCOREBUG-GOAL_SCORER':
-			case 'POPULATE-FF-PLAYINGXISUB':	
+			case 'POPULATE-CONTINENTAL_POINTS_TABLE': case 'POPULATE-SCOREBUG_STATS': case 'POPULATE-SCOREBUG-CARD': case 'POPULATE-SCOREBUG-GOAL_SCORER': case 'POPULATE-LAST_GOAL':
+			case 'POPULATE-FF-PLAYINGXISUB': case 'POPULATE-RED_CARD': case 'POPULATE-QUARTER': case 'POPULATE-LT-PENALTY_SCORES':
 				if(confirm('Animate In?') == true){
 					switch(whatToProcess){
+					case 'POPULATE-LT-PENALTY_SCORES':
+						processHockeyProcedures('ANIMATE-IN-PENALTY_SCORES');
+						break;
+					case 'POPULATE-QUARTER':
+						processHockeyProcedures('ANIMATE-IN-QUARTER');
+						break;
+					case 'POPULATE-RED_CARD':
+						processHockeyProcedures('ANIMATE-IN-SCOREBUG-RED_CARD');
+						break;
+					case 'POPULATE-LAST_GOAL':
+						processHockeyProcedures('ANIMATE-IN-SCOREBUG-LAST_GOAL');
+						break;
 					case 'POPULATE-SCOREBUG-GOAL_SCORER':
 						processHockeyProcedures('ANIMATE-IN-SCOREBUG-GOAL_SCORER');
 						break;							
@@ -3069,6 +3043,11 @@ function addItemsToList(whatToProcess, dataToProcess)
 				select.appendChild(option);
 				
 				option = document.createElement('option');
+				option.value = 'green';
+				option.text = 'GREEN CARD';
+				select.appendChild(option);
+				
+				option = document.createElement('option');
 				option.value = 'yellow_red';
 				option.text = '2YELLOW/RED';
 				select.appendChild(option);
@@ -3159,6 +3138,59 @@ function addItemsToList(whatToProcess, dataToProcess)
 					select.id = 'selectPlayer';
 					select.name = select.id;
 					
+					row.insertCell(cellCount).appendChild(select);
+					cellCount = cellCount + 1;
+					
+					select = document.createElement('select');
+					select.style = 'width:100px';
+					select.id = 'selectCards';
+					select.name = select.id;
+
+					option = document.createElement('option');
+					option.value = 'no_card';
+					option.text = 'NO CARD';
+					select.appendChild(option);
+					
+					option = document.createElement('option');
+					option.value = 'yellow';
+					option.text = 'YELLOW CARD';
+					select.appendChild(option);
+
+					option = document.createElement('option');
+					option.value = 'red';
+					option.text = 'RED CARD';
+					select.appendChild(option);
+
+					option = document.createElement('option');
+					option.value = 'green';
+					option.text = 'GREEN CARD';
+					select.appendChild(option);
+
+					option = document.createElement('option');
+					option.value = 'yellow_red';
+					option.text = '2YELLOW/RED';
+					select.appendChild(option);
+
+					select.setAttribute('onchange',"processUserSelection(this)");
+					row.insertCell(cellCount).appendChild(select);
+					cellCount = cellCount + 1;
+
+					select = document.createElement('select');
+					select.style = 'width:100px';
+					select.id = 'selectPhoto';
+					select.name = select.id;
+
+					option = document.createElement('option');
+					option.value = 'With_photo';
+					option.text = 'With Photo';
+					select.appendChild(option);
+
+					option = document.createElement('option');
+					option.value = 'Without_Photo';
+					option.text = 'Without Photo';
+					select.appendChild(option);
+
+					select.setAttribute('onchange',"processUserSelection(this)");
 					row.insertCell(cellCount).appendChild(select);
 					cellCount = cellCount + 1;
 				break;
