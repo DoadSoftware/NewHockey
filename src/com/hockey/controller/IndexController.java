@@ -29,6 +29,7 @@ import com.hockey.model.Clock;
 import com.hockey.model.Configurations;
 import com.hockey.model.Event;
 import com.hockey.model.EventFile;
+import com.hockey.model.Fixture;
 import com.hockey.model.Match;
 import com.hockey.model.MatchStats;
 import com.hockey.model.Player;
@@ -59,6 +60,7 @@ public class IndexController
 	public static HOCKEY_KHELO_INDIA session_khelo_india;
 	public static List<Scene> session_selected_scenes;
 	public static ObjectMapper objectMapper = new ObjectMapper();
+	public static List<Fixture> session_fixture = new ArrayList<>();
 	
 	@RequestMapping(value = {"/","/initialise"}, method={RequestMethod.GET,RequestMethod.POST}) 
 	public String initialisePage(ModelMap model) 
@@ -479,6 +481,10 @@ public class IndexController
 					session_match.getMatchFileName()), session_match);
 			
 			return objectMapper.writeValueAsString(session_match);
+			
+		case "POPULATE-FF-MATCHID_SINGLEPROMO": case "DOUBLE_PROMO-OPTIONS":
+			session_fixture = HockeyFunctions.processAllFixtures(hockeyService);
+			return objectMapper.writeValueAsString(session_fixture).toString();
 		
 		case "NAMESUPER_GRAPHICS-OPTIONS": case "BUG_DB_GRAPHICS-OPTIONS": case "STAFF_GRAPHICS-OPTIONS": case "PROMO_GRAPHICS-OPTIONS": case "LTPROMO_GRAPHICS-OPTIONS":
 		case "SCOREBUGPROMO_GRAPHICS-OPTIONS":	case "RESULT_PROMO_GRAPHICS-OPTIONS":
