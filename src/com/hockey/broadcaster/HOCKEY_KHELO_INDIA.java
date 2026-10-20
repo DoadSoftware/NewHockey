@@ -8,6 +8,7 @@ import java.io.PrintWriter;
 import java.net.MalformedURLException;
 import java.net.Socket;
 import java.text.SimpleDateFormat;
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -206,7 +207,7 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 		switch (whatToProcess.toUpperCase()) {
 		case "POPULATE-SCOREBUG":
 		case "POPULATE-L3-NAMESUPER": case "POPULATE-L3-NAMESUPER-PLAYER": case "POPULATE-FF-MATCHID": case "POPULATE-FF-PLAYINGXI": case "POPULATE-L3-BUG-DB":
-		case "POPULATE-L3-SCOREUPDATE": case "POPULATE-L3-MATCHSTATUS": case "POPULATE-L3-NAMESUPER-CARD": case "POPULATE-L3-SUBSTITUTE": case "POPULATE-L3-MATCHPROMO":
+		case "POPULATE-L3-SCOREUPDATE": case "POPULATE-L3-MATCHSTATUS": case "POPULATE-L3-NAMESUPER-CARD": case "POPULATE-L3-SUBSTITUTE": case "POPULATE-LT-PROMO":
 		case "POPULATE-L3-STAFF": case "POPULATE-FF-MATCHSTATS": case "POPULATE-FF-PROMO": case "POPULATE-DOUBLE_PROMO": case "POPULATE-POINTS_TABLE": 
 		case "POPULATE-OFFICIALS": case "POPULATE-PENALTY": case "POPULATE-L3-SINGLE_SUBSTITUTE": case "POPULATE-SCOREBUG_STATS": case "POPULATE-SCOREBUG-CARD":
 		case "POPULATE-SCOREBUG-GOAL_SCORER": case "POPULATE-LT-MATCHID": case "POPULATE-FF-PLAYINGXISUB": case "POPULATE-FF-MATCHSUMMARY":
@@ -306,8 +307,8 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 				populateSingleSubstitute(session_socket, valueToProcess.split(",")[1],Integer.valueOf(valueToProcess.split(",")[2]),
 						hockeyService.getAllPlayer(),hockeyService.getTeams(), match, session_selected_broadcaster);
 				break;
-			case "POPULATE-L3-MATCHPROMO":
-				populateMatchPromo(session_socket, valueToProcess.split(",")[1], match,hockeyService.getFixtures(),hockeyService.getTeams(),hockeyService.getGrounds(), session_selected_broadcaster);
+			case "POPULATE-LT-PROMO":
+				populateMatchPromo(session_socket, valueToProcess.split(",")[2], match,hockeyService.getFixtures(),hockeyService.getTeams(),hockeyService.getGrounds(), session_selected_broadcaster);
 				break;
 			case "POPULATE-FF-PROMO":
 				populateMatchPromoSingle(session_socket, valueToProcess.split(",")[1] ,Integer.valueOf(valueToProcess.split(",")[2]),hockeyService.getTeams(),
@@ -349,9 +350,8 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 			return objectMapper.writeValueAsString(hockeyService.getBugs());
 		case "STAFF_GRAPHICS-OPTIONS":
 			return objectMapper.writeValueAsString(hockeyService.getStaffs());
-		case "PROMO_GRAPHICS-OPTIONS":
+		case "PROMO_GRAPHICS-OPTIONS": case "LTPROMO_GRAPHICS-OPTIONS":
 			return objectMapper.writeValueAsString(HockeyFunctions.processAllFixtures(hockeyService));
-			
 		case "ANIMATE-HOME_WIPE":
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$Goal_Wipes$Select_Wipe*FUNCTION*Omo*vis_con SET 1\0");
 			print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_ScoreBug$Wipes START\0");
@@ -381,7 +381,7 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 		case "ANIMATE-OUT":
 		case "ANIMATE-IN-SPONSOR": case "ANIMATE-OUT-SPONSOR": case "ANIMATE-IN-PLAYINGXI": case "ANIMATE-IN-MATCHID": case "ANIMATE-IN-NAMESUPER": 
 		case "ANIMATE-IN-NAMESUPERDB": case "ANIMATE-IN-BUG-DB": case "ANIMATE-IN-SCOREUPDATE": case "ANIMATE-IN-MATCHSTATUS": case "ANIMATE-IN-NAMESUPER_CARD":
-		case "ANIMATE-IN-SUBSTITUTE": case "ANIMATE-IN-MATCHPROMO": case "ANIMATE-IN-STAFF": case "ANIMATE-IN-MATCHSTATS": case "ANIMATE-IN-PROMO": 
+		case "ANIMATE-IN-SUBSTITUTE": case "ANIMATE-IN-LTPROMO": case "ANIMATE-IN-STAFF": case "ANIMATE-IN-MATCHSTATS": case "ANIMATE-IN-PROMO": 
 		case "ANIMATE-IN-DOUBLE_PROMO": case "ANIMATE-OUT-SCOREBUG": case "ANIMATE-IN-POINTS_TABLE": case "ANIMATE-IN-OFFICIALS":case "ANIMATE-IN-PENALTY": 
 		case "ANIMATE-IN-SINGLE_SUBSTITUTE": case "ANIMATE-IN-SCOREBUG_STATS": case "ANIMATE-IN-SCOREBUG-CARD": case "ANIMATE-IN-SCOREBUG-GOAL_SCORER":
 		case "ANIMATE-IN-LT_MATCHID": case "ANIMATE-IN-PLAYINGXISUB": case "ANIMATE-IN-MATCHSUMMARY": case "ANIMATE-IN-SCOREBUG-LAST_GOAL":
@@ -396,7 +396,7 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 				print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_ScoreBug$Cards START\0");
 				red_card_on_screen = "RED_CARD";
 				break;
-			case "ANIMATE-IN-LT_MATCHID": case "ANIMATE-IN-PENALTY_SCORES":
+			case "ANIMATE-IN-LT_MATCHID": case "ANIMATE-IN-PENALTY_SCORES": case "ANIMATE-IN-LTPROMO":
 				print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_Ident$Essentials START\0");
 //				print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Loop START\0");
 				which_graphics_onscreen = "LT_MATCHID";
@@ -486,10 +486,6 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 			case "ANIMATE-IN-SINGLE_SUBSTITUTE":
 				processAnimation(session_socket, "In", "START", session_selected_broadcaster,2);
 				which_graphics_onscreen = "SINGLE_SUBSTITUTE";
-				break;
-			case "ANIMATE-IN-MATCHPROMO":
-				processAnimation(session_socket, "In", "START", session_selected_broadcaster,2);
-				which_graphics_onscreen = "MATCHPROMO";
 				break;
 			case "ANIMATE-IN-STAFF":
 				print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_LowerThird$Essentials START\0");
@@ -1171,6 +1167,8 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 			
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Ident$Center$txt_Info*GEOM*TEXT SET " 
 					+ match.getMatchIdent() + " - FROM " + match.getVenueName() +"\0");
+			
+			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Ident$Center$txt_Vs*GEOM*TEXT SET vs\0");
 		}
 		print_writer.println("-1 RENDERER PREVIEW SCENE*/Default/Overlays C:/Temp/Preview.tga anim_Ident$Essentials 1.140 anim_Ident$Essentials$In_Out 1.140 "
 				+ "anim_Ident$Essentials$In_Out$In 0.880 \0");
@@ -2888,68 +2886,92 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 			print_writer.println("LAYER1*EVEREST*GLOBAL PREVIEW OFF;");
 		}
 	}
-	public void populateMatchPromo(Socket session_socket,String viz_scene,Match match,List<Fixture> fixture,List<Team> team,List<Ground> ground, String session_selected_broadcaster) throws InterruptedException, IOException{
+	public void populateMatchPromo(Socket session_socket,String fixt,Match match,List<Fixture> fixture,List<Team> team,List<Ground> ground, String session_selected_broadcaster) throws InterruptedException, IOException{
 		if (match == null) {
 			this.status = "ERROR: Match is null";
 		} else {
 			
 			print_writer = new PrintWriter(session_socket.getOutputStream(), true);
 			
-			int count = 0 , count1 = 0,row_id = 0,l = 4 ;
-			String groun = "";
+			String match_name="",newDate = "",date_data = "",text = "";
 			
-			print_writer.println("LAYER2*EVEREST*TREEVIEW*Main*FUNCTION*TAG_CONTROL SET tHeader " + "UPCOMING MATCHES" + ";");
-			TimeUnit.MILLISECONDS.sleep(l);
-			print_writer.println("LAYER2*EVEREST*TREEVIEW*Main*FUNCTION*TAG_CONTROL SET tSubHeader " + match.getTournament().toUpperCase() + ";");
-			TimeUnit.MILLISECONDS.sleep(l);
+			String[] dateSuffix = {
+					"th", "st", "nd", "rd", "th", "th", "th", "th", "th", "th",
+					
+					"th", "th", "th", "th", "th", "th", "th", "th", "th", "th",
+					
+					"th", "st", "nd", "rd", "th", "th", "th", "th", "th","th",
+					
+					"th", "st"
+			};
 			
-			for(Fixture fx :fixture) {
-				if(match.getMatchFileName().replace(".xml", "").equalsIgnoreCase(fx.getMatchfilename())) {
-					count = fx.getMatchnumber();
-					count1 = count + 4;
-				}
-			}
-			print_writer.println("LAYER2*EVEREST*TREEVIEW*Main*FUNCTION*TAG_CONTROL SET vMatches " + "1" + ";");
+			Calendar cal_bengal = Calendar.getInstance();
+			cal_bengal.add(Calendar.DATE, +1);
 			
-			for(;count < count1;) {
-			//if(count < count1) {
-				row_id = row_id + 1;
-				print_writer.println("LAYER2*EVEREST*TREEVIEW*Main*FUNCTION*TAG_CONTROL SET lgHomeLogo" + row_id + " " + logo_path + team.get(fixture.get(count).getHometeamid() - 1).getTeamName4().toUpperCase() + 
-						HockeyUtil.PNG_EXTENSION+ ";");
-				TimeUnit.MILLISECONDS.sleep(l);
-				print_writer.println("LAYER2*EVEREST*TREEVIEW*Main*FUNCTION*TAG_CONTROL SET lgAwayLogo" + row_id + " " + logo_path + team.get(fixture.get(count).getAwayteamid() - 1).getTeamName4().toUpperCase() + 
-						HockeyUtil.PNG_EXTENSION+ ";");
-				TimeUnit.MILLISECONDS.sleep(l);
-				print_writer.println("LAYER2*EVEREST*TREEVIEW*Main*FUNCTION*TAG_CONTROL SET tHomeTeamName" + row_id + " " + team.get(fixture.get(count).getHometeamid() - 1).getTeamName1().toUpperCase() + ";");
-				TimeUnit.MILLISECONDS.sleep(l);
-				print_writer.println("LAYER2*EVEREST*TREEVIEW*Main*FUNCTION*TAG_CONTROL SET tAwayTeamName" + row_id + " " + team.get(fixture.get(count).getAwayteamid() - 1).getTeamName1().toUpperCase() + ";");
-				TimeUnit.MILLISECONDS.sleep(l);
-				
-				for(int j = 0; j <= ground.size()-1; j++) {
-					if(ground.get(j).getGroundId() == Integer.valueOf(fixture.get(count).getVenue())) {
-						groun = ground.get(j).getCity();
+			
+			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Ident$Center$txt_Vs*GEOM*TEXT SET vs\0");
+		
+			for(Fixture fixtures :fixture) {
+				if(fixtures.getMatchnumber() == Integer.valueOf(fixt)) {
+					if(fixtures.getMatchnumber() > 9) {
+						match_name = fixtures.getMatchfilename();
+					}else {
+						match_name = "MATCH " + fixtures.getMatchnumber();
 					}
+					
+					if(fixtures.getDate().equalsIgnoreCase(new SimpleDateFormat("dd-MM-yyyy").format(cal_bengal.getTime()))) {
+						
+						text = "TOMORROW - " + ground.get(fixtures.getVenue() - 1).getFullname();
+						
+					}else {
+						cal_bengal.add(Calendar.DATE, -1);
+						if(fixtures.getDate().equalsIgnoreCase(new SimpleDateFormat("dd-MM-yyyy").format(cal_bengal.getTime()))) {
+							text = "UP NEXT - " + match_name;
+						}else {
+							newDate = fixtures.getDate().split("-")[0];
+							if(Integer.valueOf(newDate) < 10) {
+								newDate = newDate.replaceFirst("0", "");
+							}
+							date_data = newDate + dateSuffix[Integer.valueOf(newDate)] + " " + 
+									Month.of(Integer.valueOf(fixtures.getDate().split("-")[1]));
+							
+							text = date_data + " - " + ground.get(fixtures.getVenue() - 1).getFullname();
+							
+						}
+					}
+					
+					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Ident$HomeTeam$img_Base2*TEXTURE*IMAGE SET " + HOCKEY_BASE2
+							+ team.get(fixtures.getHometeamid() - 1).getTeamBadge() +"\0");
+					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Ident$HomeTeam$img_Base1*TEXTURE*IMAGE SET " + HOCKEY_BASE1
+							+ team.get(fixtures.getHometeamid() - 1).getTeamBadge() +"\0");
+					
+					
+					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Ident$AwayTeam$img_Base2*TEXTURE*IMAGE SET " + HOCKEY_BASE2
+							+ team.get(fixtures.getAwayteamid() - 1).getTeamBadge() +"\0");
+					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Ident$AwayTeam$img_Base1*TEXTURE*IMAGE SET " + HOCKEY_BASE1
+							+ team.get(fixtures.getAwayteamid() - 1).getTeamBadge() +"\0");
+					
+					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Ident$HomeTeam$LOGO_ANIM$img_Logo*TEXTURE*IMAGE SET " + HOCKEY_LOGO
+							+ team.get(fixtures.getHometeamid() - 1).getTeamBadge() +"\0");
+					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Ident$AwayTeam$LOGO_ANIM$img_Logo*TEXTURE*IMAGE SET " + HOCKEY_LOGO
+							+ team.get(fixtures.getAwayteamid() - 1).getTeamBadge() +"\0");
+					
+					
+					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Ident$HomeTeam$Team_Grp$txt_Name*GEOM*TEXT SET " 
+							+ team.get(fixtures.getHometeamid() - 1).getTeamName2() +"\0");
+					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Ident$HomeTeam$Team_Grp$txt_Name02*GEOM*TEXT SET " 
+							+ team.get(fixtures.getHometeamid() - 1).getTeamName3() +"\0");
+					
+					
+					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Ident$AwayTeam$Team_Grp$txt_Name*GEOM*TEXT SET " 
+							+ team.get(fixtures.getAwayteamid() - 1).getTeamName2() +"\0");
+					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Ident$AwayTeam$Team_Grp$txt_Name02*GEOM*TEXT SET " 
+							+ team.get(fixtures.getAwayteamid() - 1).getTeamName3() +"\0");
+					
+					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Ident$Center$txt_Info*GEOM*TEXT SET " 
+							+ text +"\0");
 				}
-				
-				print_writer.println("LAYER2*EVEREST*TREEVIEW*Main*FUNCTION*TAG_CONTROL SET tInfo" + row_id + " " + fixture.get(count).getMatchfilename().toUpperCase() + " - " + fixture.get(count).getDate() + " (" + fixture.get(count).getTime() + ") LIVE FROM " + groun + ";");
-				TimeUnit.MILLISECONDS.sleep(l);
-				
-				count = count + 1;
-				
 			}
-			
-			
-			print_writer.println("LAYER1*EVEREST*GLOBAL PREVIEW ON;");
-			print_writer.println("LAYER2*EVEREST*STAGE*DIRECTOR*In STOP;");
-			print_writer.println("LAYER2*EVEREST*STAGE*DIRECTOR*Out STOP;");
-			print_writer.println("LAYER2*EVEREST*STAGE*DIRECTOR*In SHOW 85.0;");
-			print_writer.println("LAYER2*EVEREST*STAGE*DIRECTOR*Out SHOW 0.0;");
-			print_writer.println("LAYER1*EVEREST*GLOBAL SNAPSHOT_PATH C:/Temp/Preview.png;");
-			print_writer.println("LAYER1*EVEREST*GLOBAL SNAPSHOT 1920 1080;");
-			TimeUnit.SECONDS.sleep(1);
-			print_writer.println("LAYER2*EVEREST*STAGE*DIRECTOR*Out SHOW 0.0;");
-			print_writer.println("LAYER2*EVEREST*STAGE*DIRECTOR*In SHOW 0.0;");
-			print_writer.println("LAYER1*EVEREST*GLOBAL PREVIEW OFF;");
 		}
 	}
 	public void populateStaff(Socket session_socket,String viz_scene, Staff st,List<Team> team ,Match match, String selectedbroadcaster) throws InterruptedException, IOException{

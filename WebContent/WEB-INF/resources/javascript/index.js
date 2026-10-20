@@ -410,7 +410,11 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 			addItemsToList('SUBSTITUTE-OPTIONS',null);
 			break;
 		case 122:
-			processHockeyProcedures('POPULATE-L3-MATCHPROMO');
+			$("#select_event_div").hide();
+			$("#match_configuration").hide();
+			$("#hockey_div").hide();
+			
+			processHockeyProcedures('LTPROMO_GRAPHICS-OPTIONS');
 			break;
 		case 123:
 			$("#select_event_div").hide();
@@ -1085,18 +1089,7 @@ function processHockeyProcedures(whatToProcess, whichInput)
 		}
 		break;
 	case 'POPULATE-LT-PROMO':
-		switch ($('#selectedBroadcaster').val()) {
-			case 'I_LEAGUE':
-				value_to_process = 'D:/DOAD_In_House_Everest/Everest_Sports/Everest_I-League_2022/Scenes/MatchId.sum' + ',' + $('#selectMatchPromo option:selected').val();
-				//alert(value_to_process);
-				break;
-			case 'SANTOSH_TROPHY':
-				value_to_process = 'D:/DOAD_In_House_Everest/Everest_Sports/Everest_SantoshTrophy_2023/Scenes/MatchId.sum' + ',' + $('#selectMatchPromo option:selected').val() ;
-				break;
-			case 'SUPER_CUP': case 'CONTINENTAL':
-				value_to_process = '/Default/LT' + ',' + $('#selectMatchPromo option:selected').val();
-				break;
-		}
+		value_to_process = 'D:/DOAD_In_House_Everest/Everest_Sports/Everest_I-League_2022/Scenes/MatchId.sum' + ',' + $('#selectMatchPromo option:selected').val();
 		break;
 	case 'POPULATE-LT-RESULT':
 		switch ($('#selectedBroadcaster').val()) {
