@@ -56,8 +56,8 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 	public final static String HOCKEY_TEXT2 = "IMAGE*/Default/Essentials/Text2/";
 	public final static String HOCKEY_ICONS = "IMAGE*/Default/Essentials/Icons/";
 	public final static String HOCKEY_JERSEY = "IMAGE*/Default/Essentials/Jersey/";
-	public final static String HOCKEY_LOCAL_PHOTO_PATH = "C:\\\\Images\\\\Hockey\\\\Photos\\\\";
-	public final static String HOCKEY_PHOTO_PATH = "\\c\\Images\\Hockey\\Photos\\";
+	public final static String HOCKEY_LOCAL_PHOTO_PATH = "C:/Images/Hockey/Photos/";
+	public final static String HOCKEY_PHOTO_PATH = "C:/Images/Hockey/Photos/";
 	public final static String HOCKEY_SPONSOR = "IMAGE*/Default/Essentials/Spnsor/";
 	
 	public HOCKEY_KHELO_INDIA() {
@@ -1687,7 +1687,8 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 	}
 	
 	public void populateMatchIdImage(Socket session_socket,String viz_scene, Match match, String session_selected_broadcaster,int whichSide,HockeyService hockeyService, List<Team> team) throws InterruptedException, IOException
-	{
+	{	
+		String previewCommand ="";
 		if (match == null) {
 			this.status = "ERROR: Match is null";
 		}else {
@@ -1788,6 +1789,10 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 							+ "$Venue_Out$txt_Location*GEOM*TEXT SET "+ vt.getVariousText1() +"\0");
 				}
 			}
+			
+			previewCommand = "anim_FullFrame$In_Out 2.540 anim_FullFrame$In_Out$Final_Vs 2.540 anim_FullFrame$In_Out$Final_Vs$InOut 2.540 anim_FullFrame$In_Out$Final_Vs$InOut$In 2.540 "
+					+ "anim_FullFrame$In_Out$BG 2.540 anim_FullFrame$In_Out$BG$In_Out 2.540 anim_FullFrame$In_Out$BG$In_Out$In 1.730";
+			print_writer.println("-1 RENDERER PREVIEW SCENE*/Default/gfx_Fullframes " + "C:/Temp/Preview.tga " + previewCommand + "\0");
 		}
 	}
 	
@@ -2343,10 +2348,11 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 					row_id = row_id + 1;
 					
 					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
-							+ "$noname$Players$Player"+ row_id +"*TEXTURE*IMAGE SET " + HOCKEY_PHOTO_PATH + "Blank" + ".png" +"\0");
+							+ "$noname$Players$Player"+ row_id +"$Player$img_Player_Team1*TEXTURE*IMAGE SET " + HOCKEY_PHOTO_PATH + "Blank" + ".png" +"\0");
 					
 					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
-							+ "$noname$Players$Player"+ row_id +"*TEXTURE*IMAGE SET " + HOCKEY_PHOTO_PATH + hs.getPhoto() + ".png" +"\0");
+							+ "$noname$Players$Player"+ row_id +"$img_Player_Team1*TEXTURE*IMAGE SET " + HOCKEY_PHOTO_PATH +
+							match.getHomeTeam().getTeamName4() + "" +hs.getPhoto() + ".png" +"\0");
 					
 					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
 							+ "$noname$Players$Player"+ row_id + "$img_Base1*TEXTURE*IMAGE SET "+ HOCKEY_BASE1 + match.getHomeTeam().getTeamBadge() +"\0");
@@ -2452,10 +2458,10 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 				for(Player hs : match.getAwaySquad()) {
 					row_id = row_id + 1;
 					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
-							+ "$noname$Players$Player"+ row_id +"*TEXTURE*IMAGE SET " + HOCKEY_PHOTO_PATH + "Blank" + ".png" +"\0");
+							+ "$noname$Players$Player"+ row_id +"$img_Player_Team1*TEXTURE*IMAGE SET " + HOCKEY_PHOTO_PATH + "Blank" + ".png" +"\0");
 					
 					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
-							+ "$noname$Players$Player"+ row_id +"*TEXTURE*IMAGE SET " + HOCKEY_PHOTO_PATH + hs.getPhoto() + ".png" +"\0");
+							+ "$noname$Players$Player"+ row_id +"$img_Player_Team1*TEXTURE*IMAGE SET " + HOCKEY_PHOTO_PATH + hs.getPhoto() + ".png" +"\0");
 					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
 							+ "$noname$Players$Player"+ row_id + "$img_Base1*TEXTURE*IMAGE SET "+ HOCKEY_BASE1 + match.getAwayTeam().getTeamBadge() +"\0");
 					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
@@ -2643,6 +2649,8 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 					row_id = row_id + 1;
 					
 					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
+							+ "$Players$Player"+ row_id +"*TEXTURE*IMAGE SET " + HOCKEY_PHOTO_PATH + "Blank" + ".png" +"\0");
+					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
 							+ "$Players$Player"+ row_id +"*TEXTURE*IMAGE SET " + HOCKEY_PHOTO_PATH + hs.getPhoto() + ".png" +"\0");
 					
 					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
@@ -2747,7 +2755,8 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 				
 				for(Player hs : match.getAwaySquad()) {
 					row_id = row_id + 1;
-					
+					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
+							+ "$Players$Player"+ row_id +"*TEXTURE*IMAGE SET " + HOCKEY_PHOTO_PATH + "Blank" + ".png" +"\0");
 					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
 							+ "$Players$Player"+ row_id +"*TEXTURE*IMAGE SET " + HOCKEY_PHOTO_PATH + hs.getPhoto() + ".png" +"\0");
 					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
