@@ -2287,9 +2287,9 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$FF_Gfx*FUNCTION*Omo*vis_con SET 9 \0");
 
 			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$TeamList_Both$Data"
-					+ "$Match_Summary_Out$Druk-Trial-Medium*GEOM*TEXT SET "+ "TEAM" +"\0");
+					+ "$Match_Summary_Out$Druk-Trial-Medium*GEOM*TEXT SET "+ "M-" + match.getMatchId() +"\0");
 			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$TeamList_Both$Data"
-					+ "$Match_Summary_Out$Summary$Summary*GEOM*TEXT SET "+ "LIST" +"\0");
+					+ "$Match_Summary_Out$Summary$Summary*GEOM*TEXT SET "+ "SQUADS" +"\0");
 			
 			
 		
@@ -2448,11 +2448,24 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
 								+ "$noname$Players$Player"+ row_id + "$img_Text2$txt_Name02*GEOM*TEXT SET "+ "(C)(GK)" +"\0");
 					}else {
-						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
-								+ "$noname$Players$Player"+ row_id + "$img_Text2$txt_Name02*GEOM*TEXT SET "+ "" +"\0");
+						String role = hs.getRole().trim();
+						String shortRole = "";
+
+						if (role.equalsIgnoreCase("Goalkeeper")) {
+						    shortRole = "GK";
+						} else if (role.equalsIgnoreCase("Defender") || role.equalsIgnoreCase("Deferder")) {
+						    shortRole = "DF";
+						} else if (role.equalsIgnoreCase("Midfielder")) {
+						    shortRole = "MF";
+						} else if (role.equalsIgnoreCase("Forward")) {
+						    shortRole = "FW";
+						}
+
+						if (!shortRole.isEmpty()) {
+						    print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
+						            + "$noname$Players$Player" + row_id + "$img_Text2$txt_Name02*GEOM*TEXT SET " + shortRole + "\0");
+						}						
 					}
-					
-					
 					
 					for(Formation form : formation) {
 						if(form.getFormId() == match.getHomeTeamFormationId()) {
@@ -2492,7 +2505,7 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 									+ "$noname$Players$Player7*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds7Y() + "\0");
 							
 							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
-									+ "$noname$Players$Player8*TRANSFORMATION*POSITION*X SET " + form.getFormOrds8Y() + "\0");
+									+ "$noname$Players$Player8*TRANSFORMATION*POSITION*X SET " + form.getFormOrds8X() + "\0");
 							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
 									+ "$noname$Players$Player8*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds8Y() + "\0");
 							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
@@ -2571,8 +2584,23 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
 								+ "$noname$Players$Player"+ row_id + "$img_Text2$txt_Name02*GEOM*TEXT SET "+ "(C)(GK)" +"\0");
 					}else {
-						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
-								+ "$noname$Players$Player"+ row_id + "$img_Text2$txt_Name02*GEOM*TEXT SET "+ "" +"\0");
+						String role = hs.getRole().trim();
+						String shortRole = "";
+
+						if (role.equalsIgnoreCase("Goalkeeper")) {
+						    shortRole = "GK";
+						} else if (role.equalsIgnoreCase("Defender") || role.equalsIgnoreCase("Deferder")) {
+						    shortRole = "DF";
+						} else if (role.equalsIgnoreCase("Midfielder")) {
+						    shortRole = "MF";
+						} else if (role.equalsIgnoreCase("Forward")) {
+						    shortRole = "FW";
+						}
+
+						if (!shortRole.isEmpty()) {
+						    print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
+						            + "$noname$Players$Player" + row_id + "$img_Text2$txt_Name02*GEOM*TEXT SET " + shortRole + "\0");
+						}
 					}
 					
 					for(Formation form : formation) {
@@ -2613,7 +2641,7 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 									+ "$noname$Players$Player7*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds7Y() + "\0");
 							
 							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
-									+ "$noname$Players$Player8*TRANSFORMATION*POSITION*X SET " + form.getFormOrds8Y() + "\0");
+									+ "$noname$Players$Player8*TRANSFORMATION*POSITION*X SET " + form.getFormOrds8X() + "\0");
 							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
 									+ "$noname$Players$Player8*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds8Y() + "\0");
 							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
@@ -2736,8 +2764,20 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
 								+ "$Substitute_Players$Player"+ row_id_sub + "$img_Text2$txt_Name02*GEOM*TEXT SET "+ "(C)(GK)" +"\0");
 					}else {
+//						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
+//								+ "$Substitute_Players$Player"+ row_id_sub + "$img_Text2$txt_Name02*GEOM*TEXT SET "+ "" +"\0");
+						
+						String subRole = match.getHomeSubstitutes().get(i).getRole().trim();
+						String subShortRole = "";
+
+						if (subRole.equalsIgnoreCase("Goalkeeper")) subShortRole = "GK";
+						else if (subRole.equalsIgnoreCase("Defender") || subRole.equalsIgnoreCase("Deferder")) subShortRole = "DF";
+						else if (subRole.equalsIgnoreCase("Midfielder")) subShortRole = "MF";
+						else if (subRole.equalsIgnoreCase("Forward")) subShortRole = "FW";
+
 						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
-								+ "$Substitute_Players$Player"+ row_id_sub + "$img_Text2$txt_Name02*GEOM*TEXT SET "+ "" +"\0");
+						        + "$Substitute_Players$Player" + row_id_sub + "$img_Text2$txt_Name02*GEOM*TEXT SET " + subShortRole + "\0");
+						
 					}
 					
 					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
@@ -2802,8 +2842,17 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
 								+ "$Players$Player"+ row_id + "$img_Text2$txt_Name02*GEOM*TEXT SET "+ "(C)(GK)" +"\0");
 					}else {
+						String role = hs.getRole().trim();
+						String shortRole = "";
+
+						if (role.equalsIgnoreCase("Goalkeeper")) shortRole = "GK";
+						else if (role.equalsIgnoreCase("Defender") || role.equalsIgnoreCase("Deferder")) shortRole = "DF";
+						else if (role.equalsIgnoreCase("Midfielder")) shortRole = "MF";
+						else if (role.equalsIgnoreCase("Forward")) shortRole = "FW";
+
 						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
-								+ "$Players$Player"+ row_id + "$img_Text2$txt_Name02*GEOM*TEXT SET "+ "" +"\0");
+						        + "$Players$Player" + row_id + "$img_Text2$txt_Name02*GEOM*TEXT SET " + shortRole + "\0");
+						
 					}
 				}
 				
@@ -2847,7 +2896,7 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 								+ "$Players$Player7*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds7Y() + "\0");
 						
 						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
-								+ "$Players$Player8*TRANSFORMATION*POSITION*X SET " + form.getFormOrds8Y() + "\0");
+								+ "$Players$Player8*TRANSFORMATION*POSITION*X SET " + form.getFormOrds8X() + "\0");
 						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
 								+ "$Players$Player8*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds8Y() + "\0");
 						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
@@ -2917,8 +2966,17 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
 								+ "$Substitute_Players$Player"+ row_id_sub + "$img_Text2$txt_Name02*GEOM*TEXT SET "+ "(C)(GK)" +"\0");
 					}else {
+						String awaySubRole = match.getAwaySubstitutes().get(i).getRole().trim();
+						String awaySubShortRole = "";
+
+						if (awaySubRole.equalsIgnoreCase("Goalkeeper")) awaySubShortRole = "GK";
+						else if (awaySubRole.equalsIgnoreCase("Defender") || awaySubRole.equalsIgnoreCase("Deferder")) awaySubShortRole = "DF";
+						else if (awaySubRole.equalsIgnoreCase("Midfielder")) awaySubShortRole = "MF";
+						else if (awaySubRole.equalsIgnoreCase("Forward")) awaySubShortRole = "FW";
+
 						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
-								+ "$Substitute_Players$Player"+ row_id_sub + "$img_Text2$txt_Name02*GEOM*TEXT SET "+ "" +"\0");
+						        + "$Substitute_Players$Player" + row_id_sub + "$img_Text2$txt_Name02*GEOM*TEXT SET " + awaySubShortRole + "\0");
+						
 					}
 					
 					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
@@ -2978,8 +3036,17 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
 								+ "$Players$Player"+ row_id + "$img_Text2$txt_Name02*GEOM*TEXT SET "+ "(C)(GK)" +"\0");
 					}else {
+						String role = hs.getRole().trim();
+						String shortRole = "";
+
+						if (role.equalsIgnoreCase("Goalkeeper")) shortRole = "GK";
+						else if (role.equalsIgnoreCase("Defender") || role.equalsIgnoreCase("Deferder")) shortRole = "DF";
+						else if (role.equalsIgnoreCase("Midfielder")) shortRole = "MF";
+						else if (role.equalsIgnoreCase("Forward")) shortRole = "FW";
+
 						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
-								+ "$Players$Player"+ row_id + "$img_Text2$txt_Name02*GEOM*TEXT SET "+ "" +"\0");
+						        + "$Players$Player" + row_id + "$img_Text2$txt_Name02*GEOM*TEXT SET " + shortRole + "\0");
+						
 					}
 				}
 				
@@ -3021,7 +3088,7 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 								+ "$Players$Player7*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds7Y() + "\0");
 						
 						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
-								+ "$Players$Player8*TRANSFORMATION*POSITION*X SET " + form.getFormOrds8Y() + "\0");
+								+ "$Players$Player8*TRANSFORMATION*POSITION*X SET " + form.getFormOrds8X() + "\0");
 						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
 								+ "$Players$Player8*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds8Y() + "\0");
 						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
@@ -3129,7 +3196,7 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 					}else if(match.getClock().getMatchHalves().equalsIgnoreCase("END1")) {
 						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Match_Summary$Data"
 								+ "$Score_Out$Status$txt_Status*GEOM*TEXT SET "+ "END OF QUARTER 1" +"\0");
-					}else if(match.getClock().getMatchHalves().equalsIgnoreCase("END2")) {
+					}else if(match.getClock().getMatchHalves().equalsIgnoreCase("END3")) {
 						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Match_Summary$Data"
 								+ "$Score_Out$Status$txt_Status*GEOM*TEXT SET "+ "END OF QUARTER 3" +"\0");
 					}

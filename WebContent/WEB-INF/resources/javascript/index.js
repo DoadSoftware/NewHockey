@@ -261,7 +261,7 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 		case 89:
 			processHockeyProcedures('POPULATE-PENALTY');
 			break;
-		case 66:
+		/*case 66:
 			switch ($('#selectedBroadcaster').val()){
 				case 'I_LEAGUE':
 					processHockeyProcedures('POPULATE-HIGHLIGHT');
@@ -273,7 +273,7 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 					processHockeyProcedures('POPULATE-PLAYOFFS');
 					break;	
 			}
-			break;
+			break;*/
 		case 32:
 			processHockeyProcedures('CLEAR-ALL');
 			break;
@@ -344,7 +344,7 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 		case 115:
 			processHockeyProcedures('POPULATE-FF-MATCHID');
 			break;
-		case 49:
+		case 66:
 			processHockeyProcedures('POPULATE-FF-MATCHID_IMAGE');
 			break;
 		case 69:
@@ -377,7 +377,7 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 			$("#hockey_div").hide();
 			addItemsToList('PLAYINGXI-OPTIONS_SUB',null);
 			break;
-		case 51:
+		case 71:
 			processHockeyProcedures('POPULATE-FF-PLAYINGXIBOTHTEAMS');
 			break;		
 			
@@ -523,7 +523,7 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 					break;
 			}
 			break;
-		case 71:
+		/*case 71:
 			switch ($('#selectedBroadcaster').val()){
 				case 'I_LEAGUE':
 					//alert('I_LEAGUE');
@@ -533,7 +533,7 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 					processHockeyProcedures('POPULATE-EXTRA_TIME_HALF');
 					break;
 			}
-			break;
+			break;*/
 		case 219:
 			processHockeyProcedures('HOME_GOAL');
 			break;
