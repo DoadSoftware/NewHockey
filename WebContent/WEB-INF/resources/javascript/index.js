@@ -2746,7 +2746,7 @@ function addItemsToList(whatToProcess, dataToProcess)
 				    		option.type = 'button';
 				    		
 				    		option.name = 'populate_playingxisub_btn';
-				    		option.value = 'Populate Teams LineUp';
+				    		option.value = 'Populate Teams With Subs  LineUp';
 				    		
 				    		option.id = option.name;
 						    option.setAttribute('onclick',"processUserSelection(this)");
