@@ -1599,6 +1599,33 @@ function processHockeyProcedures(whatToProcess, whichInput)
 			case 'POPULATE-SUBS_CHANGE_ON':
 				processHockeyProcedures('ANIMATE-IN-SUBS_CHANGE_ON');	
 				break;
+			case 'POPULATE-SCOREBUG_STATS': case 'POPULATE-SCOREBUG-CARD': case 'POPULATE-SCOREBUG-GOAL_SCORER': case 'POPULATE-LAST_GOAL':
+			case 'POPULATE-RED_CARD':
+				
+				if(data.status == 'OK'){
+					if(confirm('Animate In?') == true){
+						switch(whatToProcess){
+							case 'POPULATE-RED_CARD':
+								processHockeyProcedures('ANIMATE-IN-SCOREBUG-RED_CARD');
+								break;
+							case 'POPULATE-LAST_GOAL':
+								processHockeyProcedures('ANIMATE-IN-SCOREBUG-LAST_GOAL');
+								break;
+							case 'POPULATE-SCOREBUG-GOAL_SCORER':
+								processHockeyProcedures('ANIMATE-IN-SCOREBUG-GOAL_SCORER');
+								break;							
+							case 'POPULATE-SCOREBUG-CARD':
+								processHockeyProcedures('ANIMATE-IN-SCOREBUG-CARD');
+								break;	
+							case 'POPULATE-SCOREBUG_STATS':
+								processHockeyProcedures('ANIMATE-IN-SCOREBUG_STATS');
+								break;
+						}
+					}
+				}else{
+					alert("SCOREBUG IS NOT ON SCREEN");
+				}
+				break;
 			case 'POPULATE-FF-MATCHID': case 'POPULATE-FF-PLAYINGXI': case 'POPULATE-L3-MATCHSTATUS': case 'POPULATE-L3-MATCHPROMO': case 'POPULATE-FF-MATCHSTATS':
 			case 'POPULATE-FF-PROMO': case 'POPULATE-DOUBLE_PROMO': case 'POPULATE-HERO-SPONSOR': case 'POPULATE-POINTS_TABLE': case 'POPULATE-FF-FORMATION':
 			case 'POPULATE-DOUBLE_SUBS': case 'POPULATE-OFFICIALS': case 'POPULATE-HIGHLIGHT': case 'POPULATE-PENALTY': case 'POPULATE-FF-PLAYINGXI_CHANGEON':
@@ -1615,21 +1642,6 @@ function processHockeyProcedures(whatToProcess, whichInput)
 					case 'POPULATE-QUARTER':
 						processHockeyProcedures('ANIMATE-IN-QUARTER');
 						break;
-					case 'POPULATE-RED_CARD':
-						processHockeyProcedures('ANIMATE-IN-SCOREBUG-RED_CARD');
-						break;
-					case 'POPULATE-LAST_GOAL':
-						processHockeyProcedures('ANIMATE-IN-SCOREBUG-LAST_GOAL');
-						break;
-					case 'POPULATE-SCOREBUG-GOAL_SCORER':
-						processHockeyProcedures('ANIMATE-IN-SCOREBUG-GOAL_SCORER');
-						break;							
-					case 'POPULATE-SCOREBUG-CARD':
-						processHockeyProcedures('ANIMATE-IN-SCOREBUG-CARD');
-						break;	
-					case 'POPULATE-SCOREBUG_STATS':
-						processHockeyProcedures('ANIMATE-IN-SCOREBUG_STATS');
-						break;	
 					case 'POPULATE-ROAD-TO-FINAL':
 						processHockeyProcedures('ANIMATE-IN-ROAD-TO-FINAL');			
 						break;

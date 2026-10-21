@@ -1037,7 +1037,7 @@ public class IndexController
 			case HockeyUtil.HOCKEY_KHELO_INDIA:
 				session_khelo_india.ProcessGraphicOption(whatToProcess,session_match, session_clock,hockeyService,session_socket, 
 						session_selected_scenes, valueToProcess);
-				break;	
+				return new ObjectMapper().writeValueAsString(session_khelo_india).toString();
 			}
 			return objectMapper.writeValueAsString(session_match);
 		}
