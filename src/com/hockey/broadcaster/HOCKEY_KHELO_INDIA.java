@@ -589,10 +589,14 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 				break;
 			case "CLEAR-ALL":
 				print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_ScoreBug SHOW 0.0\0");
-				print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_LowerThird SHOW 0.0\0");
-				print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_lowerthird_Player SHOW 0.0\0");
-				print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_LT_Quaters SHOW 0.0\0");
-				
+
+				print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_Ident$Essentials SHOW 0.0\0");
+				print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_LowerThird$Essentials SHOW 0.0\0");
+				print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_lowerthird_Player$Essentials SHOW 0.0\0");
+				print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_LT_Quaters$Essentials SHOW 0.0\0");
+				print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_LT_ScoreLine$Essentials SHOW 0.0\0");
+				print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_LT_Penalty$Essentials SHOW 0.0\0");
+
 				print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_FullFrame$In_Out SHOW 0.0\0");
 				which_graphics_onscreen = "";
 				which_stats_on_screen = "";
@@ -642,6 +646,15 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 					which_graphics_onscreen = "";
 					break;	
 				}
+				
+				TimeUnit.MILLISECONDS.sleep(1000);
+				
+				print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_Ident$Essentials SHOW 0.0\0");
+				print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_LowerThird$Essentials SHOW 0.0\0");
+				print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_lowerthird_Player$Essentials SHOW 0.0\0");
+				print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_LT_Quaters$Essentials SHOW 0.0\0");
+				print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_LT_ScoreLine$Essentials SHOW 0.0\0");
+				print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_LT_Penalty$Essentials SHOW 0.0\0");
 				break;
 			}
 			break;
@@ -780,6 +793,9 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 						+ homedata +"\0");
 				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$Penalty_Corners_Grp$Away_Team$txt_PC*GEOM*TEXT SET " 
 						+ awaydata +"\0");
+				
+				print_writer.println("-1 RENDERER PREVIEW SCENE*/Default/gfx_Overlays C:/Temp/Preview.tga anim_ScoreBug$Essentials 1.140 anim_ScoreBug$Essentials$In_Out 1.140 anim_ScoreBug$Essentials$In_Out$In 0.800 "
+						+ "anim_ScoreBug$Penalty_Corners 1.100 anim_ScoreBug$Penalty_Corners$In_Out 1.100 anim_ScoreBug$Penalty_Corners$In_Out$In 0.460\0");
 			}else {
 				return this.status = "ERROR: No ScoreBug";
 			}
@@ -964,6 +980,8 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 						}
 					}
 				}
+				print_writer.println("-1 RENDERER PREVIEW SCENE*/Default/gfx_Overlays C:/Temp/Preview.tga anim_ScoreBug$Essentials 1.140 anim_ScoreBug$Essentials$In_Out 1.140 anim_ScoreBug$Essentials$In_Out$In 0.800 "
+						+ "anim_ScoreBug$Penalty_Card 1.020 anim_ScoreBug$Penalty_Card$In_Out 1.020 anim_ScoreBug$Penalty_Card$In_Out$In 0.900\0");
 			}else {
 				return this.status = "ERROR: No ScoreBug";
 			}
@@ -1113,6 +1131,8 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 						}
 					}
 				}
+				print_writer.println("-1 RENDERER PREVIEW SCENE*/Default/gfx_Overlays C:/Temp/Preview.tga anim_ScoreBug$Essentials 1.140 anim_ScoreBug$Essentials$In_Out 1.140 anim_ScoreBug$Essentials$In_Out$In 0.800 "
+						+ "anim_ScoreBug$Goal_Scorer 1.040 anim_ScoreBug$Goal_Scorer$In_Out 1.040 anim_ScoreBug$Goal_Scorer$In_Out$In 0.900\0");
 			}else {
 				return this.status = "ERROR: No ScoreBug";
 			}
@@ -1193,6 +1213,8 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 						break;
 					}
 				}
+				print_writer.println("-1 RENDERER PREVIEW SCENE*/Default/gfx_Overlays C:/Temp/Preview.tga anim_ScoreBug$Essentials 1.140 anim_ScoreBug$Essentials$In_Out 1.140 anim_ScoreBug$Essentials$In_Out$In 0.800 "
+						+ "anim_ScoreBug$Goal_Scorer 1.040 anim_ScoreBug$Goal_Scorer$In_Out 1.040 anim_ScoreBug$Goal_Scorer$In_Out$In 0.900\0");
 			}else {
 				return this.status = "ERROR: No ScoreBug";
 			}
@@ -1209,6 +1231,10 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 				print_writer = new PrintWriter(session_socket.getOutputStream(), true);
 				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$Cards$Home_Team$Select_Cards*FUNCTION*Omo*vis_con SET " + home + "\0");
 				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$Cards$Away_Team$Select_Cards*FUNCTION*Omo*vis_con SET " + away + "\0");
+				
+				
+				print_writer.println("-1 RENDERER PREVIEW SCENE*/Default/gfx_Overlays C:/Temp/Preview.tga anim_ScoreBug$Essentials 1.140 anim_ScoreBug$Essentials$In_Out 1.140 anim_ScoreBug$Essentials$In_Out$In 0.800 "
+						+ "anim_ScoreBug$Cards 0.480 anim_ScoreBug$Cards$In_Out 0.480 anim_ScoreBug$Cards$In_Out$In 0.420\0");
 			}else {
 				return this.status = "ERROR: No ScoreBug";
 				
@@ -1255,6 +1281,7 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 					+ match.getMatchIdent() + " - FROM " + match.getVenueName() +"\0");
 			
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Ident$Center$txt_Vs*GEOM*TEXT SET vs\0");
+			
 		}
 		print_writer.println("-1 RENDERER PREVIEW SCENE*/Default/Overlays C:/Temp/Preview.tga anim_Ident$Essentials 1.140 anim_Ident$Essentials$In_Out 1.140 "
 				+ "anim_Ident$Essentials$In_Out$In 0.880 \0");
@@ -3915,8 +3942,18 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 					HockeyUtil.PNG_EXTENSION+ ";");
 			TimeUnit.MILLISECONDS.sleep(l);
 			
+			for(int i=1; i<=5; i++) {
+				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LT_Penalty$HomeTeam$Left_Team_Out$Top_Info$" + getQuarterName(i)
+				+ "$Select*FUNCTION*Omo*vis_con SET 0\0");
+				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LT_Penalty$AwayTeam$Right_Team_Out$Top_Info$" + getQuarterName(i)
+				+ "$Select*FUNCTION*Omo*vis_con SET 0\0");
+			}
 			
-			
+			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LT_Penalty$HomeTeam$img_Base2*TEXTURE*IMAGE SET " + HOCKEY_BASE2
+					+ match.getHomeTeam().getTeamBadge() +"\0");
+			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LT_Penalty$HomeTeam$img_Base1*TEXTURE*IMAGE SET " + HOCKEY_BASE1
+					+ match.getHomeTeam().getTeamBadge() +"\0");
+
 			print_writer.println("LAYER2*EVEREST*TREEVIEW*Main*FUNCTION*TAG_CONTROL SET tHomeTeamName " + match.getHomeTeam().getTeamName1().toUpperCase() + ";");
 			TimeUnit.MILLISECONDS.sleep(l);
 			print_writer.println("LAYER2*EVEREST*TREEVIEW*Main*FUNCTION*TAG_CONTROL SET tAwayTeamName " + match.getAwayTeam().getTeamName1().toUpperCase() + ";");
@@ -3965,17 +4002,8 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 				}
 			}
 			
-			print_writer.println("LAYER1*EVEREST*GLOBAL PREVIEW ON;");
-			print_writer.println("LAYER2*EVEREST*STAGE*DIRECTOR*In STOP;");
-			print_writer.println("LAYER2*EVEREST*STAGE*DIRECTOR*Out STOP;");
-			print_writer.println("LAYER2*EVEREST*STAGE*DIRECTOR*In SHOW 40.0;");
-			print_writer.println("LAYER2*EVEREST*STAGE*DIRECTOR*Out SHOW 0.0;");
-			print_writer.println("LAYER1*EVEREST*GLOBAL SNAPSHOT_PATH C:/Temp/Preview.png;");
-			print_writer.println("LAYER1*EVEREST*GLOBAL SNAPSHOT 1920 1080;");
-			TimeUnit.SECONDS.sleep(1);
-			print_writer.println("LAYER2*EVEREST*STAGE*DIRECTOR*Out SHOW 0.0;");
-			print_writer.println("LAYER2*EVEREST*STAGE*DIRECTOR*In SHOW 0.0;");
-			print_writer.println("LAYER1*EVEREST*GLOBAL PREVIEW OFF;");
+			print_writer.println("-1 RENDERER PREVIEW SCENE*/Default/gfx_Overlays C:/Temp/Preview.tga anim_LT_Penalty$Essentials 1.140 anim_LT_Penalty$Essentials$In_Out 1.140 "
+					+ "anim_LT_Penalty$Essentials$In_Out$In 0.800\0");
 		}
 	}
 	public void populatePenLtMatchId(Socket session_socket,Match match, String selectedbroadcaster,HockeyService hockeyserv) throws InterruptedException, IOException
