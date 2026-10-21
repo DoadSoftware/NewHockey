@@ -344,6 +344,9 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 		case 115:
 			processHockeyProcedures('POPULATE-FF-MATCHID');
 			break;
+		case 49:
+			processHockeyProcedures('POPULATE-FF-MATCHID_IMAGE');
+			break;
 		case 85:
 			processHockeyProcedures('POPULATE-FF-MATCHSTAT');
 			break;	
@@ -352,7 +355,7 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 			$("#match_configuration").hide();
 			$("#hockey_div").hide();
 			processHockeyProcedures('POPULATE-FF-MATCHID_SINGLEPROMO',null);
-			break;	
+			break;
 		case 65:
 			processHockeyProcedures('POPULATE-LT-MATCHID');
 			break;
@@ -1242,6 +1245,13 @@ function processHockeyProcedures(whatToProcess, whichInput)
 				break;
 		}
 		break;
+	case 'POPULATE-FF-MATCHID_IMAGE':
+		switch ($('#selectedBroadcaster').val()) {
+			case 'SUPER_CUP': case 'CONTINENTAL':
+				value_to_process = '/Default/FullFrames';
+				break;
+		}
+		break;
 	case 'POPULATE-LT-MATCHID':
 		switch ($('#selectedBroadcaster').val()) {
 			case 'SUPER_CUP': case 'CONTINENTAL':
@@ -1637,6 +1647,7 @@ function processHockeyProcedures(whatToProcess, whichInput)
 			case 'POPULATE-CONTINENTAL_POINTS_TABLE': case 'POPULATE-SCOREBUG_STATS': case 'POPULATE-SCOREBUG-CARD': case 'POPULATE-SCOREBUG-GOAL_SCORER': case 'POPULATE-LAST_GOAL':
 			case 'POPULATE-FF-PLAYINGXISUB': case 'POPULATE-RED_CARD': case 'POPULATE-QUARTER': case 'POPULATE-LT-PENALTY_SCORES': case 'POPULATE-FF_PROMO':	case 'POPULATE-FF-MATCHSTAT':
 	        case 'POPULATE-FF-PLAYINGXIBOTHTEAMS':
+			case 'POPULATE-FF-MATCHID_IMAGE':
 				if(confirm('Animate In?') == true){
 					switch(whatToProcess){
 					case 'POPULATE-LT-PENALTY_SCORES':
@@ -1678,6 +1689,9 @@ function processHockeyProcedures(whatToProcess, whichInput)
 					case 'POPULATE-FF-PLAYINGXIBOTHTEAMS':
 						processHockeyProcedures('ANIMATE-IN-PLAYINGXIBOTHTEAMS');			
 						break;	
+					case 'POPULATE-FF-MATCHID_IMAGE':
+						processHockeyProcedures('ANIMATE-IN-MATCHID_IMAGE');
+						break
 					case 'POPULATE-FF-MATCHSTAT':
 						processHockeyProcedures('ANIMATE-IN-MATCHSTAT');			
 						break;	
