@@ -80,6 +80,8 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 		{
 			int iHomeCont = 0, iAwayCont = 0;
 			penalties.add(valueToProcess.split(",")[1]);
+			
+			System.out.println("valueToProcess.split(\",\")[1] =================" + valueToProcess.split(",")[1]);
 			/*if(((match.getHomePenaltiesHits()+match.getHomePenaltiesMisses())%5) == 0 && ((match.getAwayPenaltiesHits()+match.getAwayPenaltiesMisses())%5) == 0) {
 				System.out.println("hello");
 				penalties = new ArrayList<String>();
@@ -138,18 +140,28 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 					}
 				}
 			}
-			if(match.getHomePenaltiesHits() == 0 && match.getAwayPenaltiesHits() == 0) {
-				penalties = new ArrayList<String>();
-				penaltiesremove = new ArrayList<String>();
+//			if(match.getHomePenaltiesHits() == 0 && match.getAwayPenaltiesHits() == 0) {
+//				penalties = new ArrayList<String>();
+//				penaltiesremove = new ArrayList<String>();
+//			}
+			if (match.getHomePenaltiesHits() + match.getHomePenaltiesMisses()
+			        + match.getAwayPenaltiesHits() + match.getAwayPenaltiesMisses() == 0) {
+			    penalties = new ArrayList<String>();
+			    penaltiesremove = new ArrayList<String>();
 			}
 		} else {
 			if(penalties == null) {
 				penalties = new ArrayList<String>();
 				penaltiesremove = new ArrayList<String>();
 			}
-			if(match.getHomePenaltiesHits() == 0 && match.getAwayPenaltiesHits() == 0) {
-				penalties = new ArrayList<String>();
-				penaltiesremove = new ArrayList<String>();
+//			if(match.getHomePenaltiesHits() == 0 && match.getAwayPenaltiesHits() == 0) {
+//				penalties = new ArrayList<String>();
+//				penaltiesremove = new ArrayList<String>();
+//			}
+			if (match.getHomePenaltiesHits() + match.getHomePenaltiesMisses()
+			        + match.getAwayPenaltiesHits() + match.getAwayPenaltiesMisses() == 0) {
+			    penalties = new ArrayList<String>();
+			    penaltiesremove = new ArrayList<String>();
 			}
 			int iHomeCont = 0, iAwayCont = 0;
 			penalties.add(valueToProcess.split(",")[1]);
@@ -569,6 +581,8 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 					print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_ScoreBug$Sponsor CONTINUE\0");
 					sponsor_on_screen = "";
 				}else {
+					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$Sponsor$Select_Sponsor*FUNCTION*Omo*vis_con SET 2\0");
+					
 					print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_ScoreBug$Sponsor START\0");
 					sponsor_on_screen = "SPONSOR";
 				}
