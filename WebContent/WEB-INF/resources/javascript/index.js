@@ -313,7 +313,7 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 		case 88:
 			processHockeyProcedures('ANIMATE-OUT-RED_CARD');
 			break;
-		case 69:
+		case 6999:
 			addItemsToList('EXTRA-TIME_OPTION',null);
 			break;
 		case 68:
@@ -347,9 +347,12 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 		case 49:
 			processHockeyProcedures('POPULATE-FF-MATCHID_IMAGE');
 			break;
-		case 85:
+		case 69:
 			processHockeyProcedures('POPULATE-FF-MATCHSTAT');
-			break;	
+			break;
+		case 85:
+			processHockeyProcedures('POPULATE-CHANGE_PENALTY');
+			break;		
 		case 82:
 			$("#select_event_div").hide();
 			$("#match_configuration").hide();
