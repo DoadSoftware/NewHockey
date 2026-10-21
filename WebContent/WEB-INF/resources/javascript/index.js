@@ -370,7 +370,10 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 			$("#match_configuration").hide();
 			$("#hockey_div").hide();
 			addItemsToList('PLAYINGXI-OPTIONS_SUB',null);
-			break;	
+			break;
+		case 51:
+			processHockeyProcedures('POPULATE-FF-PLAYINGXIBOTHTEAMS');
+			break;		
 			
 		/*case 117:
 			switch ($('#selectedBroadcaster').val()){
@@ -1633,7 +1636,7 @@ function processHockeyProcedures(whatToProcess, whichInput)
 			case 'POPULATE-QUAIFIERS': case 'POPULATE-LT-PROMO': case 'POPULATE-POINTS_TABLE2': case 'POPULATE-PLAYOFFS': case 'POPULATE-LT-RESULT': case 'POPULATE-ROAD-TO-FINAL':
 			case 'POPULATE-CONTINENTAL_POINTS_TABLE': case 'POPULATE-SCOREBUG_STATS': case 'POPULATE-SCOREBUG-CARD': case 'POPULATE-SCOREBUG-GOAL_SCORER': case 'POPULATE-LAST_GOAL':
 			case 'POPULATE-FF-PLAYINGXISUB': case 'POPULATE-RED_CARD': case 'POPULATE-QUARTER': case 'POPULATE-LT-PENALTY_SCORES': case 'POPULATE-FF_PROMO':	case 'POPULATE-FF-MATCHSTAT':
-
+	        case 'POPULATE-FF-PLAYINGXIBOTHTEAMS':
 				if(confirm('Animate In?') == true){
 					switch(whatToProcess){
 					case 'POPULATE-LT-PENALTY_SCORES':
@@ -1672,6 +1675,9 @@ function processHockeyProcedures(whatToProcess, whichInput)
 					case 'POPULATE-FF-MATCHID':
 						processHockeyProcedures('ANIMATE-IN-MATCHID');			
 						break;
+					case 'POPULATE-FF-PLAYINGXIBOTHTEAMS':
+						processHockeyProcedures('ANIMATE-IN-PLAYINGXIBOTHTEAMS');			
+						break;	
 					case 'POPULATE-FF-MATCHSTAT':
 						processHockeyProcedures('ANIMATE-IN-MATCHSTAT');			
 						break;	
