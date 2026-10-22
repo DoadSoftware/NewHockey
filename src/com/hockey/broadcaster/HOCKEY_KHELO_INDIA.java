@@ -2286,13 +2286,20 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 			 int row_ida=0;
 			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$FF_Gfx*FUNCTION*Omo*vis_con SET 9 \0");
 
-			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$TeamList_Both$Data"
-					+ "$Match_Summary_Out$Druk-Trial-Medium*GEOM*TEXT SET "+ "M-" + match.getMatchId() +"\0");
-			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$TeamList_Both$Data"
-					+ "$Match_Summary_Out$Summary$Summary*GEOM*TEXT SET "+ "SQUADS" +"\0");
 			
 			
-		
+			if(match.getMatchIdent().contains("EXHIBITION")) {
+				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$TeamList_Both$Data"
+						+ "$Match_Summary_Out$Druk-Trial-Medium*GEOM*TEXT SET "+ "TEAM" +"\0");
+				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$TeamList_Both$Data"
+						+ "$Match_Summary_Out$Summary$Summary*GEOM*TEXT SET "+ "LIST" +"\0");
+			}else {
+				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$TeamList_Both$Data"
+						+ "$Match_Summary_Out$Druk-Trial-Medium*GEOM*TEXT SET "+ "M-" + match.getMatchId() +"\0");
+				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$TeamList_Both$Data"
+						+ "$Match_Summary_Out$Summary$Summary*GEOM*TEXT SET "+ "SQUADS" +"\0");
+			}
+			
 				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$TeamList_Both$Data"
 						+ "$Logos_Vs$Left_Logo_Out$img_Logo_Left*TEXTURE*IMAGE SET "+ logo_path + match.getHomeTeam().getTeamBadge() +"\0");
 				
