@@ -425,17 +425,25 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 			switch(which_stats_on_screen) {
 			case "PENALTY_CORNER":
 				print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_ScoreBug$Penalty_Corners CONTINUE\0");
+				TimeUnit.MILLISECONDS.sleep(500);
+				print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_ScoreBug$Penalty_Corners SHOW 0.0\0");
 				break;
 			case "PLAYER_CARD":
 				print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_ScoreBug$Penalty_Card CONTINUE\0");
+				TimeUnit.MILLISECONDS.sleep(500);
+				print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_ScoreBug$Penalty_Card SHOW 0.0\0");
 				break;
 			case "GOAL_SCORER": case "LAST_GOAL":
 				print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_ScoreBug$Goal_Scorer CONTINUE\0");
+				TimeUnit.MILLISECONDS.sleep(500);
+				print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_ScoreBug$Goal_Scorer SHOW 0.0\0");
 				break;	
 			}
 			break;
 		case "ANIMATE-OUT-RED_CARD":
 			print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_ScoreBug$Cards CONTINUE\0");
+			TimeUnit.MILLISECONDS.sleep(500);
+			print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_ScoreBug$Cards SHOW 0.0\0");
 			break;
 		case "ANIMATE-IN-SCOREBUG": 
 		case "CLEAR-ALL": 
@@ -1124,8 +1132,8 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 						}
 						
 						if(whichPlayer == as.getPlayerId()) {
-							print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$Goal_Scorer$Home_Team$Player_Data$txt_PlayerName*GEOM*TEXT SET " + as.getTicker_name() + tim + "\0");
-							print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$Goal_Scorer$Home_Team$Player_Data$txt_PC*GEOM*TEXT SET " + as.getJersey_number() + "\0");
+							print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$Goal_Scorer$Away_Team$Player_Data$txt_PlayerName*GEOM*TEXT SET " + as.getTicker_name() + tim + "\0");
+							print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$Goal_Scorer$Away_Team$Player_Data$txt_PC*GEOM*TEXT SET " + as.getJersey_number() + "\0");
 						}
 					}
 					
@@ -1151,8 +1159,8 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 						}
 						
 						if(whichPlayer == asub.getPlayerId()) {
-							print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$Goal_Scorer$Home_Team$Player_Data$txt_PlayerName*GEOM*TEXT SET " + asub.getTicker_name() + tim + "\0");
-							print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$Goal_Scorer$Home_Team$Player_Data$txt_PC*GEOM*TEXT SET " + asub.getJersey_number() + "\0");
+							print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$Goal_Scorer$Away_Team$Player_Data$txt_PlayerName*GEOM*TEXT SET " + asub.getTicker_name() + tim + "\0");
+							print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$Goal_Scorer$Away_Team$Player_Data$txt_PC*GEOM*TEXT SET " + asub.getJersey_number() + "\0");
 						}
 					}
 				}
@@ -2039,12 +2047,19 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 				
 				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Match_Id$Data"
 						+ "$Match_Number_Out$Number$txt_Match_Number*GEOM*TEXT SET "+ "2" +"\0");
-			}else {
+			}else if(fixture.getMatchfilename().contains("EXHIBITION")) {
+				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Match_Id$Data"
+						+ "$Match_Number_Out$Match$Druk-Trial-Medium*GEOM*TEXT SET "+ "WOMENS   " +"\0");
+				
+				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Match_Id$Data"
+						+ "$Match_Number_Out$Number$txt_Match_Number*GEOM*TEXT SET "+ "" +"\0");
+			}
+			else {
 				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Match_Id$Data"
 						+ "$Match_Number_Out$Match$Druk-Trial-Medium*GEOM*TEXT SET "+ "MATCH" +"\0");
 				
 				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Match_Id$Data"
-						+ "$Match_Number_Out$Number$txt_Match_Number*GEOM*TEXT SET "+ fixture.getMatchnumber() +"\0");
+						+ "$Match_Number_Out$Number$txt_Match_Number*GEOM*TEXT SET "+ (fixture.getMatchnumber()-1) +"\0");
 			}
 			
 			match_name = (fixture.getMatchnumber() > 9 ? fixture.getMatchfilename() : "MATCH " + fixture.getMatchnumber());
@@ -3172,7 +3187,7 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 			
 			
 			for(VariousText vt : hockeyService.getVariousTexts()) {
-				if(vt.getVariousType().equalsIgnoreCase("MATCHSUMMARYHEADER") && vt.getUseThis().equalsIgnoreCase("Yes")) {
+				if(vt.getVariousType().equalsIgnoreCase("MATCHSUMMARYHEADER") && vt.getUseThis().equalsIgnoreCase("YES")) {
 					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Match_Summary$Data"
 							+ "$Score_Out$Status$txt_Status*GEOM*TEXT SET "+ vt.getVariousText() +"\0");
 				}else {
@@ -3803,19 +3818,37 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 					
 					
 					
-					if( fix.get(i).getMatchfilename().contains("SEMI")) {
+					if( fix.get(i).getMatchfilename().contains("FINAL")) {
 						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Match_Id_Double$Match" + row
-								+ "$Match_Number_Out$Match$Druk-Trial-Medium*GEOM*TEXT SET "+ "S-FINAL  " +"\0");
+								+ "$Match_Number_Out$Match$Druk-Trial-Medium*GEOM*TEXT SET "+ "FINAL  " +"\0");
 						
 						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Match_Id_Double$Match" + row
-								+ "$Match_Number_Out$Number$txt_Match_Number*GEOM*TEXT SET "+ row +"\0");
+								+ "$Match_Number_Out$Number$txt_Match_Number*GEOM*TEXT SET "+ "" +"\0");
 						
+					}else if(fix.get(i).getMatchfilename().contains("SEMI FINAL 1")) {
+						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Match_Id_Double$Match" + row
+								+ "$Match_Number_Out$Match$Druk-Trial-Medium*GEOM*TEXT SET "+ "S-FINAL   " +"\0");
+						
+						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Match_Id_Double$Match" + row
+								+ "$Match_Number_Out$Number$txt_Match_Number*GEOM*TEXT SET "+ "1" +"\0");
+					}else if(fix.get(i).getMatchfilename().contains("SEMI FINAL 2")) {
+						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Match_Id_Double$Match" + row
+								+ "$Match_Number_Out$Match$Druk-Trial-Medium*GEOM*TEXT SET "+ "S-FINAL   " +"\0");
+						
+						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Match_Id_Double$Match" + row
+								+ "$Match_Number_Out$Number$txt_Match_Number*GEOM*TEXT SET "+ "2" +"\0");
+					}else if(fix.get(i).getMatchfilename().contains("EXHIBITION")) {
+						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Match_Id_Double$Match" + row
+								+ "$Match_Number_Out$Match$Druk-Trial-Medium*GEOM*TEXT SET "+ "WOMENS   " +"\0");
+						
+						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Match_Id_Double$Match" + row
+								+ "$Match_Number_Out$Number$txt_Match_Number*GEOM*TEXT SET "+ "" +"\0");
 					}else {
 						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Match_Id_Double$Match" + row
 								+ "$Match_Number_Out$Match$Druk-Trial-Medium*GEOM*TEXT SET "+ "MATCH" +"\0");
 						
 						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Match_Id_Double$Match" + row
-								+ "$Match_Number_Out$Number$txt_Match_Number*GEOM*TEXT SET "+ fix.get(i).getMatchnumber() +"\0");
+								+ "$Match_Number_Out$Number$txt_Match_Number*GEOM*TEXT SET "+ (fix.get(i).getMatchnumber()-1) +"\0");
 					}
 					row_id = row_id + 1;
 				}
