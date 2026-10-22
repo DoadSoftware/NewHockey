@@ -578,7 +578,31 @@ public class IndexController
 							}
 						}
 					}
+					for(Player plyr : session_match.getHomeSubstitutes()) {
+						if(plyr.getPlayerId() == Integer.valueOf(valueToProcess.split(",")[2])) {
+							switch (valueToProcess.split(",")[1].toUpperCase()) {
+							case HockeyUtil.GOAL: case HockeyUtil.PENALTY:
+								session_match.setHomeTeamScore(session_match.getHomeTeamScore() + 1);
+								break;
+							case HockeyUtil.OWN_GOAL: 
+								session_match.setAwayTeamScore(session_match.getAwayTeamScore() + 1);
+								break;
+							}
+						}
+					}
 					for(Player plyr : session_match.getAwaySquad()) {
+						if(plyr.getPlayerId() == Integer.valueOf(valueToProcess.split(",")[2])) {
+							switch (valueToProcess.split(",")[1].toUpperCase()) {
+							case HockeyUtil.GOAL: case HockeyUtil.PENALTY:
+								session_match.setAwayTeamScore(session_match.getAwayTeamScore() + 1);
+								break;
+							case HockeyUtil.OWN_GOAL: 
+								session_match.setHomeTeamScore(session_match.getHomeTeamScore() + 1);
+								break;
+							}
+						}
+					}
+					for(Player plyr : session_match.getAwaySubstitutes()) {
 						if(plyr.getPlayerId() == Integer.valueOf(valueToProcess.split(",")[2])) {
 							switch (valueToProcess.split(",")[1].toUpperCase()) {
 							case HockeyUtil.GOAL: case HockeyUtil.PENALTY:
@@ -909,7 +933,31 @@ public class IndexController
 										}
 									}
 								}
+								for(Player plyr : session_match.getHomeSubstitutes()) {
+									if(plyr.getPlayerId() == this_event.getEventPlayerId()) {
+										switch (this_event.getEventType().toUpperCase()) {
+										case HockeyUtil.GOAL: case HockeyUtil.PENALTY:
+											session_match.setHomeTeamScore(session_match.getHomeTeamScore() - 1);
+											break;
+										case HockeyUtil.OWN_GOAL: 
+											session_match.setAwayTeamScore(session_match.getAwayTeamScore() - 1);
+											break;
+										}
+									}
+								}
 								for(Player plyr : session_match.getAwaySquad()) {
+									if(plyr.getPlayerId() == this_event.getEventPlayerId()) {
+										switch (this_event.getEventType().toUpperCase()) {
+										case HockeyUtil.GOAL: case HockeyUtil.PENALTY:
+											session_match.setAwayTeamScore(session_match.getAwayTeamScore() - 1);
+											break;
+										case HockeyUtil.OWN_GOAL: 
+											session_match.setHomeTeamScore(session_match.getHomeTeamScore() - 1);
+											break;
+										}
+									}
+								}
+								for(Player plyr : session_match.getAwaySubstitutes()) {
 									if(plyr.getPlayerId() == this_event.getEventPlayerId()) {
 										switch (this_event.getEventType().toUpperCase()) {
 										case HockeyUtil.GOAL: case HockeyUtil.PENALTY:

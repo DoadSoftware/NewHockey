@@ -667,7 +667,7 @@ function processUserSelection(whichInput)
 			break;	
 		}
 		break;
-	case 'homePlayers': case 'awayPlayers':
+	case 'homePlayers': case 'awayPlayers': case 'homeSubstitutes': case 'awaySubstitutes':
 		$('#selected_player_name').html(whichInput.innerHTML);
 		$('#selected_player_id').val(whichInput.value);
 		document.getElementById('select_event_div').style.display = '';
@@ -5113,8 +5113,8 @@ function addItemsToList(whatToProcess, dataToProcess)
 						break;
 					}
 
-					text = document.createElement('label');
-					
+				//	text = document.createElement('label');
+				    text = document.createElement('a');
 					if(addSelect == true) {
 					
 						switch(j){
@@ -5145,7 +5145,7 @@ function addItemsToList(whatToProcess, dataToProcess)
 							break;
 							
 						}
-					
+						text.setAttribute('onclick','processUserSelection(this);');
 						text.setAttribute('style','cursor: pointer;');
 					
 					}	
