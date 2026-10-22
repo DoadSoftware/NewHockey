@@ -12,8 +12,46 @@
 	<script type="text/javascript" src="<c:url value="/resources/javascript/index.js"/>"></script>
 	<link rel="stylesheet" href="<c:url value="/webjars/bootstrap/5.3.3/css/bootstrap.min.css"/>">
 
+	<style>
+		.side-wrap {
+			position: fixed;
+			top: 50%;
+			transform: translateY(-50%);
+			width: 230px;
+			display: flex;
+			flex-direction: column;
+			gap: 15px;
+			z-index: 1000;
+		}
+		.side-wrap.left  { left: 10px; }
+		.side-wrap.right { right: 10px; }
+	
+		.side-panel {
+			padding: 10px;
+			border: 2px solid #2E008B;
+			border-radius: 10px;
+			background-color: #FEFEFE;
+		}
+		.side-panel .btn-grid {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			gap: 8px;
+		}
+		.side-panel .btn {
+			background-color: #2E008B;
+			color: #FEFEFE;
+			font-size: 0.75rem;
+			padding: 4px 2px;
+			white-space: nowrap;
+		}
+	</style>
+
   <script type="text/javascript">
 	$(document).on("keydown", function(e){
+		var tag = e.target.tagName;
+		if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT" || e.target.isContentEditable) {
+			return; // let the key work normally, don't call processUserSelectionData
+		}
 		if (e.which >= 112 && e.which <= 123) { // Suppress default behaviour of F1 to F12
 			e.preventDefault();
 		}else if (e.which == 32) {
@@ -24,6 +62,53 @@
   </script>  
 </head>
 <body onload="afterPageLoad('MATCH');">
+	<!-- LEFT SIDE (HOME) -->
+	<div class="side-wrap left d-none d-xl-flex">
+		<div class="side-panel">
+			<div class="btn-grid">
+				<button type="button" class="btn btn-sm" name="side_btn" id="homeYellow1In" onclick="processUserSelection(this)">Yellow 1</button>
+				<button type="button" class="btn btn-sm" name="side_btn" id="homeYellow2In" onclick="processUserSelection(this)">Yellow 2</button>
+				<button type="button" class="btn btn-sm" name="side_btn" id="homeRed1In" onclick="processUserSelection(this)">Red 1</button>
+				<button type="button" class="btn btn-sm" name="side_btn" id="homeRed2In" onclick="processUserSelection(this)">Red 2</button>
+				<button type="button" class="btn btn-sm" name="side_btn" id="homeGreen1In" onclick="processUserSelection(this)">Green 1</button>
+				<button type="button" class="btn btn-sm" name="side_btn" id="homeGreen2In" onclick="processUserSelection(this)">Green 2</button>
+			</div>
+		</div>
+		<div class="side-panel">
+			<div class="btn-grid">
+				<button type="button" class="btn btn-sm" name="side_btn" id="outhomeYellow1" onclick="processUserSelection(this)">Out Yellow 1</button>
+				<button type="button" class="btn btn-sm" name="side_btn" id="outhomeYellow2" onclick="processUserSelection(this)">Out Yellow 2</button>
+				<button type="button" class="btn btn-sm" name="side_btn" id="outhomeRed1" onclick="processUserSelection(this)">Out Red 1</button>
+				<button type="button" class="btn btn-sm" name="side_btn" id="outhomeRed2" onclick="processUserSelection(this)">Out Red 2</button>
+				<button type="button" class="btn btn-sm" name="side_btn" id="outhomeGreen1" onclick="processUserSelection(this)">Out Green 1</button>
+				<button type="button" class="btn btn-sm" name="side_btn" id="outhomeGreen2" onclick="processUserSelection(this)">Out Green 2</button>
+			</div>
+		</div>
+	</div>
+
+	<!-- RIGHT SIDE (AWAY) -->
+	<div class="side-wrap right d-none d-xl-flex">
+		<div class="side-panel">
+			<div class="btn-grid">
+				<button type="button" class="btn btn-sm" name="side_btn" id="awayYellow1In" onclick="processUserSelection(this)">Yellow 1</button>
+				<button type="button" class="btn btn-sm" name="side_btn" id="awayYellow2In" onclick="processUserSelection(this)">Yellow 2</button>
+				<button type="button" class="btn btn-sm" name="side_btn" id="awayRed1In" onclick="processUserSelection(this)">Red 1</button>
+				<button type="button" class="btn btn-sm" name="side_btn" id="awayRed2In" onclick="processUserSelection(this)">Red 2</button>
+				<button type="button" class="btn btn-sm" name="side_btn" id="awayGreen1In" onclick="processUserSelection(this)">Green 1</button>
+				<button type="button" class="btn btn-sm" name="side_btn" id="awayGreen2In" onclick="processUserSelection(this)">Green 2</button>
+			</div>
+		</div>
+		<div class="side-panel">
+			<div class="btn-grid">
+				<button type="button" class="btn btn-sm" name="side_btn" id="outawayYellow1" onclick="processUserSelection(this)">Out Yellow 1</button>
+				<button type="button" class="btn btn-sm" name="side_btn" id="outawayYellow2" onclick="processUserSelection(this)">Out Yellow 2</button>
+				<button type="button" class="btn btn-sm" name="side_btn" id="outawayRed1" onclick="processUserSelection(this)">Out Red 1</button>
+				<button type="button" class="btn btn-sm" name="side_btn" id="outawayRed2" onclick="processUserSelection(this)">Out Red 2</button>
+				<button type="button" class="btn btn-sm" name="side_btn" id="outawayGreen1" onclick="processUserSelection(this)">Out Green 1</button>
+				<button type="button" class="btn btn-sm" name="side_btn" id="outawayGreen2" onclick="processUserSelection(this)">Out Green 2</button>
+			</div>
+		</div>
+	</div>
 <form:form name="hockey_form" autocomplete="off" action="match" method="POST" 
 	modelAttribute="session_match">
 <div class="content py-5" style="background-color: #EAE8FF; color: #2E008B">

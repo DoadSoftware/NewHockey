@@ -19,6 +19,8 @@ function getPlayerMatchStats(playerId){
 					value = value + 'Y';
 				}else if(match_data.events[k].eventType == 'red'){
 					value = value + 'R';
+				}else if(match_data.events[k].eventType == 'green'){
+					value = value + 'G';
 				}
 			}else if(match_data.events[k].eventPlayerId == 0){
 				if(match_data.events[k].offPlayerId == playerId){
@@ -328,6 +330,15 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 		case 74:
 			processHockeyProcedures('ANIMATE-OUT-SPONSOR');
 			break;
+		case 50:
+			processHockeyProcedures('ANIMATE-OUT-SCORETEAM');
+			break;
+		case 49:
+			$("#select_event_div").hide();
+			$("#match_configuration").hide();
+			$("#hockey_div").hide();
+			addItemsToList('CARDS-OPTIONS');
+			break;		
 		case 113:
 			$("#select_event_div").hide();
 			$("#match_configuration").hide();
@@ -597,6 +608,89 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 		break;
 	}
 }
+function processSideButton(btnId)
+{
+	switch (btnId) {
+	case 'homeYellow1In':
+		processHockeyProcedures('HOME_YELLOW1');
+		break;
+	case 'homeYellow2In':
+		processHockeyProcedures('HOME_YELLOW2');
+		break;
+	case 'homeRed1In':
+		processHockeyProcedures('HOME_RED1');
+		break;
+	case 'homeRed2In':
+		processHockeyProcedures('HOME_RED2');
+		break;
+	case 'homeGreen1In':
+		processHockeyProcedures('HOME_GREEN1');
+		break;
+	case 'homeGreen2In':
+		processHockeyProcedures('HOME_GREEN2');
+		break;
+		
+		
+	case 'awayYellow1In':
+		processHockeyProcedures('AWAY_YELLOW1');
+		break;
+	case 'awayYellow2In':
+		processHockeyProcedures('AWAY_YELLOW2');
+		break;
+	case 'awayRed1In':
+		processHockeyProcedures('AWAY_RED1');
+		break;
+	case 'awayRed2In':
+		processHockeyProcedures('AWAY_RED2');
+		break;
+	case 'awayGreen1In':
+		processHockeyProcedures('AWAY_GREEN1');
+		break;
+	case 'awayGreen2In':
+		processHockeyProcedures('AWAY_GREEN2');
+		break;
+	
+		
+	case 'outhomeYellow1':
+		processHockeyProcedures('HOME_YELLOW1_OUT');
+		break;
+	case 'outhomeYellow2':
+		processHockeyProcedures('HOME_YELLOW2_OUT');
+		break;
+	case 'outhomeRed1':
+		processHockeyProcedures('HOME_RED1_OUT');
+		break;
+	case 'outhomeRed2':
+		processHockeyProcedures('HOME_RED2_OUT');
+		break;
+	case 'outhomeGreen1':
+		processHockeyProcedures('HOME_GREEN1_OUT');
+		break;
+	case 'outhomeGreen2':
+		processHockeyProcedures('HOME_GREEN2_OUT');
+		break;
+		
+		
+	case 'outawayYellow1':
+		processHockeyProcedures('AWAY_YELLOW1_OUT');
+		break;
+	case 'outawayYellow2':
+		processHockeyProcedures('AWAY_YELLOW2_OUT');
+		break;
+	case 'outawayRed1':
+		processHockeyProcedures('AWAY_RED1_OUT');
+		break;
+	case 'outawayRed2':
+		processHockeyProcedures('AWAY_RED2_OUT');
+		break;
+	case 'outawayGreen1':
+		processHockeyProcedures('AWAY_GREEN1_OUT');
+		break;
+	case 'outawayGreen2':
+		processHockeyProcedures('AWAY_GREEN2_OUT');
+		break;
+	}
+}
 function processUserSelection(whichInput)
 {	
 	switch ($(whichInput).attr('name')) {
@@ -800,6 +894,9 @@ function processUserSelection(whichInput)
 		processWaitingButtonSpinner('START_WAIT_TIMER');
 		processHockeyProcedures('LOAD_MATCH',$('#select_hockey_matches option:selected'));
 		break;
+	case 'side_btn':
+		processSideButton(whichInput.id);
+		break;	
 	case 'log_event_btn':
 		if(whichInput.id.toLowerCase() == 'undo') {
     		if(match_data == null || match_data.events.length <= 0) {
@@ -848,11 +945,14 @@ function processUserSelection(whichInput)
 	case 'populate_scorebug_subs_btn': case 'populate_single_substitution_btn': case 'populate_playingxi_changeon_btn': case 'populate_points_table_btn': case 'populate_homesub_btn': 
 	case 'populate_Away_btn': case 'populate_awaysub_btn': case 'populate_sub_btn': case 'populate_heatmap_btn': case 'populate_Top_Stats_btn': case 'populate_fixtures_btn':
 	case 'populate_subchange_on_btn': case 'populate_double_promo_btn': case 'populate_ltmatch_promo_btn': case 'populate_scorebug_match_promo_btn': case 'populate_points_table2_btn':
-	case 'populate_result_promo_btn': case 'populate_scorebug_goalScorer_btn': case 'populate_playingxisub_btn':
-	case 'populate_match_promo_btnn':	
+	case 'populate_result_promo_btn': case 'populate_scorebug_goalScorer_btn': case 'populate_playingxisub_btn': case 'populate_scorecard_btn':
+	case 'populate_match_promo_btnn': case 'populate_refstatus_btn':
 
 		processWaitingButtonSpinner('START_WAIT_TIMER');
 		switch ($(whichInput).attr('name')) {
+		/*case 'populate_refstatus_btn':
+			processHockeyProcedures('POPULATE-REFERRAL');
+			break;*/
 		case 'populate_subchange_on_btn':
 			processHockeyProcedures('ANIMATE-SUB_CHANGE_ON');
 			break;
@@ -928,6 +1028,9 @@ function processUserSelection(whichInput)
 		case 'populate_scorebug_card_btn':
 			processHockeyProcedures('POPULATE-SCOREBUG-CARD');
 			break;
+		case 'populate_scorecard_btn':
+			processHockeyProcedures('POPULATE-SCORETEAM');
+			break;	
 		case 'populate_scorebug_goalScorer_btn':
 			processHockeyProcedures('POPULATE-SCOREBUG-GOAL_SCORER');
 			break;	
@@ -1164,6 +1267,14 @@ function processHockeyProcedures(whatToProcess, whichInput)
 				break;
 		}
 		break;
+	case 'POPULATE-SCORETEAM':
+		switch ($('#selectedBroadcaster').val()) {
+			case 'PUNJAB': 
+				value_to_process = $('#selectTeam option:selected').val();
+				//alert(value_to_process);
+				break;
+		}
+		break;	
 	case 'POPULATE-SCOREBUG-GOAL_SCORER':
 		switch ($('#selectedBroadcaster').val()) {
 			case 'HOCKEY_KHELO_INDIA': case 'PUNJAB': 
@@ -1457,6 +1568,9 @@ function processHockeyProcedures(whatToProcess, whichInput)
 			break;	
 		}
 		break;
+	/*case 'POPULATE-REFERRAL':
+		value_to_process = $('#selectTeam option:selected').val() + ',' + $('#selectStatus option:selected').val();
+		break;	*/
 	case 'ANIMATE-CHANGE_ON_FORMATION':
 		switch ($('#selectedBroadcaster').val()) {
 		case 'I_LEAGUE':
@@ -1561,11 +1675,14 @@ function processHockeyProcedures(whatToProcess, whichInput)
 				processHockeyProcedures('ANIMATE-IN-SUBS_CHANGE_ON');	
 				break;
 			case 'POPULATE-SCOREBUG_STATS': case 'POPULATE-SCOREBUG-CARD': case 'POPULATE-SCOREBUG-GOAL_SCORER': case 'POPULATE-LAST_GOAL':
-			case 'POPULATE-RED_CARD':
+			case 'POPULATE-RED_CARD': case 'POPULATE-SCORETEAM':
 				
 				if(data.status == 'OK'){
 					if(confirm('Animate In?') == true){
 						switch(whatToProcess){
+							case 'POPULATE-SCORETEAM':
+								processHockeyProcedures('ANIMATE-IN-SCORECARD');
+								break;
 							case 'POPULATE-RED_CARD':
 								processHockeyProcedures('ANIMATE-IN-SCOREBUG-RED_CARD');
 								break;
@@ -1594,10 +1711,13 @@ function processHockeyProcedures(whatToProcess, whichInput)
 			case 'POPULATE-QUAIFIERS': case 'POPULATE-LT-PROMO': case 'POPULATE-POINTS_TABLE2': case 'POPULATE-PLAYOFFS': case 'POPULATE-LT-RESULT': case 'POPULATE-ROAD-TO-FINAL':
 			case 'POPULATE-CONTINENTAL_POINTS_TABLE': case 'POPULATE-SCOREBUG_STATS': case 'POPULATE-SCOREBUG-CARD': case 'POPULATE-SCOREBUG-GOAL_SCORER': case 'POPULATE-LAST_GOAL':
 			case 'POPULATE-FF-PLAYINGXISUB': case 'POPULATE-RED_CARD': case 'POPULATE-QUARTER': case 'POPULATE-LT-PENALTY_SCORES': case 'POPULATE-FF_PROMO':	case 'POPULATE-FF-MATCHSTAT':
-	        case 'POPULATE-FF-PLAYINGXIBOTHTEAMS':
+	        case 'POPULATE-FF-PLAYINGXIBOTHTEAMS': case 'POPULATE-REFERRAL':
 			case 'POPULATE-FF-MATCHID_IMAGE':
 				if(confirm('Animate In?') == true){
 					switch(whatToProcess){
+					case 'POPULATE-REFERRAL':
+						processHockeyProcedures('ANIMATE-IN-REFERRAL');
+						break;	
 					case 'POPULATE-LT-PENALTY_SCORES':
 						processHockeyProcedures('ANIMATE-IN-PENALTY_SCORES');
 						break;
@@ -1900,7 +2020,7 @@ function addItemsToList(whatToProcess, dataToProcess)
 	case 'STAFF-OPTIONS': case 'MATCH-PROMO-OPTIONS':case 'AD-OPTIONS': case 'SUBSTITUTE-OPTIONS': case 'FORMATION-OPTIONS': case 'SCOREBUG-CARD-OPTIONS':
 	case 'SCOREBUG-SUBSTITUTION-OPTIONS': case 'SINGLE_SUBSTITUTE-OPTIONS': case 'HEATMAP_PEAKDISTACE-OPTION': case 'LT_MATCH-PROMO-OPTIONS': case 'SCOREBUGPROMO-OPTIONS':
 	case 'TOP_STATS-OPTIONS': case 'FIXTURES-OPTIONS': case 'POINT_TABLE-OPTIONS': case 'DOUBLE_PROMO-OPTIONS': case 'POINTS_TABLE2_OPTION': case 'RESULT_PROMO-OPTIONS':
-	case 'SCOREBUG-GOALSCORER-OPTIONS': case 'PLAYINGXI-OPTIONS_SUB': case 'FF_PROMO-OPTIONS':
+	case 'SCOREBUG-GOALSCORER-OPTIONS': case 'PLAYINGXI-OPTIONS_SUB': case 'FF_PROMO-OPTIONS': case 'REFERRAL-OPTIONS': case 'CARDS-OPTIONS':
 		switch ($('#selectedBroadcaster').val().toUpperCase()) {
 		case 'PUNJAB': case 'HOCKEY_KHELO_INDIA':
 
@@ -2142,6 +2262,71 @@ function addItemsToList(whatToProcess, dataToProcess)
 				    div.append(option);
 				    
 				    row.insertCell(2).appendChild(div);
+					document.getElementById('select_graphic_options_div').style.display = '';
+					break;
+				case 'REFERRAL-OPTIONS':
+					select = document.createElement('select');
+					select.id = 'selectTeam';
+					select.name = select.id;
+					
+					option = document.createElement('option');
+					option.value = match_data.homeTeamId;
+					option.text = match_data.homeTeam.teamName1;
+					select.appendChild(option);
+					
+					option = document.createElement('option');
+					option.value = match_data.awayTeamId;
+					option.text = match_data.awayTeam.teamName1;
+					select.appendChild(option);
+					
+					row.insertCell(cellCount).appendChild(select);
+					cellCount = cellCount + 1;
+					
+					select = document.createElement('select');
+					select.id = 'selectStatus';
+					select.name = select.id;
+					
+					option = document.createElement('option');
+					option.value = 'success';
+					option.text = 'SuccessFull';
+					select.appendChild(option);
+					
+					option = document.createElement('option');
+					option.value = 'unSuccess';
+					option.text = 'UnSuccessfull';
+					select.appendChild(option);
+					
+				    select.setAttribute('onchange',"processUserSelection(this)");
+					row.insertCell(cellCount).appendChild(select);
+					cellCount = cellCount + 1;
+					
+					option = document.createElement('input');
+					option.type = 'button';
+					
+					option.name = 'populate_refstatus_btn';
+					option.value = 'Populate Referral';
+					
+					option.id = option.name;
+				    option.setAttribute('onclick',"processUserSelection(this)");
+				    
+				    div = document.createElement('div');
+				    div.append(option);
+				    
+				    row.insertCell(cellCount).appendChild(div);
+				    cellCount = cellCount + 1;
+				    
+					option = document.createElement('input');
+					option.type = 'button';
+					option.name = 'cancel_graphics_btn';
+					option.id = option.name;
+					option.value = 'Cancel';
+					option.setAttribute('onclick','processUserSelection(this)');
+
+				    div.append(option);
+				    
+				    row.insertCell(cellCount).appendChild(div);
+				    cellCount = cellCount + 1;
+				    
 					document.getElementById('select_graphic_options_div').style.display = '';
 					break;
 				case 'SCOREBUG-SUBSTITUTION-OPTIONS':					
@@ -2947,6 +3132,25 @@ function addItemsToList(whatToProcess, dataToProcess)
 				row.insertCell(cellCount).appendChild(select);
 				cellCount = cellCount + 1;
 				break;
+			case 'CARDS-OPTIONS':
+				select = document.createElement('select');
+				select.id = 'selectTeam';
+				select.name = select.id;
+				
+				option = document.createElement('option');
+				option.value = match_data.homeTeamId;
+				option.text = match_data.homeTeam.teamName1;
+				select.appendChild(option);
+				
+				option = document.createElement('option');
+				option.value = match_data.awayTeamId;
+				option.text = match_data.awayTeam.teamName1;
+				select.appendChild(option);
+
+				select.setAttribute('onchange',"processUserSelection(this)");
+				row.insertCell(cellCount).appendChild(select);
+				cellCount = cellCount + 1;
+				break;
 			case 'SCOREBUG-CARD-OPTIONS':
 				select = document.createElement('select');
 				select.id = 'selectTeam';
@@ -3500,7 +3704,32 @@ function addItemsToList(whatToProcess, dataToProcess)
 			    cellCount = cellCount + 1;
 			    
 				document.getElementById('select_graphic_options_div').style.display = '';
-				break;	
+				break;
+			case 'CARDS-OPTIONS':
+				option = document.createElement('input');
+		   	 	option.type = 'button';
+			    option.name = 'populate_scorecard_btn';
+			    option.value = 'Populate ScoreBug Team';
+			    option.id = option.name;
+			    option.setAttribute('onclick',"processUserSelection(this)");
+			    
+			    div = document.createElement('div');
+			    div.append(option);
+
+				option = document.createElement('input');
+				option.type = 'button';
+				option.name = 'cancel_graphics_btn';
+				option.id = option.name;
+				option.value = 'Cancel';
+				option.setAttribute('onclick','processUserSelection(this)');
+		
+			    div.append(option);
+			    
+			    row.insertCell(cellCount).appendChild(div);
+			    cellCount = cellCount + 1;
+			    
+				document.getElementById('select_graphic_options_div').style.display = '';
+				break;			
 			case 'SCOREBUG-CARD-OPTIONS':
 				option = document.createElement('input');
 		   	 	option.type = 'button';
@@ -4754,7 +4983,7 @@ function addItemsToList(whatToProcess, dataToProcess)
 		for(var iRow=0;iRow<=0;iRow++) {
 			
 			row = tbody.insertRow(tbody.rows.length);
-			max_cols = 5;
+			max_cols = 6;
 			
 			for(var iCol=0;iCol<=max_cols;iCol++) {
 				
@@ -4793,6 +5022,10 @@ function addItemsToList(whatToProcess, dataToProcess)
 						option.value = 'Penalty';
 						break;
 					case 5:
+						option.id = 'card';
+						option.value = 'Card';
+						break;	
+					case 6:
 						option.name = 'cancel_event_btn';
 						option.id = option.name;
 						option.value = 'Cancel';
@@ -4923,7 +5156,7 @@ function addItemsToList(whatToProcess, dataToProcess)
 							
 						case 'card':
 							
-							for(var ibound=1; ibound<=2; ibound++) 
+							for(var ibound=1; ibound<=3; ibound++) 
 							{
 						    	anchor = document.createElement('a');
 							    anchor.className = 'btn btn-success';
@@ -4934,7 +5167,10 @@ function addItemsToList(whatToProcess, dataToProcess)
 							    } else if(ibound == 2) {
 								    anchor.id = 'red';
 								    anchor.innerText = 'Red Card';
-							    }
+							    }else if(ibound == 3) {
+								    anchor.id = 'green';
+								    anchor.innerText = 'Green Card';
+								}
 							    
 							    anchor.setAttribute('onclick','processWaitingButtonSpinner("START_WAIT_TIMER");processHockeyProcedures("LOG_EVENT",this);');
 							    anchor.style = 'display:block;';

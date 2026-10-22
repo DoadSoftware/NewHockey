@@ -157,7 +157,7 @@ public class IndexController
 				//System.out.println("Broad : " + session_selected_broadcaster + " Port : " + vizPortNumber);
 				session_socket = new Socket(vizIPAddresss, Integer.valueOf(vizPortNumber));
 				switch (session_selected_broadcaster.toUpperCase()) {
-				case HockeyUtil.HOCKEY_KHELO_INDIA: case "PUNJAB":
+				case HockeyUtil.HOCKEY_KHELO_INDIA:
 					session_selected_scenes.add(new Scene("","FULL-FRAMERS"));
 					session_selected_scenes.add(new Scene("","OVERLAYS"));
 					session_selected_scenes.get(0).scene_load(session_socket, session_selected_broadcaster);
@@ -165,7 +165,14 @@ public class IndexController
 					session_khelo_india = new HOCKEY_KHELO_INDIA();
 					session_khelo_india.scorebug = new ScoreBug();
 					break;
-					
+				case "PUNJAB":
+					session_selected_scenes.add(new Scene("","FULL-FRAMERS"));
+					session_selected_scenes.add(new Scene("","OVERLAYS"));
+					session_selected_scenes.get(0).scene_load(session_socket, session_selected_broadcaster);
+					session_selected_scenes.get(1).scene_load(session_socket, session_selected_broadcaster);
+					session_punjab = new PUNJAB();
+					session_punjab.scorebug = new ScoreBug();
+					break;
 				}
 			}
 			
@@ -561,7 +568,7 @@ public class IndexController
 				switch (valueToProcess.split(",")[1].toUpperCase()) {
 				case HockeyUtil.GOAL: case HockeyUtil.OWN_GOAL: case HockeyUtil.PENALTY: case HockeyUtil.YELLOW: case HockeyUtil.RED:
 				case HockeyUtil.SHOTS_ON_TARGET: case HockeyUtil.SHOTS: case HockeyUtil.CORNERS_CONVERTED: case HockeyUtil.CORNERS:
-				case HockeyUtil.ASSISTS: case HockeyUtil.OFF_SIDE: case HockeyUtil.FOULS:
+				case HockeyUtil.ASSISTS: case HockeyUtil.OFF_SIDE: case HockeyUtil.FOULS: case HockeyUtil.GREEN:
 					
 					session_match.getMatchStats().add(new MatchStats(session_match.getMatchStats().size() + 1, Integer.valueOf(valueToProcess.split(",")[2]), 
 							session_match.getClock().getMatchHalves(),valueToProcess.split(",")[1], 1, session_match.getClock().getMatchTotalMilliSeconds()));
@@ -918,7 +925,7 @@ public class IndexController
 							switch (this_event.getEventType().toUpperCase()) {
 							case HockeyUtil.GOAL: case HockeyUtil.OWN_GOAL: case HockeyUtil.PENALTY: case HockeyUtil.YELLOW: case HockeyUtil.RED:
 							case HockeyUtil.ASSISTS: case HockeyUtil.SHOTS: case HockeyUtil.SHOTS_ON_TARGET: case HockeyUtil.OFF_SIDE: case HockeyUtil.FOULS:
-							case HockeyUtil.CORNERS_CONVERTED: case HockeyUtil.CORNERS: case HockeyUtil.SAVES:
+							case HockeyUtil.CORNERS_CONVERTED: case HockeyUtil.CORNERS: case HockeyUtil.SAVES: case HockeyUtil.GREEN:
 								this_event = session_event.getEvents().get(session_event.getEvents().size() - 1);
 								session_match.getMatchStats().remove(session_match.getMatchStats().get(session_match.getMatchStats().size() - 1));
 								for(Player plyr : session_match.getHomeSquad()) {
