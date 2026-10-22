@@ -39,6 +39,7 @@ import com.hockey.util.HockeyUtil;
 import com.opencsv.exceptions.CsvException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hockey.broadcaster.HOCKEY_KHELO_INDIA;
+import com.hockey.broadcaster.PUNJAB;
 import com.hockey.containers.Scene;
 import com.hockey.containers.ScoreBug;
 
@@ -58,6 +59,7 @@ public class IndexController
 	public static String session_selected_broadcaster;
 	public static Socket session_socket;
 	public static HOCKEY_KHELO_INDIA session_khelo_india;
+	public static PUNJAB session_punjab;
 	public static List<Scene> session_selected_scenes;
 	public static ObjectMapper objectMapper = new ObjectMapper();
 	public static List<Fixture> session_fixture = new ArrayList<>();
@@ -155,7 +157,7 @@ public class IndexController
 				//System.out.println("Broad : " + session_selected_broadcaster + " Port : " + vizPortNumber);
 				session_socket = new Socket(vizIPAddresss, Integer.valueOf(vizPortNumber));
 				switch (session_selected_broadcaster.toUpperCase()) {
-				case HockeyUtil.HOCKEY_KHELO_INDIA:
+				case HockeyUtil.HOCKEY_KHELO_INDIA: case "PUNJAB":
 					session_selected_scenes.add(new Scene("","FULL-FRAMERS"));
 					session_selected_scenes.add(new Scene("","OVERLAYS"));
 					session_selected_scenes.get(0).scene_load(session_socket, session_selected_broadcaster);
@@ -466,6 +468,10 @@ public class IndexController
 				session_khelo_india.ProcessGraphicOption(whatToProcess,session_match, session_clock,hockeyService,session_socket, 
 						session_selected_scenes, valueToProcess);
 				break;
+			case HockeyUtil.HOCKEY_PUNJAB:
+				session_punjab.ProcessGraphicOption(whatToProcess,session_match, session_clock,hockeyService,session_socket, 
+						session_selected_scenes, valueToProcess);
+				break;	
 			}
 			//session_i_league.ProcessGraphicOption(whatToProcess,session_match, session_clock,footballService,session_socket, session_selected_scenes, valueToProcess);
 			return objectMapper.writeValueAsString(session_match);
@@ -492,6 +498,9 @@ public class IndexController
 			case HockeyUtil.HOCKEY_KHELO_INDIA:
 				return session_khelo_india.ProcessGraphicOption(whatToProcess,session_match,session_clock, 
 						hockeyService,session_socket, session_selected_scenes, valueToProcess).toString();
+			case HockeyUtil.HOCKEY_PUNJAB:
+				return session_punjab.ProcessGraphicOption(whatToProcess,session_match,session_clock, 
+						hockeyService,session_socket, session_selected_scenes, valueToProcess).toString();	
 			}
 			
 			return objectMapper.writeValueAsString(session_match);
@@ -1028,6 +1037,9 @@ public class IndexController
 				case HockeyUtil.HOCKEY_KHELO_INDIA:
 					session_khelo_india.updateScoreBug(session_selected_scenes,session_match, session_socket);
 					break;
+				case HockeyUtil.HOCKEY_PUNJAB:
+					session_punjab.updateScoreBug(session_selected_scenes,session_match, session_socket);
+					break;	
 				}
 			}
 			return objectMapper.writeValueAsString(session_match);
@@ -1038,6 +1050,10 @@ public class IndexController
 				session_khelo_india.ProcessGraphicOption(whatToProcess,session_match, session_clock,hockeyService,session_socket, 
 						session_selected_scenes, valueToProcess);
 				return new ObjectMapper().writeValueAsString(session_khelo_india).toString();
+			case HockeyUtil.HOCKEY_PUNJAB:
+				session_punjab.ProcessGraphicOption(whatToProcess,session_match, session_clock,hockeyService,session_socket, 
+						session_selected_scenes, valueToProcess);
+				return new ObjectMapper().writeValueAsString(session_punjab).toString();	
 			}
 			return objectMapper.writeValueAsString(session_match);
 		}

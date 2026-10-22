@@ -488,7 +488,7 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 					//alert('I_LEAGUE');
 					processHockeyProcedures('POPULATE-DOUBLE_PROMO');
 					break;
-				 case 'SUPER_CUP': case 'CONTINENTAL': case 'HOCKEY_KHELO_INDIA':
+				 case 'PUNJAB': case 'HOCKEY_KHELO_INDIA':
 					$("#select_event_div").hide();
 					$("#match_configuration").hide();
 					$("#hockey_div").hide();
@@ -498,7 +498,7 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 			break;
 		case 80:
 			switch ($('#selectedBroadcaster').val()){
-				case 'HOCKEY_KHELO_INDIA':
+				case 'HOCKEY_KHELO_INDIA': case 'PUNJAB': 
 					//alert('I_LEAGUE');
 					processHockeyProcedures('POPULATE-POINTS_TABLE');
 					break;
@@ -1071,23 +1071,10 @@ function processHockeyProcedures(whatToProcess, whichInput)
 		break;
 	case 'POPULATE-L3-NAMESUPER':
 		switch ($('#selectedBroadcaster').val()) {
-			case 'I_LEAGUE':
-				value_to_process = 'D:/DOAD_In_House_Everest/Everest_Sports/Everest_I-League_2022/Scenes/LT_GoalScorer.sum' + ',' + $('#selectNameSuper option:selected').val() ;
-			//value_to_process = 'D:/DOAD_In_House_Everest/Everest_Sports/Everest_I-League_2022/Scenes/LT_NameSuper.sum' + ',' + $('#selectNameSuper option:selected').val() ;
-				break;
-			case 'HOCKEY_KHELO_INDIA':
+			case 'HOCKEY_KHELO_INDIA': case 'PUNJAB': 
 				value_to_process = 'D:/DOAD_In_House_Everest/Everest_Sports/Everest_Khelo_India_2023/Scenes/LT.sum' + ',' + 
 					$('#selectNameSuper option:selected').val() ;
 				break;
-			case 'SANTOSH_TROPHY':
-				value_to_process = 'D:/DOAD_In_House_Everest/Everest_Sports/Everest_SantoshTrophy_2023/Scenes/LT_NameSuper.sum' + ',' + $('#selectNameSuper option:selected').val() ;
-				break;
-			case 'VIZ_TRI_NATION':
-				value_to_process = '/Default/LT' + ',' + $('#selectNameSuper option:selected').val() ;
-				break;
-			case 'SUPER_CUP': case 'CONTINENTAL':
-				value_to_process = '/Default/LT' + ',' + $('#selectNameSuper option:selected').val() ;
-				break;	
 		}
 		break;
 	case 'POPULATE-PENALTY':
@@ -1105,7 +1092,7 @@ function processHockeyProcedures(whatToProcess, whichInput)
 		break;
 	case 'POPULATE-L3-STAFF':
 		switch ($('#selectedBroadcaster').val()) {
-			case 'HOCKEY_KHELO_INDIA':
+			case 'HOCKEY_KHELO_INDIA': case 'PUNJAB': 
 				value_to_process = '/Default/LT' + ',' + $('#selectStaff option:selected').val() ;
 				break;
 		}
@@ -1157,28 +1144,12 @@ function processHockeyProcedures(whatToProcess, whichInput)
 		break;
 	case 'POPULATE-L3-NAMESUPER-PLAYER':
 		switch ($('#selectedBroadcaster').val()) {
-			case 'I_LEAGUE':
-				value_to_process = 'D:/DOAD_In_House_Everest/Everest_Sports/Everest_I-League_2022/Scenes/LT_GoalScorer.sum' + ',' + $('#selectTeam option:selected').val() + ',' + 
-					$('#selectCaptainWicketKeeper option:selected').val() + ',' + $('#selectPlayer option:selected').val() ;
-				break;
-			case 'HOCKEY_KHELO_INDIA':
+			case 'HOCKEY_KHELO_INDIA': case 'PUNJAB': 
 				value_to_process = 'D:/DOAD_In_House_Everest/Everest_Sports/Everest_Khelo_India_2023/Scenes/LT.sum' + ',' + $('#selectTeam option:selected').val() + ',' + 
 					$('#selectCaptainWicketKeeper option:selected').val() + ',' + $('#selectPlayer option:selected').val() + ',' + $('#selectCards option:selected').val() + ',' + 
 					$('#selectPhoto option:selected').val();
 				
 				break;
-			case 'SANTOSH_TROPHY':
-				value_to_process = 'D:/DOAD_In_House_Everest/Everest_Sports/Everest_SantoshTrophy_2023/Scenes/LT_NameSuper.sum' + ',' + $('#selectTeam option:selected').val() + ',' + 
-				$('#selectCaptainWicketKeeper option:selected').val() + ',' + $('#selectPlayer option:selected').val() ;
-				break;
-			case 'VIZ_TRI_NATION':
-				value_to_process = '/Default/LT' + ',' + $('#selectTeam option:selected').val() + ',' + $('#selectCaptainWicketKeeper option:selected').val() + ',' + 
-					$('#selectPlayer option:selected').val() ;
-				break;
-			case 'SUPER_CUP': case 'CONTINENTAL':
-				value_to_process = '/Default/LT' + ',' + $('#selectTeam option:selected').val() + ',' + $('#selectCaptainWicketKeeper option:selected').val() + ',' + 
-					$('#selectPlayer option:selected').val() ;
-				break;	
 		}
 		break;
 	case 'POPULATE-L3-NAMESUPER-CARD':
@@ -1187,7 +1158,7 @@ function processHockeyProcedures(whatToProcess, whichInput)
 		break;
 	case 'POPULATE-SCOREBUG-CARD':
 		switch ($('#selectedBroadcaster').val()) {
-			case 'HOCKEY_KHELO_INDIA':
+			case 'HOCKEY_KHELO_INDIA': case 'PUNJAB': 
 				value_to_process = $('#selectTeam option:selected').val() + ',' + $('#selectCaptainWicketKeeper option:selected').val() + ',' + $('#selectPlayer option:selected').val() + ',' + $('#selectPhoto option:selected').val();
 				//alert(value_to_process);
 				break;
@@ -1195,7 +1166,7 @@ function processHockeyProcedures(whatToProcess, whichInput)
 		break;
 	case 'POPULATE-SCOREBUG-GOAL_SCORER':
 		switch ($('#selectedBroadcaster').val()) {
-			case 'HOCKEY_KHELO_INDIA':
+			case 'HOCKEY_KHELO_INDIA': case 'PUNJAB': 
 				value_to_process = $('#selectTeam option:selected').val() + ','  + $('#selectPlayer option:selected').val();
 				//alert(value_to_process);
 				break;
@@ -1264,14 +1235,14 @@ function processHockeyProcedures(whatToProcess, whichInput)
 		break;
 	case 'POPULATE-FF-MATCHSTATS':
 		switch ($('#selectedBroadcaster').val()) {
-			case 'HOCKEY_KHELO_INDIA':
+			case 'HOCKEY_KHELO_INDIA': case 'PUNJAB': 
 				value_to_process = 'D:/DOAD_In_House_Everest/Everest_Sports/Everest_Khelo_India_2023/Scenes/FF_Score.sum' ;
 			break;
 		}
 		break;
 	case 'POPULATE-DOUBLE_PROMO':
 		switch ($('#selectedBroadcaster').val()) {
-			case 'SUPER_CUP': case 'CONTINENTAL':  case 'HOCKEY_KHELO_INDIA':
+			case 'PUNJAB':  case 'HOCKEY_KHELO_INDIA':
 				value_to_process = $('#selectDoublePromo option:selected').val() ;
 				break;
 		}
@@ -1329,18 +1300,8 @@ function processHockeyProcedures(whatToProcess, whichInput)
 		break;
 	case 'POPULATE-POINTS_TABLE':
 		switch ($('#selectedBroadcaster').val()) {
-			case 'I_LEAGUE':
-				value_to_process = 'D:/DOAD_In_House_Everest/Everest_Sports/Everest_I-League_2022/Scenes/PointsTable.sum' ;
-				break;
-			case 'HOCKEY_KHELO_INDIA':
+			case 'HOCKEY_KHELO_INDIA': case 'PUNJAB': 
 				value_to_process = 'D:/DOAD_In_House_Everest/Everest_Sports/Everest_Khelo_India_2023/Scenes/FF_PointsTable.sum';
-				break;
-			case 'SANTOSH_TROPHY':
-				value_to_process = 'D:/DOAD_In_House_Everest/Everest_Sports/Everest_SantoshTrophy_2023/Scenes/PointsTable.sum' + ',' + $('#selectLeagueTable option:selected').val();
-				break;
-			case 'SUPER_CUP': case 'CONTINENTAL':
-				value_to_process = '/Default/FullFrames';
-				//alert(value_to_process);
 				break;
 		}
 		break;
@@ -1381,24 +1342,8 @@ function processHockeyProcedures(whatToProcess, whichInput)
 		break;
 	case 'POPULATE-FF-PLAYINGXI':
 		switch ($('#selectedBroadcaster').val()) {
-			case 'I_LEAGUE':
-				value_to_process = 'D:/DOAD_In_House_Everest/Everest_Sports/Everest_I-League_2022/Scenes/TeamLineUp_Subs.sum' + ',' + 
-					$('#selectPlayingXI option:selected').val();
-				break;
-			case 'HOCKEY_KHELO_INDIA':
+			case 'HOCKEY_KHELO_INDIA': case 'PUNJAB': 
 				value_to_process =$('#selectPlayingXI option:selected').val();
-				break;
-			case 'SANTOSH_TROPHY':
-				value_to_process = 'D:/DOAD_In_House_Everest/Everest_Sports/Everest_SantoshTrophy_2023/Scenes/TeamLineUp_Subs.sum' + ',' + $('#selectPlayingXI option:selected').val();
-				break;
-			case 'VIZ_SANTOSH_TROPHY':
-				value_to_process = '/Default/LineUp' + ',' + $('#selectPlayingXI option:selected').val();
-				break;
-			case 'VIZ_TRI_NATION':
-				value_to_process = '/Default/FullFrames' + ',' + $('#selectPlayingXI option:selected').val() + ',' + $('#selectPlayingXIType option:selected').val();
-				break;
-			case 'SUPER_CUP': case 'CONTINENTAL':
-				value_to_process = '/Default/FullFrames' + ',' + $('#selectPlayingXI option:selected').val() + ',' + $('#selectPlayingXIType option:selected').val();
 				break;	
 		}
 		break;
@@ -1456,7 +1401,7 @@ function processHockeyProcedures(whatToProcess, whichInput)
 		break;
 	case 'POPULATE-SCOREBUG_STATS':
 		switch ($('#selectedBroadcaster').val()) {
-		case 'HOCKEY_KHELO_INDIA':
+		case 'HOCKEY_KHELO_INDIA': case 'PUNJAB': 
 			value_to_process = $('#selectScorebugstats option:selected').val() + ',' + $('#selecthomedata').val() + ',' + $('#selectawaydata').val() ;
 			break;
 		}
@@ -1957,8 +1902,7 @@ function addItemsToList(whatToProcess, dataToProcess)
 	case 'TOP_STATS-OPTIONS': case 'FIXTURES-OPTIONS': case 'POINT_TABLE-OPTIONS': case 'DOUBLE_PROMO-OPTIONS': case 'POINTS_TABLE2_OPTION': case 'RESULT_PROMO-OPTIONS':
 	case 'SCOREBUG-GOALSCORER-OPTIONS': case 'PLAYINGXI-OPTIONS_SUB': case 'FF_PROMO-OPTIONS':
 		switch ($('#selectedBroadcaster').val().toUpperCase()) {
-		case 'I_LEAGUE': case 'SANTOSH_TROPHY': case 'VIZ_SANTOSH_TROPHY': case 'VIZ_TRI_NATION': case 'SUPER_CUP': case 'CONTINENTAL':
-		case 'HOCKEY_KHELO_INDIA':
+		case 'PUNJAB': case 'HOCKEY_KHELO_INDIA':
 
 			$('#select_graphic_options_div').empty();
 	
@@ -1979,7 +1923,7 @@ function addItemsToList(whatToProcess, dataToProcess)
 			switch(whatToProcess){
 				case 'DOUBLE_PROMO-OPTIONS':
 					switch ($('#selectedBroadcaster').val().toUpperCase()){
-						case 'SUPER_CUP': case 'CONTINENTAL':  case 'HOCKEY_KHELO_INDIA':
+						case 'PUNJAB':  case 'HOCKEY_KHELO_INDIA':
 							select = document.createElement('select');
 							select.id = 'selectDoublePromo';
 							select.name = select.id;
@@ -3775,7 +3719,7 @@ function addItemsToList(whatToProcess, dataToProcess)
 		break;*/	
 	case 'SCOREBUG_OPTION': case 'EXTRA-TIME_OPTION': case 'SCOREBUG_OPTION_2': case 'EXTRA-TIME-BOTH_OPTION': case 'RED_CARD_OPTION':
 		switch ($('#selectedBroadcaster').val()) {
-		case 'HOCKEY_KHELO_INDIA':
+		case 'HOCKEY_KHELO_INDIA': case 'PUNJAB': 
 
 			$('#select_graphic_options_div').empty();
 	
@@ -3875,7 +3819,7 @@ function addItemsToList(whatToProcess, dataToProcess)
 				
 				case 'SCOREBUG_OPTION':
 					switch ($('#selectedBroadcaster').val()){
-						case 'HOCKEY_KHELO_INDIA':
+						case 'HOCKEY_KHELO_INDIA': case 'PUNJAB': 
 							select = document.createElement('select');
 							select.style = 'width:130px';
 							select.id = 'selectScorebugstats';
@@ -3938,56 +3882,6 @@ function addItemsToList(whatToProcess, dataToProcess)
 							select.id = 'selectawaydata';
 							select.value = '';
 							
-							row.insertCell(cellCount).appendChild(select);
-							cellCount = cellCount + 1;
-							break;
-						case 'I_LEAGUE': case 'SANTOSH_TROPHY': case 'VIZ_SANTOSH_TROPHY': 
-							select = document.createElement('select');
-							select.style = 'width:130px';
-							select.id = 'selectScorebugstats';
-							select.name = select.id;
-							
-							option = document.createElement('option');
-							option.value = 'yellow';
-							option.text = 'Yellow Card';
-							select.appendChild(option);
-		
-							option = document.createElement('option');
-							option.value = 'red';
-							option.text = 'Red Card';
-							select.appendChild(option);
-							
-							/*option = document.createElement('option');
-							option.value = 'off_side';
-							option.text = 'Offside';
-							select.appendChild(option);
-			
-							option = document.createElement('option');
-							option.value = 'shots';
-							option.text = 'Shots';
-							select.appendChild(option);
-							
-							option = document.createElement('option');
-							option.value = 'shots_on_target';
-							option.text = 'Shots on Target';
-							select.appendChild(option);
-							
-							option = document.createElement('option');
-							option.value = 'possession';
-							option.text = 'Possession';
-							select.appendChild(option);
-							
-							option = document.createElement('option');
-							option.value = 'corners';
-							option.text = 'Corners';
-							select.appendChild(option);
-							
-							option = document.createElement('option');
-							option.value = 'tackles';
-							option.text = 'Tackles';
-							select.appendChild(option);*/
-							
-							select.setAttribute('onchange',"processUserSelection(this)");
 							row.insertCell(cellCount).appendChild(select);
 							cellCount = cellCount + 1;
 							break;

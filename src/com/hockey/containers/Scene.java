@@ -64,6 +64,20 @@ public class Scene {
 				break;
 			}
 			break;
+		case HockeyUtil.HOCKEY_PUNJAB:
+			switch (this.which_layer) {
+			case "FULL-FRAMERS":
+				print_writer.println("-1 RENDERER*BACK_LAYER SET_OBJECT SCENE*/Default/gfx_Fullframes\0");
+				print_writer.println("-1 RENDERER*BACK_LAYER*SCENE_DATA INITIALIZE \0");
+				print_writer.println("-1 RENDERER*BACK_LAYER*STAGE SHOW 0.0 \0");
+				break;
+			case "OVERLAYS":
+				print_writer.println("-1 RENDERER*FRONT_LAYER SET_OBJECT SCENE*/Default/gfx_Overlays\0");
+				print_writer.println("-1 RENDERER*FRONT_LAYER*SCENE_DATA INITIALIZE \0");
+				print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE SHOW 0.0 \0");
+				break;
+			}
+			break;	
 		}
 	}
 }
