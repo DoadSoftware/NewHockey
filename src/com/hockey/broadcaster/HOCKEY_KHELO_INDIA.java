@@ -380,18 +380,13 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 				break;
 			case "POPULATE-POINTS_TABLE":
 				LeagueTable league_table1 = null;
-				LeagueTable league_table2 = null;
-				if(new File(HockeyUtil.KHELO_INDIA_DIRECTORY + HockeyUtil.HOCKEY_DIRECTORY + HockeyUtil.LEAGUE_TABLE_DIRECTORY + "LeagueTableA" + ".XML").exists()) {
+				if(new File(HockeyUtil.SPORTS_DIRECTORY + HockeyUtil.HOCKEY_DIRECTORY + HockeyUtil.LEAGUE_TABLE_DIRECTORY + "LeagueTable" + ".XML").exists()) {
 					league_table1 = (LeagueTable)JAXBContext.newInstance(LeagueTable.class).createUnmarshaller().unmarshal(
-							new File(HockeyUtil.KHELO_INDIA_DIRECTORY + HockeyUtil.HOCKEY_DIRECTORY + HockeyUtil.LEAGUE_TABLE_DIRECTORY + "LeagueTableA" + ".XML"));
-				}
-				if(new File(HockeyUtil.KHELO_INDIA_DIRECTORY + HockeyUtil.HOCKEY_DIRECTORY + HockeyUtil.LEAGUE_TABLE_DIRECTORY + "LeagueTableB" + ".XML").exists()) {
-					league_table2 = (LeagueTable)JAXBContext.newInstance(LeagueTable.class).createUnmarshaller().unmarshal(
-							new File(HockeyUtil.KHELO_INDIA_DIRECTORY + HockeyUtil.HOCKEY_DIRECTORY + HockeyUtil.LEAGUE_TABLE_DIRECTORY + "LeagueTableB" + ".XML"));
+							new File(HockeyUtil.SPORTS_DIRECTORY + HockeyUtil.HOCKEY_DIRECTORY + HockeyUtil.LEAGUE_TABLE_DIRECTORY + "LeagueTable" + ".XML"));
 				}
 				
-				populatePointsTable(session_socket, valueToProcess.split(",")[1],league_table1.getLeagueTeams(),league_table2.getLeagueTeams(),
-						hockeyService.getTeams(),session_selected_broadcaster,match);
+				populatePointsTable(session_socket, valueToProcess.split(",")[1],league_table1.getLeagueTeams(),"",
+						hockeyService.getTeams(),session_selected_broadcaster,match,1);
 				break;
 			case "POPULATE-L3-STAFF":
 				for(Staff st : hockeyService.getStaffs()) {
@@ -476,7 +471,7 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 		case "ANIMATE-OUT":
 			switch(which_graphics_onscreen) {
 			case "MATCHID": case "PLAYINGXI": case "POINTS_TABLE": case "MATCHSTATS":  case "PLAYINGXISUB": case "MATCHSUMMARY":
-			case "SINGLEPROMO":	 case "MATCHSTAT": case "DOUBLE_PROMO": case "PLAYINGXIBOTHTEAMS": case "MATCHID_IMAGE":
+			case "SINGLEPROMO":	 case "MATCHSTAT": case "DOUBLE_PROMO": case "PLAYINGXIBOTHTEAMS": case "MATCHID_IMAGE": 
 			//	processAnimation(session_socket, "In", "CONTINUE", session_selected_broadcaster,2);
 				print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_FullFrame$In_Out CONTINUE \0");
 				which_graphics_onscreen = "";
@@ -502,6 +497,11 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 				break;
 			case "SCOREUPDATE":
 				print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_LT_ScoreLine$Essentials CONTINUE\0");
+				
+				TimeUnit.MILLISECONDS.sleep(500);
+				if(scorebug.isScorebug_on_screen() == true) {
+					print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_ScoreBug$Push CONTINUE\0");
+				}
 				which_graphics_onscreen = "";
 				break;
 			case "PENALTY":	
@@ -517,10 +517,6 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 			}
 			
 			TimeUnit.MILLISECONDS.sleep(1000);
-			
-			if(scorebug.isScorebug_on_screen() == true) {
-				print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_ScoreBug$Push CONTINUE\0");
-			}
 			
 			print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_Ident$Essentials SHOW 0.0\0");
 			print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_LowerThird$Essentials SHOW 0.0\0");
@@ -567,9 +563,18 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 		case "ANIMATE-IN-SCOREBUG_STATS":
 			print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_ScoreBug$Penalty_Corners START\0");
 			which_stats_on_screen = "PENALTY_CORNER";
+			break;
+		case "ANIMATE-IN-SCOREUPDATE":
+			if(scorebug.isScorebug_on_screen() == true) {
+				print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_ScoreBug$Push START\0");
+			}
+			print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_LT_ScoreLine$Essentials START\0");
+			TimeUnit.MILLISECONDS.sleep(500);
+			
+			which_graphics_onscreen = "SCOREUPDATE";
 			break;	
 		case "ANIMATE-OUT-SPONSOR": case "ANIMATE-IN-PLAYINGXI": case "ANIMATE-IN-MATCHID": case "ANIMATE-IN-NAMESUPER": 
-		case "ANIMATE-IN-NAMESUPERDB": case "ANIMATE-IN-BUG-DB": case "ANIMATE-IN-SCOREUPDATE": case "ANIMATE-IN-MATCHSTATUS": case "ANIMATE-IN-NAMESUPER_CARD":
+		case "ANIMATE-IN-NAMESUPERDB": case "ANIMATE-IN-BUG-DB": case "ANIMATE-IN-MATCHSTATUS": case "ANIMATE-IN-NAMESUPER_CARD":
 		case "ANIMATE-IN-SUBSTITUTE": case "ANIMATE-IN-LTPROMO": case "ANIMATE-IN-STAFF": case "ANIMATE-IN-MATCHSTATS": case "ANIMATE-IN-PROMO": 
 		case "ANIMATE-IN-DOUBLE_PROMO": case "ANIMATE-IN-POINTS_TABLE": case "ANIMATE-IN-OFFICIALS":case "ANIMATE-IN-PENALTY": 
 		case "ANIMATE-IN-SINGLE_SUBSTITUTE": case "ANIMATE-IN-PLAYINGXIBOTHTEAMS":	case "ANIMATE-IN-MATCHID_IMAGE":
@@ -577,10 +582,6 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 		case "ANIMATE-IN-QUARTER": case "ANIMATE-IN-PENALTY_SCORES":
 		case "ANIMATE-IN-SINGLEPROMO": case "ANIMATE-IN-MATCHSTAT":	
 
-			if(scorebug.isScorebug_on_screen() == true) {
-				print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_ScoreBug$Push START\0");
-			}
-			
 			switch (whatToProcess.toUpperCase()) {
 			case "ANIMATE-IN-QUARTER":
 				print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_LT_Quaters$Essentials START\0");
@@ -655,12 +656,7 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 				processAnimation(session_socket, "In", "START", session_selected_broadcaster,2);
 				which_graphics_onscreen = "BUG-DB";
 				break;
-			case "ANIMATE-IN-SCOREUPDATE":
-				print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_LT_ScoreLine$Essentials START\0");
-				TimeUnit.MILLISECONDS.sleep(500);
-				
-				which_graphics_onscreen = "SCOREUPDATE";
-				break;
+			
 			case "ANIMATE-IN-MATCHSUMMARY":
 				print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_FullFrame$In_Out START \0");
 				print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Loop START \0");
@@ -693,7 +689,8 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 				which_graphics_onscreen = "DOUBLE_PROMO";
 				break;
 			case "ANIMATE-IN-POINTS_TABLE":
-				processAnimation(session_socket, "In", "START", session_selected_broadcaster,2);
+				print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_FullFrame$In_Out START \0");
+				print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Loop START \0");
 				which_graphics_onscreen = "POINTS_TABLE";
 				break;
 			case "ANIMATE-IN-OFFICIALS":
@@ -2333,7 +2330,7 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$TeamList_Both$Data"
 						+ "$Match_Summary_Out$Druk-Trial-Medium*GEOM*TEXT SET "+ "M-" + match.getMatchId() +"\0");
 				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$TeamList_Both$Data"
-						+ "$Match_Summary_Out$Summary$Summary*GEOM*TEXT SET "+ "SQUADS" +"\0");
+						+ "$Match_Summary_Out$Summary$Summary*GEOM*TEXT SET "+ "PLAYING XI" +"\0");
 			}
 			
 				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$TeamList_Both$Data"
@@ -3997,81 +3994,69 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 				
 		}
 	}
-	public void populatePointsTable(Socket session_socket,String viz_sence_path,List<LeagueTeam> point_table1,List<LeagueTeam> point_table2, List<Team> team,String session_selected_broadcaster,Match match) throws InterruptedException, IOException 
+	public void populatePointsTable(Socket session_socket,String viz_sence_path,List<LeagueTeam> point_table1,String point_table2
+			, List<Team> team,String session_selected_broadcaster,Match match,int whichSide) throws InterruptedException, IOException 
 	{		
+		String previewCommand ="";
 		print_writer = new PrintWriter(session_socket.getOutputStream(), true);
 		int row_no=0,l=4;
-		print_writer.println("LAYER2*EVEREST*TREEVIEW*Main*FUNCTION*TAG_CONTROL SET tHeader " + "HOCKEY POINTS TABLE" + ";");
-		TimeUnit.MILLISECONDS.sleep(l);
-		print_writer.println("LAYER2*EVEREST*TREEVIEW*Main*FUNCTION*TAG_CONTROL SET vTableType 0;");
-		print_writer.println("LAYER2*EVEREST*TREEVIEW*Main*FUNCTION*TAG_CONTROL SET tSubText01 " + "GROUP A" + ";");
-		print_writer.println("LAYER2*EVEREST*TREEVIEW*Main*FUNCTION*TAG_CONTROL SET tSubText02 " + "GROUP B" + ";");
 		
-		print_writer.println("LAYER2*EVEREST*TREEVIEW*Main*FUNCTION*TAG_CONTROL SET lgGameIcon " + icon_path + "HOCKEY" + 
-				HockeyUtil.PNG_EXTENSION + ";");
+		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$FF_Gfx*FUNCTION*Omo*vis_con SET 10 \0");
+
+		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Points_Table$Data"
+					+ "$Match_Summary_Out$Druk-Trial-Medium*GEOM*TEXT SET "+ "POINTS" +"\0");
+		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Points_Table$Data"
+					+ "$Match_Summary_Out$Summary$Summary*GEOM*TEXT SET "+ "TABLE" +"\0");
 		
+		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Points_Table$Data"
+				+ "$Stats_Out$Stats_Head$txt_Text1*GEOM*TEXT SET "+ "" +"\0");
+		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Points_Table$Data"
+				+ "$Stats_Out$Stats_Head$txt_Text2*GEOM*TEXT SET "+ "P" +"\0");
+		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Points_Table$Data"
+				+ "$Stats_Out$Stats_Head$txt_Text3*GEOM*TEXT SET "+ "W" +"\0");
+		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Points_Table$Data"
+				+ "$Stats_Out$Stats_Head$txt_Text4*GEOM*TEXT SET "+ "L" +"\0");
+		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Points_Table$Data"
+				+ "$Stats_Out$Stats_Head$txt_Text5*GEOM*TEXT SET "+ "D" +"\0");
+		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Points_Table$Data"
+				+ "$Stats_Out$Stats_Head$txt_Text6*GEOM*TEXT SET "+ "POINTS" +"\0");
+		
+		System.out.println("point_table1.size() - 1 " +(point_table1.size() - 1));
 		for(int i = 0; i <= point_table1.size() - 1 ; i++) {
 			row_no = row_no + 1;
 			
-			print_writer.println("LAYER2*EVEREST*TREEVIEW*Main*FUNCTION*TAG_CONTROL SET tTeam0" + row_no + " " + point_table1.get(i).getTeamName() + ";");
+			
+		
+			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Points_Table$Data"
+					+ "$Stats_Out$Stats" + row_no + "_Grp$Data$txt_Text1*GEOM*TEXT SET "+ point_table1.get(i).getTeamName() +"\0");
+			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Points_Table$Data"
+					+ "$Stats_Out$Stats" + row_no + "_Grp$Data$txt_Text2*GEOM*TEXT SET "+ point_table1.get(i).getPlayed() +"\0");
+			
+			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Points_Table$Data"
+					+ "$Stats_Out$Stats" + row_no + "_Grp$Data$txt_Text3*GEOM*TEXT SET "+ point_table1.get(i).getWon() +"\0");
+			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Points_Table$Data"
+					+ "$Stats_Out$Stats" + row_no + "_Grp$Data$txt_Text4*GEOM*TEXT SET "+ point_table1.get(i).getLost() +"\0");
+			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Points_Table$Data"
+					+ "$Stats_Out$Stats" + row_no + "_Grp$Data$txt_Text5*GEOM*TEXT SET "+ point_table1.get(i).getDrawn() +"\0");
+			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Points_Table$Data"
+					+ "$Stats_Out$Stats" + row_no + "_Grp$Data$txt_Text6*GEOM*TEXT SET "+ point_table1.get(i).getPoints() +"\0");
+			
+			
 			if(point_table1.get(i).getQualifiedStatus().trim().equalsIgnoreCase("")) {
-				print_writer.println("LAYER2*EVEREST*TREEVIEW*Main*FUNCTION*TAG_CONTROL SET tQ0" + row_no + " " + ";");
-				TimeUnit.MILLISECONDS.sleep(l);
-			}else {
-				print_writer.println("LAYER2*EVEREST*TREEVIEW*Main*FUNCTION*TAG_CONTROL SET tQ0" + row_no + " " + "(Q)" + ";");
-				TimeUnit.MILLISECONDS.sleep(l);
-			}
 				
-			print_writer.println("LAYER2*EVEREST*TREEVIEW*Main*FUNCTION*TAG_CONTROL SET tPlayer0" + row_no + " " + point_table1.get(i).getPlayed() + ";");
-			TimeUnit.MILLISECONDS.sleep(l);
-			print_writer.println("LAYER2*EVEREST*TREEVIEW*Main*FUNCTION*TAG_CONTROL SET tWon0" + row_no + " " + point_table1.get(i).getWon() + ";");
-			TimeUnit.MILLISECONDS.sleep(l);
-			print_writer.println("LAYER2*EVEREST*TREEVIEW*Main*FUNCTION*TAG_CONTROL SET tLost0" + row_no + " " + point_table1.get(i).getDrawn() + ";");
-			TimeUnit.MILLISECONDS.sleep(l);
-			print_writer.println("LAYER2*EVEREST*TREEVIEW*Main*FUNCTION*TAG_CONTROL SET tTied0" + row_no + " " + point_table1.get(i).getLost() + ";");
-			TimeUnit.MILLISECONDS.sleep(l);
-			print_writer.println("LAYER2*EVEREST*TREEVIEW*Main*FUNCTION*TAG_CONTROL SET tPTS0" + row_no + " " + point_table1.get(i).getPoints() + ";");
-			TimeUnit.MILLISECONDS.sleep(l);
+				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Points_Table$Data"
+						+ "$Stats_Out$Stats" + row_no + "_Grp$Data$txt_Text0*GEOM*TEXT SET "+ row_no +"\0");
+			}else {
+				
+				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Points_Table$Data"
+						+ "$Stats_Out$Stats" + row_no + "_Grp$Data$txt_Text0*GEOM*TEXT SET "+ "Q" +"\0");
+			}
 
 		}
 		
-		for(int j = 0; j <= point_table2.size() - 1 ; j++) {
-			row_no = row_no + 1;
-			
-			print_writer.println("LAYER2*EVEREST*TREEVIEW*Main*FUNCTION*TAG_CONTROL SET tTeam0" + row_no + " " + point_table2.get(j).getTeamName() + ";");
-			if(point_table2.get(j).getQualifiedStatus().trim().equalsIgnoreCase("")) {
-				print_writer.println("LAYER2*EVEREST*TREEVIEW*Main*FUNCTION*TAG_CONTROL SET tQ0" + row_no + " " + ";");
-				TimeUnit.MILLISECONDS.sleep(l);
-			}else {
-				print_writer.println("LAYER2*EVEREST*TREEVIEW*Main*FUNCTION*TAG_CONTROL SET tQ0" + row_no + " " + "(Q)" + ";");
-				TimeUnit.MILLISECONDS.sleep(l);
-			}
-				
-			print_writer.println("LAYER2*EVEREST*TREEVIEW*Main*FUNCTION*TAG_CONTROL SET tPlayer0" + row_no + " " + point_table2.get(j).getPlayed() + ";");
-			TimeUnit.MILLISECONDS.sleep(l);
-			print_writer.println("LAYER2*EVEREST*TREEVIEW*Main*FUNCTION*TAG_CONTROL SET tWon0" + row_no + " " + point_table2.get(j).getWon() + ";");
-			TimeUnit.MILLISECONDS.sleep(l);
-			print_writer.println("LAYER2*EVEREST*TREEVIEW*Main*FUNCTION*TAG_CONTROL SET tLost0" + row_no + " " + point_table2.get(j).getDrawn() + ";");
-			TimeUnit.MILLISECONDS.sleep(l);
-			print_writer.println("LAYER2*EVEREST*TREEVIEW*Main*FUNCTION*TAG_CONTROL SET tTied0" + row_no + " " + point_table2.get(j).getLost() + ";");
-			TimeUnit.MILLISECONDS.sleep(l);
-			print_writer.println("LAYER2*EVEREST*TREEVIEW*Main*FUNCTION*TAG_CONTROL SET tPTS0" + row_no + " " + point_table2.get(j).getPoints() + ";");
-			TimeUnit.MILLISECONDS.sleep(l);
-
-		}
-		print_writer.println("LAYER1*EVEREST*GLOBAL PREVIEW ON;");
-		print_writer.println("LAYER1*EVEREST*TREEVIEW*Infobar*CONTAINER SET ACTIVE 0;");
-		print_writer.println("LAYER2*EVEREST*STAGE*DIRECTOR*In STOP;");
-		print_writer.println("LAYER2*EVEREST*STAGE*DIRECTOR*Out STOP;");
-		print_writer.println("LAYER2*EVEREST*STAGE*DIRECTOR*In SHOW 110.0;");
-		print_writer.println("LAYER2*EVEREST*STAGE*DIRECTOR*Out SHOW 0.0;");
-		print_writer.println("LAYER1*EVEREST*GLOBAL SNAPSHOT_PATH C:/Temp/Preview.png;");
-		print_writer.println("LAYER1*EVEREST*GLOBAL SNAPSHOT 1920 1080;");
-		TimeUnit.SECONDS.sleep(1);
-		print_writer.println("LAYER2*EVEREST*STAGE*DIRECTOR*Out SHOW 0.0;");
-		print_writer.println("LAYER2*EVEREST*STAGE*DIRECTOR*In SHOW 0.0;");
-		print_writer.println("LAYER1*EVEREST*TREEVIEW*Infobar*CONTAINER SET ACTIVE 1;");
-		print_writer.println("LAYER1*EVEREST*GLOBAL PREVIEW OFF;");
+		previewCommand = "anim_FullFrame$In_Out 2.540 anim_FullFrame$In_Out$Points_Table 2.540 anim_FullFrame$In_Out$Points_Table$In_Out 2.540 anim_FullFrame$In_Out$Points_Table$In_Out$In 2.540 "
+				+ "anim_FullFrame$In_Out$BG 2.540 anim_FullFrame$In_Out$BG$In_Out 2.540 anim_FullFrame$In_Out$BG$In_Out$In 1.730";
+		print_writer.println("-1 RENDERER PREVIEW SCENE*/Default/gfx_Fullframes " + "C:/Temp/Preview.tga " + previewCommand + "\0");
 		
 	}
 	public void populateOfficials(Socket session_socket,String viz_scene,List<Officials> officials,Match match, String session_selected_broadcaster) throws InterruptedException, IOException 
