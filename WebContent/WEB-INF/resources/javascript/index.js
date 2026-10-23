@@ -415,10 +415,16 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 			}
 			break;*/
 		case 118:
-			processHockeyProcedures('POPULATE-L3-SCOREUPDATE');
+			$("#select_event_div").hide();
+			$("#match_configuration").hide();
+			$("#hockey_div").hide();
+			addItemsToList('L3-SCOREUPDATE',null);
 			break;
 		case 119:
-			processHockeyProcedures('POPULATE-FF-MATCHSUMMARY');
+			$("#select_event_div").hide();
+			$("#match_configuration").hide();
+			$("#hockey_div").hide();
+			addItemsToList('FF-MATCHSUMMARY',null);
 			break;	
 		/*case 119:
 			processHockeyProcedures('POPULATE-L3-MATCHSTATUS');
@@ -952,13 +958,19 @@ function processUserSelection(whichInput)
 	case 'populate_Away_btn': case 'populate_awaysub_btn': case 'populate_sub_btn': case 'populate_heatmap_btn': case 'populate_Top_Stats_btn': case 'populate_fixtures_btn':
 	case 'populate_subchange_on_btn': case 'populate_double_promo_btn': case 'populate_ltmatch_promo_btn': case 'populate_scorebug_match_promo_btn': case 'populate_points_table2_btn':
 	case 'populate_result_promo_btn': case 'populate_scorebug_goalScorer_btn': case 'populate_playingxisub_btn': case 'populate_scorecard_btn':
-	case 'populate_match_promo_btnn': case 'populate_refstatus_btn':
+	case 'populate_match_promo_btnn': case 'populate_refstatus_btn': case 'populate_lt_scoreupdate_btn': case 'populate_ff_scoreupdate_btn':
 
 		processWaitingButtonSpinner('START_WAIT_TIMER');
 		switch ($(whichInput).attr('name')) {
 		/*case 'populate_refstatus_btn':
 			processHockeyProcedures('POPULATE-REFERRAL');
 			break;*/
+		case 'populate_ff_scoreupdate_btn':
+			processHockeyProcedures('POPULATE-FF-MATCHSUMMARY');
+			break;	
+		case 'populate_lt_scoreupdate_btn':
+			processHockeyProcedures('POPULATE-L3-SCOREUPDATE');
+			break;	
 		case 'populate_subchange_on_btn':
 			processHockeyProcedures('ANIMATE-SUB_CHANGE_ON');
 			break;
@@ -1484,22 +1496,10 @@ function processHockeyProcedures(whatToProcess, whichInput)
 				break;	
 		}
 		break;
-	case 'POPULATE-L3-SCOREUPDATE':
+	case 'POPULATE-L3-SCOREUPDATE': case 'POPULATE-FF-MATCHSUMMARY':
 		switch ($('#selectedBroadcaster').val()) {
-			case 'I_LEAGUE':
-				value_to_process = 'D:/DOAD_In_House_Everest/Everest_Sports/Everest_I-League_2022/Scenes/LT_ScoreUpdate.sum';
-				break;
-			case 'SANTOSH_TROPHY':
-				value_to_process = 'D:/DOAD_In_House_Everest/Everest_Sports/Everest_SantoshTrophy_2023/Scenes/LT_ScoreUpdate.sum';
-				break;
-			case 'VIZ_SANTOSH_TROPHY':
-				value_to_process = '/Default/LtGameIntro';
-				break;
-			case 'VIZ_TRI_NATION':
-				value_to_process = '/Default/LT';
-				break;
-			case 'SUPER_CUP': case 'CONTINENTAL':
-				value_to_process = '/Default/LT';
+			case 'HOCKEY_KHELO_INDIA':
+				value_to_process = $('#selectScorer option:selected').val();
 				break;
 		}
 		break;
@@ -2026,7 +2026,8 @@ function addItemsToList(whatToProcess, dataToProcess)
 	case 'STAFF-OPTIONS': case 'MATCH-PROMO-OPTIONS':case 'AD-OPTIONS': case 'SUBSTITUTE-OPTIONS': case 'FORMATION-OPTIONS': case 'SCOREBUG-CARD-OPTIONS':
 	case 'SCOREBUG-SUBSTITUTION-OPTIONS': case 'SINGLE_SUBSTITUTE-OPTIONS': case 'HEATMAP_PEAKDISTACE-OPTION': case 'LT_MATCH-PROMO-OPTIONS': case 'SCOREBUGPROMO-OPTIONS':
 	case 'TOP_STATS-OPTIONS': case 'FIXTURES-OPTIONS': case 'POINT_TABLE-OPTIONS': case 'DOUBLE_PROMO-OPTIONS': case 'POINTS_TABLE2_OPTION': case 'RESULT_PROMO-OPTIONS':
-	case 'SCOREBUG-GOALSCORER-OPTIONS': case 'PLAYINGXI-OPTIONS_SUB': case 'FF_PROMO-OPTIONS': case 'REFERRAL-OPTIONS': case 'CARDS-OPTIONS':
+	case 'SCOREBUG-GOALSCORER-OPTIONS': case 'PLAYINGXI-OPTIONS_SUB': case 'FF_PROMO-OPTIONS': case 'REFERRAL-OPTIONS': case 'CARDS-OPTIONS': case 'L3-SCOREUPDATE':
+	case 'FF-MATCHSUMMARY':	
 		switch ($('#selectedBroadcaster').val().toUpperCase()) {
 		case 'PUNJAB': case 'HOCKEY_KHELO_INDIA':
 
@@ -2047,6 +2048,92 @@ function addItemsToList(whatToProcess, dataToProcess)
 			row = tbody.insertRow(tbody.rows.length);
 			
 			switch(whatToProcess){
+				case 'FF-MATCHSUMMARY':
+					select = document.createElement('select');
+					select.id = 'selectScorer';
+					select.name = select.id;
+
+					option = document.createElement('option');
+					option.value = 'with';
+					option.text = 'WITH SCORER';
+					select.appendChild(option);
+
+					option = document.createElement('option');
+					option.value = 'without';
+					option.text = 'WITHOUT SCORER';
+					select.appendChild(option);
+
+					row.insertCell(0).appendChild(select);
+
+					option = document.createElement('input');
+					option.type = 'button';
+
+					option.name = 'populate_ff_scoreupdate_btn';
+					option.value = 'Populate Scoreline';
+
+					option.id = option.name;
+					option.setAttribute('onclick',"processUserSelection(this)");
+
+					div = document.createElement('div');
+					div.append(option);
+
+					row.insertCell(1).appendChild(div);
+
+					option = document.createElement('input');
+					option.type = 'button';
+					option.name = 'cancel_graphics_btn';
+					option.id = option.name;
+					option.value = 'Cancel';
+					option.setAttribute('onclick','processUserSelection(this)');
+
+					div.append(option);
+
+					row.insertCell(2).appendChild(div);
+					document.getElementById('select_graphic_options_div').style.display = '';
+					break;
+				case 'L3-SCOREUPDATE':
+					select = document.createElement('select');
+					select.id = 'selectScorer';
+					select.name = select.id;
+					
+					option = document.createElement('option');
+					option.value = 'with';
+					option.text = 'WITH SCORER';
+					select.appendChild(option);
+					
+					option = document.createElement('option');
+					option.value = 'without';
+					option.text = 'WITHOUT SCORER';
+					select.appendChild(option);
+					
+					row.insertCell(0).appendChild(select);
+					
+					option = document.createElement('input');
+					option.type = 'button';
+					
+					option.name = 'populate_lt_scoreupdate_btn';
+					option.value = 'Populate Scoreline';
+					
+					option.id = option.name;
+				    option.setAttribute('onclick',"processUserSelection(this)");
+				    
+				    div = document.createElement('div');
+				    div.append(option);
+				    
+				    row.insertCell(1).appendChild(div);
+				    
+					option = document.createElement('input');
+					option.type = 'button';
+					option.name = 'cancel_graphics_btn';
+					option.id = option.name;
+					option.value = 'Cancel';
+					option.setAttribute('onclick','processUserSelection(this)');
+
+				    div.append(option);
+				    
+				    row.insertCell(2).appendChild(div);
+					document.getElementById('select_graphic_options_div').style.display = '';
+					break;
 				case 'DOUBLE_PROMO-OPTIONS':
 					switch ($('#selectedBroadcaster').val().toUpperCase()){
 						case 'PUNJAB':  case 'HOCKEY_KHELO_INDIA':
