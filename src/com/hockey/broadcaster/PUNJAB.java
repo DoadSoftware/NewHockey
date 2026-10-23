@@ -14,9 +14,7 @@ import java.text.SimpleDateFormat;
 import java.time.Month;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
@@ -51,8 +49,7 @@ public class PUNJAB extends Scene{
 	public List<Fixture> fixTures;
 	public Fixture fixture;
 	
-	private static final int MAX_CARDS = 2; // GreenCard_1..2, YellowCard_1..2, RedCard_1..2
-	private final Map<String, Integer> cardState = new HashMap<>();
+	public int HomePreviousScore = 0, HomeCurrentScore = 0,AwayPreviousScore = 0, AwayCurrentScore = 0;
 	
 	public final static String HOCKEY_LOGO = "IMAGE*/Default/Essentials/Logos/";
 	public final static String HOCKEY_BASE1 = "IMAGE*/Default/Essentials/Base1/";
@@ -65,6 +62,8 @@ public class PUNJAB extends Scene{
 	public final static String HOCKEY_LOCAL_PHOTO_PATH = "C:\\\\Images\\\\Hockey\\\\Photos\\\\";
 	public final static String HOCKEY_PHOTO_PATH = "\\c\\Images\\Hockey\\Photos\\";
 	
+	private boolean homeScoreChanged = false;
+	private boolean awayScoreChanged = false;
 	
 	public PUNJAB() {
 		super();
@@ -73,8 +72,39 @@ public class PUNJAB extends Scene{
 	public ScoreBug updateScoreBug(List<Scene> scenes, Match match, Socket session_socket) throws InterruptedException, MalformedURLException, IOException, CsvException
 	{
 		if(scorebug.isScorebug_on_screen() == true) {
-			scorebug = populateScoreBug(true,scorebug, session_socket, scenes.get(0).getScene_path(),match, session_selected_broadcaster);
+			scorebug = populateScoreBug(true,scorebug, session_socket, scenes.get(0).getScene_path(),match, session_selected_broadcaster,1);
 		}
+		
+//		if (scorebug.isScorebug_on_screen()) {
+//		    String scenePath = scenes.get(0).getScene_path();
+//
+//		    // detect change BEFORE populateScoreBug updates the previous scores
+//		    boolean scoreChanged = match.getHomeTeamScore() != HomePreviousScore
+//		                        || match.getAwayTeamScore() != AwayPreviousScore;
+//
+//		    if (scoreChanged) {
+//		        // side 2 gets new value, animation fires
+//		        scorebug = populateScoreBug(true, scorebug, session_socket, scenePath, match, session_selected_broadcaster, 2);
+//
+//		        TimeUnit.MILLISECONDS.sleep(1500);
+//
+//		        // side 1 gets new value
+//		        scorebug = populateScoreBug(true, scorebug, session_socket, scenePath, match, session_selected_broadcaster, 1);
+//
+//		        // reset only the animations that played
+//		        if (homeScoreChanged) {
+//		            print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_Change$Score$Team1 SHOW 0.0\0");
+//		            homeScoreChanged = false;
+//		        }
+//		        if (awayScoreChanged) {
+//		            print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_Change$Score$Team2 SHOW 0.0\0");
+//		            awayScoreChanged = false;
+//		        }
+//		    } else {
+//		        // no score change: single refresh on the on-air side (period, referral etc.), no side swap, no animation
+//		        scorebug = populateScoreBug(true, scorebug, session_socket, scenePath, match, session_selected_broadcaster, 1);
+//		    }
+//		}
 		return scorebug;
 	}
 	public Object ProcessGraphicOption(String whatToProcess,Match match,Clock clock, HockeyService hockeyService,Socket session_socket,
@@ -314,7 +344,7 @@ public class PUNJAB extends Scene{
 				populateScoreBugStats(false,scorebug,session_socket, valueToProcess.split(",")[1],valueToProcess.split(",")[2],valueToProcess.split(",")[3],match, session_selected_broadcaster);
 				break;
 			case "POPULATE-SCOREBUG":
-				populateScoreBug(false,scorebug,session_socket, valueToProcess.split(",")[1],match, session_selected_broadcaster);
+				populateScoreBug(false,scorebug,session_socket, valueToProcess.split(",")[1],match, session_selected_broadcaster,1);
 				break;
 			case "POPULATE-LT-MATCHID":
 				populateLtMatchId(session_socket, match, session_selected_broadcaster,hockeyService);
@@ -740,41 +770,25 @@ public class PUNJAB extends Scene{
 	public String toString() {
 		return "Doad [status=" + status + ", slashOrDash=" + slashOrDash + "]";
 	}
-
-	private void playCard(PrintWriter pw, String team, String type, int count) {
-		count = Math.min(count, MAX_CARDS);
-		String key = team + "_" + type;
-		int last = cardState.getOrDefault(key, 0);
-		String base = "-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*$anim_Cards$" + team + "$" + type + "Card_";
-
-		if (count > last) {
-			// New card(s) -> play only the new animation(s)
-			for (int i = last + 1; i <= count; i++) {
-				pw.println(base + i + " START\0");
-			}
-		} else if (count < last) {
-			// Card removed/corrected -> reset those animations to frame 0
-			for (int i = count + 1; i <= last; i++) {
-				pw.println(base + i + " SHOW 0.0\0");
-			}
-		}
-		cardState.put(key, count);
-	}
 	
-	public ScoreBug populateScoreBug(boolean is_this_updating,ScoreBug scorebug, Socket session_socket,String viz_sence_path, Match match, String selectedbroadcaster) throws IOException
+	public ScoreBug populateScoreBug(boolean is_this_updating,ScoreBug scorebug, Socket session_socket,String viz_sence_path, Match match, String selectedbroadcaster,int whichSide) throws IOException
 	{
 		if (match == null) {
 			this.status = "ERROR: Match is null";
 		} else {
 			
-			int hgc = 0,hyc = 0, hrc = 0,agc = 0,ayc = 0, arc = 0;
+			HomeCurrentScore = match.getHomeTeamScore();
+			AwayCurrentScore = match.getAwayTeamScore();
 			
-			// Fresh scene load -> forget previous animation state
-			if (!is_this_updating) {
-				cardState.clear();
-			}
+			print_writer = new PrintWriter(session_socket.getOutputStream(), true);
 			
 			if(is_this_updating == false) {
+				HomePreviousScore = match.getHomeTeamScore();
+				AwayPreviousScore = match.getAwayTeamScore();
+				
+				homeScoreChanged = false;
+				awayScoreChanged = false;
+				
 				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreTicker$ScoreTicker$ScoreTicker$Team1$txt_TeamName*GEOM*TEXT SET " 
 						+ match.getHomeTeam().getTeamName4() +"\0");
 				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreTicker$ScoreTicker$ScoreTicker$Team2$txt_TeamName*GEOM*TEXT SET " 
@@ -782,15 +796,26 @@ public class PUNJAB extends Scene{
 				
 				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreTicker$ScoreTicker$Referral$Team1$select_Refferal*FUNCTION*Omo*vis_con SET 1\0");
 				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreTicker$ScoreTicker$Referral$Team2$select_Refferal*FUNCTION*Omo*vis_con SET 1\0");
-				
 			}
 			
-			print_writer = new PrintWriter(session_socket.getOutputStream(), true);
 			
-			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreTicker$ScoreTicker$ScoreTicker$Score$score$Team1$Side1$txt_Score*GEOM*TEXT SET " 
+			
+			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreTicker$ScoreTicker$ScoreTicker$Score$score$Team1$Side" + whichSide + "$txt_Score*GEOM*TEXT SET " 
 					+ match.getHomeTeamScore() +"\0");
-			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreTicker$ScoreTicker$ScoreTicker$Score$score$Team2$Side1$txt_Score*GEOM*TEXT SET " 
+			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreTicker$ScoreTicker$ScoreTicker$Score$score$Team2$Side" + whichSide + "$txt_Score*GEOM*TEXT SET " 
 					+ match.getAwayTeamScore() +"\0");
+			
+			// Independent checks: both teams can animate in the same update
+//			if (HomePreviousScore != HomeCurrentScore) {
+//				print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_Change$Score$Team1 START\0");
+//				HomePreviousScore = HomeCurrentScore;
+//				homeScoreChanged = true;
+//			}
+//			if (AwayPreviousScore != AwayCurrentScore) {
+//				print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_Change$Score$Team2 START\0");
+//				AwayPreviousScore = AwayCurrentScore;
+//				awayScoreChanged = true;
+//			}
 			
 			String[] referral = readReferral("C:\\Sports\\Hockey\\Referral.txt");
 			String homeReferral = referral[0];
@@ -4250,7 +4275,7 @@ public class PUNJAB extends Scene{
 						pName = pName + ", " + hs.getTicker_name();
 					}
 					
-					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreTicker$02=TeamCrawler$Head1$txt_LineUp*GEOM*TEXT SET " + pName + "\0");
+					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreTicker$02=TeamCrawler$Head1$txt_LineUp*GEOM*TEXT SET " + pName.replaceFirst(",", "") + "\0");
 					
 					pName = "";
 					
@@ -4260,7 +4285,7 @@ public class PUNJAB extends Scene{
 							pName = pName + ", " + hsub.getTicker_name();
 						}
 					}
-					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreTicker$02=TeamCrawler$Head2$txt_Subs*GEOM*TEXT SET " + pName + "\0");
+					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreTicker$02=TeamCrawler$Head2$txt_Subs*GEOM*TEXT SET " + pName.replaceFirst(",", "") + "\0");
 					
 				}else {
 					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreTicker$02=TeamCrawler$txt_TeamName*GEOM*TEXT SET " + match.getAwayTeam().getTeamName1() + "\0");
@@ -4270,7 +4295,7 @@ public class PUNJAB extends Scene{
 						pName = pName + ", " + as.getTicker_name();
 					}
 					
-					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreTicker$02=TeamCrawler$Head1$txt_LineUp*GEOM*TEXT SET " + pName + "\0");
+					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreTicker$02=TeamCrawler$Head1$txt_LineUp*GEOM*TEXT SET " + pName.replaceFirst(",", "") + "\0");
 					
 					pName = "";
 					
@@ -4280,7 +4305,7 @@ public class PUNJAB extends Scene{
 							pName = pName + ", " + asub.getTicker_name();
 						}
 					}
-					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreTicker$02=TeamCrawler$Head2$txt_Subs*GEOM*TEXT SET " + pName + "\0");
+					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreTicker$02=TeamCrawler$Head2$txt_Subs*GEOM*TEXT SET " + pName.replaceFirst(",", "") + "\0");
 					
 				}
 				
