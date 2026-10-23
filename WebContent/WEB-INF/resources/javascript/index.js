@@ -333,6 +333,12 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 		case 50:
 			processHockeyProcedures('ANIMATE-OUT-SCORETEAM');
 			break;
+		case 38:
+			processHockeyProcedures('TICKER_UP');
+			break;
+		case 40:
+			processHockeyProcedures('TICKER_DOWN');
+			break;		
 		case 49:
 			$("#select_event_div").hide();
 			$("#match_configuration").hide();

@@ -440,54 +440,159 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 				break;	
 			}
 			break;
+		case "TICKER_UP":
+			print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_ScoreBug$Push CONTINUE\0");
+			break;
+		case "TICKER_DOWN":
+			print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_ScoreBug$Push START\0");
+			break;	
 		case "ANIMATE-OUT-RED_CARD":
 			print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_ScoreBug$Cards CONTINUE\0");
 			TimeUnit.MILLISECONDS.sleep(500);
 			print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_ScoreBug$Cards SHOW 0.0\0");
 			break;
-		case "ANIMATE-IN-SCOREBUG": 
-		case "CLEAR-ALL": 
+		case "ANIMATE-IN-SCOREBUG":
+			print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_ScoreBug$Essentials START\0");
+//			print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Loop START\0");
+			is_infobar = true;
+			scorebug.setScorebug_on_screen(true);
+			break;
+		case "CLEAR-ALL":
+			print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_ScoreBug SHOW 0.0\0");
+
+			print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_Ident$Essentials SHOW 0.0\0");
+			print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_LowerThird$Essentials SHOW 0.0\0");
+			print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_lowerthird_Player$Essentials SHOW 0.0\0");
+			print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_LT_Quaters$Essentials SHOW 0.0\0");
+			print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_LT_ScoreLine$Essentials SHOW 0.0\0");
+			print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_LT_Penalty$Essentials SHOW 0.0\0");
+
+			print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_FullFrame$In_Out SHOW 0.0\0");
+			which_graphics_onscreen = "";
+			which_stats_on_screen = "";
+			scorebug.setScorebug_on_screen(false);
+			is_infobar = false;
+			break;
 		case "ANIMATE-OUT":
-		case "ANIMATE-IN-SPONSOR": case "ANIMATE-OUT-SPONSOR": case "ANIMATE-IN-PLAYINGXI": case "ANIMATE-IN-MATCHID": case "ANIMATE-IN-NAMESUPER": 
+			switch(which_graphics_onscreen) {
+			case "MATCHID": case "PLAYINGXI": case "POINTS_TABLE": case "MATCHSTATS":  case "PLAYINGXISUB": case "MATCHSUMMARY":
+			case "SINGLEPROMO":	 case "MATCHSTAT": case "DOUBLE_PROMO": case "PLAYINGXIBOTHTEAMS": case "MATCHID_IMAGE":
+			//	processAnimation(session_socket, "In", "CONTINUE", session_selected_broadcaster,2);
+				print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_FullFrame$In_Out CONTINUE \0");
+				which_graphics_onscreen = "";
+				TimeUnit.MILLISECONDS.sleep(1000);
+				print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_FullFrame$In_Out SHOW 0.0\0");
+				break;
+			
+			case "NAMESUPERDB": case "STAFF":
+				print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_LowerThird$Essentials CONTINUE\0");
+				which_graphics_onscreen = "";
+				break;
+			case "NAMESUPER":
+				print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_lowerthird_Player$Essentials CONTINUE\0");
+				which_graphics_onscreen = "";
+				break;
+			case "LT_MATCHID":
+				print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_Ident$Essentials CONTINUE\0");
+				which_graphics_onscreen = "";
+				break;
+			case "QUARTER":
+				print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_LT_Quaters$Essentials CONTINUE\0");
+				which_graphics_onscreen = "";
+				break;
+			case "SCOREUPDATE":
+				print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_LT_ScoreLine$Essentials CONTINUE\0");
+				which_graphics_onscreen = "";
+				break;
+			case "PENALTY":	
+				print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_LT_Penalty$Essentials CONTINUE\0");
+				which_graphics_onscreen = "";
+				break;	
+			case "BUG-DB": case "MATCHSTATUS": case "NAMESUPER_CARD":
+			case "SUBSTITUTE": case "MATCHPROMO": case "PROMO": case "OFFICIALS": 
+			case "SINGLE_SUBSTITUTE": 
+				print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_LowerThird$Essentials CONTINUE\0");
+				which_graphics_onscreen = "";
+				break;	
+			}
+			
+			TimeUnit.MILLISECONDS.sleep(1000);
+			
+			if(scorebug.isScorebug_on_screen() == true) {
+				print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_ScoreBug$Push CONTINUE\0");
+			}
+			
+			print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_Ident$Essentials SHOW 0.0\0");
+			print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_LowerThird$Essentials SHOW 0.0\0");
+			print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_lowerthird_Player$Essentials SHOW 0.0\0");
+			print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_LT_Quaters$Essentials SHOW 0.0\0");
+			print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_LT_ScoreLine$Essentials SHOW 0.0\0");
+			print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_LT_Penalty$Essentials SHOW 0.0\0");
+			break;
+		case "ANIMATE-OUT-SCOREBUG":
+			if(is_infobar == true) {
+				print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_ScoreBug$Essentials CONTINUE\0");
+				is_infobar = false;
+				scorebug.setScorebug_on_screen(false);
+				sponsor_on_screen = "";
+			}
+			break;
+		case "ANIMATE-IN-SPONSOR":
+			if(sponsor_on_screen.equalsIgnoreCase("SPONSOR")) {
+				print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_ScoreBug$Sponsor CONTINUE\0");
+				sponsor_on_screen = "";
+			}else {
+				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$Sponsor$Select_Sponsor*FUNCTION*Omo*vis_con SET 2\0");
+				
+				print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_ScoreBug$Sponsor START\0");
+				sponsor_on_screen = "SPONSOR";
+			}
+			break;
+		case "ANIMATE-IN-SCOREBUG-RED_CARD":
+			print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_ScoreBug$Cards START\0");
+			red_card_on_screen = "RED_CARD";
+			break;
+		case "ANIMATE-IN-SCOREBUG-LAST_GOAL":
+			print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_ScoreBug$Goal_Scorer START\0");
+			which_stats_on_screen = "LAST_GOAL";
+			break;
+		case "ANIMATE-IN-SCOREBUG-GOAL_SCORER":
+			print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_ScoreBug$Goal_Scorer START\0");
+			which_stats_on_screen = "GOAL_SCORER";
+			break;
+		case "ANIMATE-IN-SCOREBUG-CARD":
+			print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_ScoreBug$Penalty_Card START\0");
+			which_stats_on_screen = "PLAYER_CARD";
+			break;
+		case "ANIMATE-IN-SCOREBUG_STATS":
+			print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_ScoreBug$Penalty_Corners START\0");
+			which_stats_on_screen = "PENALTY_CORNER";
+			break;	
+		case "ANIMATE-OUT-SPONSOR": case "ANIMATE-IN-PLAYINGXI": case "ANIMATE-IN-MATCHID": case "ANIMATE-IN-NAMESUPER": 
 		case "ANIMATE-IN-NAMESUPERDB": case "ANIMATE-IN-BUG-DB": case "ANIMATE-IN-SCOREUPDATE": case "ANIMATE-IN-MATCHSTATUS": case "ANIMATE-IN-NAMESUPER_CARD":
 		case "ANIMATE-IN-SUBSTITUTE": case "ANIMATE-IN-LTPROMO": case "ANIMATE-IN-STAFF": case "ANIMATE-IN-MATCHSTATS": case "ANIMATE-IN-PROMO": 
-		case "ANIMATE-IN-DOUBLE_PROMO": case "ANIMATE-OUT-SCOREBUG": case "ANIMATE-IN-POINTS_TABLE": case "ANIMATE-IN-OFFICIALS":case "ANIMATE-IN-PENALTY": 
-		case "ANIMATE-IN-SINGLE_SUBSTITUTE": case "ANIMATE-IN-SCOREBUG_STATS": case "ANIMATE-IN-SCOREBUG-CARD": case "ANIMATE-IN-SCOREBUG-GOAL_SCORER":
-		case "ANIMATE-IN-PLAYINGXIBOTHTEAMS":	case "ANIMATE-IN-MATCHID_IMAGE":
-		case "ANIMATE-IN-LT_MATCHID": case "ANIMATE-IN-PLAYINGXISUB": case "ANIMATE-IN-MATCHSUMMARY": case "ANIMATE-IN-SCOREBUG-LAST_GOAL":
-		case "ANIMATE-IN-SCOREBUG-RED_CARD": case "ANIMATE-IN-QUARTER": case "ANIMATE-IN-PENALTY_SCORES":
+		case "ANIMATE-IN-DOUBLE_PROMO": case "ANIMATE-IN-POINTS_TABLE": case "ANIMATE-IN-OFFICIALS":case "ANIMATE-IN-PENALTY": 
+		case "ANIMATE-IN-SINGLE_SUBSTITUTE": case "ANIMATE-IN-PLAYINGXIBOTHTEAMS":	case "ANIMATE-IN-MATCHID_IMAGE":
+		case "ANIMATE-IN-LT_MATCHID": case "ANIMATE-IN-PLAYINGXISUB": case "ANIMATE-IN-MATCHSUMMARY":
+		case "ANIMATE-IN-QUARTER": case "ANIMATE-IN-PENALTY_SCORES":
 		case "ANIMATE-IN-SINGLEPROMO": case "ANIMATE-IN-MATCHSTAT":	
 
+			if(scorebug.isScorebug_on_screen() == true) {
+				print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_ScoreBug$Push START\0");
+			}
+			
 			switch (whatToProcess.toUpperCase()) {
 			case "ANIMATE-IN-QUARTER":
 				print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_LT_Quaters$Essentials START\0");
 				which_graphics_onscreen = "QUARTER";
 				break;
-			case "ANIMATE-IN-SCOREBUG-RED_CARD":
-				print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_ScoreBug$Cards START\0");
-				red_card_on_screen = "RED_CARD";
-				break;
+			
 			case "ANIMATE-IN-LT_MATCHID": case "ANIMATE-IN-PENALTY_SCORES": case "ANIMATE-IN-LTPROMO":
 				print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_Ident$Essentials START\0");
 //				print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Loop START\0");
 				which_graphics_onscreen = "LT_MATCHID";
 				break;
-			case "ANIMATE-IN-SCOREBUG-LAST_GOAL":
-				print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_ScoreBug$Goal_Scorer START\0");
-				which_stats_on_screen = "LAST_GOAL";
-				break;
-			case "ANIMATE-IN-SCOREBUG-GOAL_SCORER":
-				print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_ScoreBug$Goal_Scorer START\0");
-				which_stats_on_screen = "GOAL_SCORER";
-				break;
-			case "ANIMATE-IN-SCOREBUG-CARD":
-				print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_ScoreBug$Penalty_Card START\0");
-				which_stats_on_screen = "PLAYER_CARD";
-				break;
-			case "ANIMATE-IN-SCOREBUG_STATS":
-				print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_ScoreBug$Penalty_Corners START\0");
-				which_stats_on_screen = "PENALTY_CORNER";
-				break;
+			
 			case "ANIMATE-IN-PENALTY":
 				print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_LT_Penalty$Essentials START\0");
 				which_graphics_onscreen = "PENALTY";
@@ -591,103 +696,9 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 				processAnimation(session_socket, "In", "START", session_selected_broadcaster,2);
 				which_graphics_onscreen = "POINTS_TABLE";
 				break;
-			case "ANIMATE-IN-SCOREBUG":
-				print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_ScoreBug$Essentials START\0");
-//				print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Loop START\0");
-				is_infobar = true;
-				scorebug.setScorebug_on_screen(true);
-				break;
-			case "ANIMATE-IN-SPONSOR":
-				if(sponsor_on_screen.equalsIgnoreCase("SPONSOR")) {
-					print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_ScoreBug$Sponsor CONTINUE\0");
-					sponsor_on_screen = "";
-				}else {
-					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$Sponsor$Select_Sponsor*FUNCTION*Omo*vis_con SET 2\0");
-					
-					print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_ScoreBug$Sponsor START\0");
-					sponsor_on_screen = "SPONSOR";
-				}
-				break;
 			case "ANIMATE-IN-OFFICIALS":
 				processAnimation(session_socket, "In", "START", session_selected_broadcaster,2);
 				which_graphics_onscreen = "OFFICIALS";
-				break;
-			case "CLEAR-ALL":
-				print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_ScoreBug SHOW 0.0\0");
-
-				print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_Ident$Essentials SHOW 0.0\0");
-				print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_LowerThird$Essentials SHOW 0.0\0");
-				print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_lowerthird_Player$Essentials SHOW 0.0\0");
-				print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_LT_Quaters$Essentials SHOW 0.0\0");
-				print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_LT_ScoreLine$Essentials SHOW 0.0\0");
-				print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_LT_Penalty$Essentials SHOW 0.0\0");
-
-				print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_FullFrame$In_Out SHOW 0.0\0");
-				which_graphics_onscreen = "";
-				which_stats_on_screen = "";
-				scorebug.setScorebug_on_screen(false);
-				is_infobar = false;
-				break;
-			
-			case "ANIMATE-OUT-SCOREBUG":
-				if(is_infobar == true) {
-					print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_ScoreBug$Essentials CONTINUE\0");
-					is_infobar = false;
-					scorebug.setScorebug_on_screen(false);
-					sponsor_on_screen = "";
-				}
-				break;
-			case "ANIMATE-OUT":
-				switch(which_graphics_onscreen) {
-				case "MATCHID": case "PLAYINGXI": case "POINTS_TABLE": case "MATCHSTATS":  case "PLAYINGXISUB": case "MATCHSUMMARY":
-				case "SINGLEPROMO":	 case "MATCHSTAT": case "DOUBLE_PROMO": case "PLAYINGXIBOTHTEAMS": case "MATCHID_IMAGE":
-				//	processAnimation(session_socket, "In", "CONTINUE", session_selected_broadcaster,2);
-					print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_FullFrame$In_Out CONTINUE \0");
-					which_graphics_onscreen = "";
-					TimeUnit.MILLISECONDS.sleep(1000);
-					print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_FullFrame$In_Out SHOW 0.0\0");
-					break;
-				
-				case "NAMESUPERDB": case "STAFF":
-					print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_LowerThird$Essentials CONTINUE\0");
-					which_graphics_onscreen = "";
-					break;
-				case "NAMESUPER":
-					print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_lowerthird_Player$Essentials CONTINUE\0");
-					which_graphics_onscreen = "";
-					break;
-				case "LT_MATCHID":
-					print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_Ident$Essentials CONTINUE\0");
-					which_graphics_onscreen = "";
-					break;
-				case "QUARTER":
-					print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_LT_Quaters$Essentials CONTINUE\0");
-					which_graphics_onscreen = "";
-					break;
-				case "SCOREUPDATE":
-					print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_LT_ScoreLine$Essentials CONTINUE\0");
-					which_graphics_onscreen = "";
-					break;
-				case "PENALTY":	
-					print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_LT_Penalty$Essentials CONTINUE\0");
-					which_graphics_onscreen = "";
-					break;	
-				case "BUG-DB": case "MATCHSTATUS": case "NAMESUPER_CARD":
-				case "SUBSTITUTE": case "MATCHPROMO": case "PROMO": case "OFFICIALS": 
-				case "SINGLE_SUBSTITUTE": 
-					print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_LowerThird$Essentials CONTINUE\0");
-					which_graphics_onscreen = "";
-					break;	
-				}
-				
-				TimeUnit.MILLISECONDS.sleep(1000);
-				
-				print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_Ident$Essentials SHOW 0.0\0");
-				print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_LowerThird$Essentials SHOW 0.0\0");
-				print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_lowerthird_Player$Essentials SHOW 0.0\0");
-				print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_LT_Quaters$Essentials SHOW 0.0\0");
-				print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_LT_ScoreLine$Essentials SHOW 0.0\0");
-				print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_LT_Penalty$Essentials SHOW 0.0\0");
 				break;
 			}
 			break;
@@ -1796,20 +1807,20 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 				if(hsh.getCaptainGoalKeeper().equalsIgnoreCase(HockeyUtil.CAPTAIN) || hsh.getCaptainGoalKeeper().equalsIgnoreCase(HockeyUtil.CAPTAIN_GOAL_KEEPER)) {
 					if(IndexController.session_configurations.getIpAddress().equalsIgnoreCase("LOCALHOST")) {
 						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Final_Vs$Data"
-								+ "$Logos_Vs$Left_Logo_Out$img_Player_Team1*TEXTURE*IMAGE SET "+ HOCKEY_LOCAL_PHOTO_PATH + 
+								+ "$Logos_Vs$Left_Logo_Out$img_Player_Team1*TEXTURE*IMAGE SET "+ HOCKEY_LOCAL_PHOTO_PATH + match.getHomeTeam().getTeamName4() + "\\\\" + 
 								"Blank" + HockeyUtil.PNG_EXTENSION +"\0");
 						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Final_Vs$Data"
-								+ "$Logos_Vs$Left_Logo_Out$img_Player_Team1*TEXTURE*IMAGE SET "+ HOCKEY_LOCAL_PHOTO_PATH + 
+								+ "$Logos_Vs$Left_Logo_Out$img_Player_Team1*TEXTURE*IMAGE SET "+ HOCKEY_LOCAL_PHOTO_PATH + match.getHomeTeam().getTeamName4() + "\\\\" + 
 								hsh.getPhoto() + HockeyUtil.PNG_EXTENSION +"\0");
 						
 					}else {
 						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Final_Vs$Data"
 								+ "$Logos_Vs$Left_Logo_Out$img_Player_Team1*TEXTURE*IMAGE SET "+ "\\\\" + IndexController.session_configurations.getIpAddress()
-								+  HOCKEY_PHOTO_PATH + "Blank" + HockeyUtil.PNG_EXTENSION +"\0");
+								+  HOCKEY_PHOTO_PATH + match.getHomeTeam().getTeamName4() + "\\\\" + "Blank" + HockeyUtil.PNG_EXTENSION +"\0");
 						
 						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Final_Vs$Data"
 								+ "$Logos_Vs$Left_Logo_Out$img_Player_Team1*TEXTURE*IMAGE SET "+ "\\\\" + IndexController.session_configurations.getIpAddress()
-								+  HOCKEY_PHOTO_PATH + hsh.getPhoto() + HockeyUtil.PNG_EXTENSION +"\0");
+								+  HOCKEY_PHOTO_PATH + match.getHomeTeam().getTeamName4() + "\\\\" + hsh.getPhoto() + HockeyUtil.PNG_EXTENSION +"\0");
 					}
 				}
 			}
@@ -1818,19 +1829,19 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 				if(hsa.getCaptainGoalKeeper().equalsIgnoreCase(HockeyUtil.CAPTAIN) || hsa.getCaptainGoalKeeper().equalsIgnoreCase(HockeyUtil.CAPTAIN_GOAL_KEEPER)) {
 					if(IndexController.session_configurations.getIpAddress().equalsIgnoreCase("LOCALHOST")) {
 						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Final_Vs$Data"
-								+ "$Logos_Vs$Right_Logo_Out$img_Player_Team2*TEXTURE*IMAGE SET "+ HOCKEY_LOCAL_PHOTO_PATH +
+								+ "$Logos_Vs$Right_Logo_Out$img_Player_Team2*TEXTURE*IMAGE SET "+ HOCKEY_LOCAL_PHOTO_PATH + match.getAwayTeam().getTeamName4() + "\\\\" +
 								"Blank" + HockeyUtil.PNG_EXTENSION +"\0");
 						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Final_Vs$Data"
-								+ "$Logos_Vs$Right_Logo_Out$img_Player_Team2*TEXTURE*IMAGE SET "+ HOCKEY_LOCAL_PHOTO_PATH +
+								+ "$Logos_Vs$Right_Logo_Out$img_Player_Team2*TEXTURE*IMAGE SET "+ HOCKEY_LOCAL_PHOTO_PATH + match.getAwayTeam().getTeamName4() + "\\\\" +
 								hsa.getPhoto() + HockeyUtil.PNG_EXTENSION +"\0");
 						
 					}else {
 						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Final_Vs$Data"
 								+ "$Logos_Vs$Right_Logo_Out$img_Player_Team2*TEXTURE*IMAGE SET "+ "\\\\" + IndexController.session_configurations.getIpAddress() +
-								HOCKEY_PHOTO_PATH +"Blank" + HockeyUtil.PNG_EXTENSION +"\0");
+								HOCKEY_PHOTO_PATH + match.getAwayTeam().getTeamName4() + "\\\\" + "Blank" + HockeyUtil.PNG_EXTENSION +"\0");
 						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Final_Vs$Data"
 								+ "$Logos_Vs$Right_Logo_Out$img_Player_Team2*TEXTURE*IMAGE SET " + "\\\\" + IndexController.session_configurations.getIpAddress() 
-								+ HOCKEY_PHOTO_PATH + hsa.getPhoto() + HockeyUtil.PNG_EXTENSION +"\0");
+								+ HOCKEY_PHOTO_PATH + match.getAwayTeam().getTeamName4() + "\\\\" + hsa.getPhoto() + HockeyUtil.PNG_EXTENSION +"\0");
 					}
 				}
 			}
@@ -3666,10 +3677,10 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 		
 			for(Fixture fixtures :fixture) {
 				if(fixtures.getMatchnumber() == Integer.valueOf(fixt)) {
-					if(fixtures.getMatchnumber() > 9) {
+					if(fixtures.getMatchnumber() > 10) {
 						match_name = fixtures.getMatchfilename();
 					}else {
-						match_name = "MATCH " + fixtures.getMatchnumber();
+						match_name = "MATCH " + (fixtures.getMatchnumber()-1);
 					}
 					
 					if(fixtures.getDate().equalsIgnoreCase(new SimpleDateFormat("dd-MM-yyyy").format(cal_bengal.getTime()))) {
