@@ -3358,6 +3358,21 @@ function addItemsToList(whatToProcess, dataToProcess)
 					option.text = 'GoalKeeper';
 					select.appendChild(option);
 					
+					option = document.createElement('option');
+					option.value = 'Goal_Scorer';
+					option.text = 'Goal Scorer';
+					select.appendChild(option);
+										
+					option = document.createElement('option');
+					option.value = 'Striker_of_the_Match';
+					option.text = 'Striker of the Match';
+					select.appendChild(option);
+															
+					option = document.createElement('option');
+					option.value = 'Player_of_the_Match';
+					option.text = 'Player of the Match';
+					select.appendChild(option);
+					
 					select.setAttribute('onchange',"processUserSelection(this)");
 					row.insertCell(cellCount).appendChild(select);
 					cellCount = cellCount + 1;
@@ -3408,15 +3423,15 @@ function addItemsToList(whatToProcess, dataToProcess)
 					select.style = 'width:100px';
 					select.id = 'selectPhoto';
 					select.name = select.id;
+					
+					option = document.createElement('option');
+					option.value = 'Without_Photo';
+					option.text = 'Without Photo';
+					select.appendChild(option);
 
 					option = document.createElement('option');
 					option.value = 'With_photo';
 					option.text = 'With Photo';
-					select.appendChild(option);
-
-					option = document.createElement('option');
-					option.value = 'Without_Photo';
-					option.text = 'Without Photo';
 					select.appendChild(option);
 
 					select.setAttribute('onchange',"processUserSelection(this)");

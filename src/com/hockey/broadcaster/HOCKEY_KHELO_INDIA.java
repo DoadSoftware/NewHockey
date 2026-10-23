@@ -1623,6 +1623,16 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 						+ "CAPTAIN & GOAL KEEPER" + " , " + Home_or_Away +"\0");
 				TimeUnit.MILLISECONDS.sleep(l);
 				break;
+			case "STRIKER_OF_THE_MATCH":	
+				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_lowerthird_Player$Designation_Out$txt_Designation*GEOM*TEXT SET " 
+						+ "STRIKER OF THE MATCH" +"\0");
+				TimeUnit.MILLISECONDS.sleep(l);
+				break;
+			case "PLAYER_OF_THE_MATCH":
+				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_lowerthird_Player$Designation_Out$txt_Designation*GEOM*TEXT SET " 
+						+ "PLAYER OF THE MATCH" +"\0");
+				TimeUnit.MILLISECONDS.sleep(l);
+				break;	
 			}
 			
 			
