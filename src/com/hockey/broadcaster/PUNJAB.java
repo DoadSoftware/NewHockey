@@ -563,8 +563,7 @@ public class PUNJAB extends Scene{
 				break;
 			case "ANIMATE-IN-MATCHID":
 //				processAnimation(session_socket, "In", "START", session_selected_broadcaster,2);
-				print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_FullFrame$In_Out START \0");
-				print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Loop START \0");
+				print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_Ident$In_Out START \0");
 				which_graphics_onscreen = "MATCHID";
 				break;
 			case "ANIMATE-IN-PLAYINGXIBOTHTEAMS":
@@ -695,7 +694,7 @@ public class PUNJAB extends Scene{
 				break;
 			case "ANIMATE-OUT":
 				switch(which_graphics_onscreen) {
-				case "MATCHID": case "PLAYINGXI": case "POINTS_TABLE": case "MATCHSTATS":  case "PLAYINGXISUB": case "MATCHSUMMARY":
+				case "PLAYINGXI": case "POINTS_TABLE": case "MATCHSTATS":  case "PLAYINGXISUB": case "MATCHSUMMARY":
 				case "SINGLEPROMO":	 case "MATCHSTAT": case "DOUBLE_PROMO": case "PLAYINGXIBOTHTEAMS": case "MATCHID_IMAGE":
 				//	processAnimation(session_socket, "In", "CONTINUE", session_selected_broadcaster,2);
 					print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_FullFrame$In_Out CONTINUE \0");
@@ -703,6 +702,10 @@ public class PUNJAB extends Scene{
 					TimeUnit.MILLISECONDS.sleep(1000);
 					print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_FullFrame$In_Out SHOW 0.0\0");
 					break;
+				case "MATCHID": 
+					print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_Ident$In_Out SHOW 0.0\0");
+					break;
+					
 				
 				case "NAMESUPERDB": case "STAFF":
 					print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_LowerThird$Essentials CONTINUE\0");
@@ -1966,58 +1969,34 @@ public class PUNJAB extends Scene{
 			this.status = "ERROR: Match is null";
 		}else {
 			
-			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$FF_Gfx*FUNCTION*Omo*vis_con SET 1 \0");
+			
+			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_MatchId$Header-UD$FF_Title_SEL_UD$txt_Title"
+					+ "*GEOM*TEXT SET "+ "ASIAN CHAMPIONS TROPH" +"\0");
+			
+			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_MatchId$Header$Data$Flags$Team1"
+					+ "$img_Flag*TEXTURE*IMAGE SET "+ logo_path + match.getHomeTeam().getTeamBadge() +"\0");
+			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_MatchId$Header$Data$Flags$Team1"
+					+ "$txt_TeamName*GEOM*TEXT SET "+ match.getHomeTeam().getTeamName1() +"\0");
 			
 			
-			if(match.getMatchIdent().contains("FINAL")) {
-				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Match_Id$Data"
-						+ "$Match_Number_Out$Match$Druk-Trial-Medium*GEOM*TEXT SET "+ "FINAL " +"\0");
-				
-				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Match_Id$Data"
-						+ "$Match_Number_Out$Number$txt_Match_Number*GEOM*TEXT SET "+ "" +"\0");
-				
-			}else if(match.getMatchIdent().contains("SEMI") && match.getMatchId() == 1) {
-				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Match_Id$Data"
-						+ "$Match_Number_Out$Match$Druk-Trial-Medium*GEOM*TEXT SET "+ "S-FINAL  " +"\0");
-				
-				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Match_Id$Data"
-						+ "$Match_Number_Out$Number$txt_Match_Number*GEOM*TEXT SET "+ "1" +"\0");
-				
-			}else if(match.getMatchIdent().contains("SEMI") && match.getMatchId() == 2) {
-				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Match_Id$Data"
-						+ "$Match_Number_Out$Match$Druk-Trial-Medium*GEOM*TEXT SET "+ "S-FINAL  " +"\0");
-				
-				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Match_Id$Data"
-						+ "$Match_Number_Out$Number$txt_Match_Number*GEOM*TEXT SET "+ "2" +"\0");
-			}else {
-				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Match_Id$Data"
-						+ "$Match_Number_Out$Match$Druk-Trial-Medium*GEOM*TEXT SET "+ "MATCH" +"\0");
-				
-				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Match_Id$Data"
-						+ "$Match_Number_Out$Number$txt_Match_Number*GEOM*TEXT SET "+ match.getMatchId() +"\0");
-			}
+			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_MatchId$Header$Data$Flags$Team2"
+					+ "$img_Flag*TEXTURE*IMAGE SET "+ logo_path + match.getAwayTeam().getTeamBadge() +"\0");
+			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_MatchId$Header$Data$Flags$Team2"
+					+ "$txt_TeamName*GEOM*TEXT SET "+ match.getAwayTeam().getTeamName1() +"\0");
 			
 			
-			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Match_Id$Data"
-					+ "$Logos_Vs$Left_Logo_Out$img_Logo_Left*TEXTURE*IMAGE SET "+ logo_path + match.getHomeTeam().getTeamBadge() +"\0");
-			
-			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Match_Id$Data"
-					+ "$Logos_Vs$Right_Logo_Out$img_Logo_Right*TEXTURE*IMAGE SET "+ logo_path + match.getAwayTeam().getTeamBadge() +"\0");
-			
-			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Match_Id$Data"
-					+ "$Date_Out*ACTIVE SET 0\0");
-			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Match_Id$Data"
-					+ "$Venue_Out$txt_Venue*GEOM*TEXT SET "+ "SARDAR VALLABHBHAI PATEL" +"\0");
-			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Match_Id$Data"
-					+ "$Venue_Out$txt_Location*GEOM*TEXT SET "+ "INTERNATIONAL HOCKEY STADIUM, RAIPUR, CHHATTISGARH" +"\0");
+			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_MatchId$Header$Data"
+					+ "$txt_Footer*GEOM*TEXT SET "+ "PUNJAB" +"\0");
+			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_MatchId$Header$Data"
+					+ "$txt_Hashtag*GEOM*TEXT SET "+ "HELLO" +"\0");
 			
 			
 			for(VariousText vt : hockeyService.getVariousTexts()) {
 				if(vt.getVariousType().equalsIgnoreCase("MATCHIDENTFOOTER") && vt.getUseThis().equalsIgnoreCase("YES") ) {
-					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Match_Id$Data"
-							+ "$Venue_Out$txt_Venue*GEOM*TEXT SET "+ vt.getVariousText() +"\0");
-					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Match_Id$Data"
-							+ "$Venue_Out$txt_Location*GEOM*TEXT SET "+ vt.getVariousText1() +"\0");
+					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_MatchId$Header$Data$Flags"
+							+ "$txt_Footer*GEOM*TEXT SET "+ vt.getVariousText() +"\0");
+					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_MatchId$Header$Data$Flags"
+							+ "$txt_Hashtag*GEOM*TEXT SET "+ vt.getVariousText1() +"\0");
 				}
 			}
 			previewCommand = "anim_FullFrame$In_Out 2.540 anim_FullFrame$In_Out$Match_Id 2.540 anim_FullFrame$In_Out$Match_Id$In_Out 2.540 anim_FullFrame$In_Out$Match_Id$In_Out$In 2.540 "
@@ -2461,163 +2440,132 @@ public class PUNJAB extends Scene{
 		}else {
 			 String previewCommand ="";
 			 int row_id=0;
-			 boolean hc=false;
-			 boolean ac=false;
-			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$FF_Gfx*FUNCTION*Omo*vis_con SET 4 \0");
-			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
-					+ "$Assistant_Coach*ACTIVE SET 0\0");
-			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
-					+ "$Head_Coach*ACTIVE SET 0\0");
 			
 			
-			for(Staff st: hockeyService.getStaffs()) {
-				if(st.getClubId() == TeamId && st.getRole().equalsIgnoreCase("HEAD COACH")) {
-					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
-							+ "$Head_Coach$txt_Head_Coach*GEOM*TEXT SET "+ "HEAD COACH" +"\0");
-					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
-							+ "$Head_Coach$txt_Header*GEOM*TEXT SET "+ st.getName() +"\0");
-					hc=true;
-				}
-				if(st.getClubId() == TeamId && st.getRole().equalsIgnoreCase("ASSISTANT COACH")) {
-					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
-							+ "$Assistant_Coach$txt_Head_Coach*GEOM*TEXT SET "+ "ASSISTANT COACH" +"\0");
-					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
-							+ "$Assistant_Coach$txt_Header*GEOM*TEXT SET "+ st.getName() +"\0");
-					ac=true;
-				}
-			}
 			
 			
-			if(ac == true) {
-				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
-						+ "$Assistant_Coach*ACTIVE SET 1\0");
-			}
-			if(hc) {
-				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
-						+ "$Head_Coach*ACTIVE SET 1\0");
-			}
 			
 			
 			if(TeamId == match.getHomeTeamId()) {
-				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$LOGO_ANIM"
-						+ "$noname$img_Logo_Left*TEXTURE*IMAGE SET "+ logo_path + match.getHomeTeam().getTeamBadge() +"\0");
 				
+				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Formation$Header$Side" + whichSide + "$Text-1"
+						+ "$img_Flag"+ logo_path + match.getHomeTeam().getTeamBadge() +"\0");
+				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Formation$Header$Side" + whichSide + "$Text-1"
+						+ "$img_Text$img_TeamName*GEOM*TEXT SET "+ match.getHomeTeam().getTeamName1() +"\0");
 				
+				for(Staff st: hockeyService.getStaffs()) {
+					if(st.getClubId() == TeamId && st.getRole().equalsIgnoreCase("HEAD COACH")) {
+						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Formation$Header$Side" + whichSide + "$Text-2"
+								+ "$txt_Info*GEOM*TEXT SET "+ "HEAD COACH: " + st.getName()+"\0");
+					}
+				}
 				
-				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
-						+ "$Header_Out$txt_Header*GEOM*TEXT SET "+ match.getHomeTeam().getTeamName1() +"\0");
 				
 				for(Player hs : match.getHomeSquad()) {
 					row_id = row_id + 1;
 					
+					//forbase
+//					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
+//							+ "$noname$Players$Player"+ row_id + "$img_Base1*TEXTURE*IMAGE SET "+ HOCKEY_BASE1 + match.getHomeTeam().getTeamBadge() +"\0");
+					
+					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Formation$Formation$Player-Grp$Side" + whichSide 
+							+ "$Player"+ row_id + "$Info-P1$Text-P1$txt_Name*GEOM*TEXT SET "+ hs.getFull_name() +"\0");
+					
+					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Formation$Formation$Player-Grp$Side" + whichSide 
+							+ "$Player"+ row_id + "$Info-P1$Text-P1$txt_Number*GEOM*TEXT SET "+ hs.getJersey_number() +"\0");
+					
 					if(IndexController.session_configurations.getIpAddress().equalsIgnoreCase("LOCALHOST")) {
+						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Formation$Formation$Player-Grp$Side" + whichSide 
+								+ "$Player"+ row_id + "$img_Player*TEXTURE*IMAGE SET " + HOCKEY_LOCAL_PHOTO_PATH + "Blank" + ".png" +"\0");
 						
-						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
-								+ "$noname$Players$Player"+ row_id +"$Player$img_Player_Team1*TEXTURE*IMAGE SET " + HOCKEY_LOCAL_PHOTO_PATH + "Blank" + ".png" +"\0");
-						
-						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
-								+ "$noname$Players$Player"+ row_id +"$img_Player_Team1*TEXTURE*IMAGE SET " + HOCKEY_LOCAL_PHOTO_PATH +
+						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Formation$Formation$Player-Grp$Side" + whichSide 
+								+ "$Player"+ row_id + "$img_Player*TEXTURE*IMAGE SET " + HOCKEY_LOCAL_PHOTO_PATH +
 								match.getHomeTeam().getTeamName4() +  "\\\\"  +hs.getPhoto() + ".png" +"\0");
 						
 					}else {
+						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Formation$Formation$Player-Grp$Side" + whichSide 
+								+ "$Player"+ row_id + "$img_Player*TEXTURE*IMAGE SET " + "\\\\" +  IndexController.session_configurations.getIpAddress() + HOCKEY_PHOTO_PATH + "Blank.png\0");
 						
-						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
-								+ "$noname$Players$Player"+ row_id +"$Player$img_Player_Team1*TEXTURE*IMAGE SET "+ "\\\\" +  IndexController.session_configurations.getIpAddress() + HOCKEY_PHOTO_PATH + "Blank.png\0");
-						
-						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
-								+ "$noname$Players$Player"+ row_id +"$img_Player_Team1*TEXTURE*IMAGE SET " + "\\\\" + IndexController.session_configurations.getIpAddress() + HOCKEY_PHOTO_PATH + 
+						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Formation$Formation$Player-Grp$Side" + whichSide 
+								+ "$Player"+ row_id + "$img_Player*TEXTURE*IMAGE SET "  + "\\\\" + IndexController.session_configurations.getIpAddress() + HOCKEY_PHOTO_PATH + 
 								match.getHomeTeam().getTeamName4() +  "\\\\"  +hs.getPhoto() + ".png" +"\0");
+						
 					}
 					
-					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
-							+ "$noname$Players$Player"+ row_id + "$img_Base1*TEXTURE*IMAGE SET "+ HOCKEY_BASE1 + match.getHomeTeam().getTeamBadge() +"\0");
 					
-					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
-							+ "$noname$Players$Player"+ row_id + "$img_Base2*TEXTURE*IMAGE SET "+ HOCKEY_BASE2 + match.getHomeTeam().getTeamBadge() +"\0");
-					
-					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
-							+ "$noname$Players$Player"+ row_id + "$img_Text1*TEXTURE*IMAGE SET "+ HOCKEY_TEXT1 + match.getHomeTeam().getTeamBadge() +"\0");	
-					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
-							+ "$noname$Players$Player"+ row_id + "$img_Text2*TEXTURE*IMAGE SET "+ HOCKEY_TEXT2 + match.getHomeTeam().getTeamBadge() +"\0");
-					
-					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
-							+ "$noname$Players$Player"+ row_id + "$img_Text1$txt_Name*GEOM*TEXT SET "+ hs.getFull_name() +"\0");
-					
-					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
-							+ "$noname$Players$Player"+ row_id + "$img_Text2$txt_Name*GEOM*TEXT SET "+ hs.getJersey_number() +"\0");
-					
-					
-					if(hs.getCaptainGoalKeeper().equalsIgnoreCase(HockeyUtil.CAPTAIN)) {
-						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
-								+ "$noname$Players$Player"+ row_id + "$img_Text2$txt_Name02*GEOM*TEXT SET "+ "(C)" +"\0");
-					}else if(hs.getCaptainGoalKeeper().equalsIgnoreCase(HockeyUtil.GOAL_KEEPER)) {
-						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
-								+ "$noname$Players$Player"+ row_id + "$img_Text2$txt_Name02*GEOM*TEXT SET "+ "(GK)" +"\0");
-					}else if(hs.getCaptainGoalKeeper().equalsIgnoreCase("CAPTAIN_GOAL_KEEPER")) {
-						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
-								+ "$noname$Players$Player"+ row_id + "$img_Text2$txt_Name02*GEOM*TEXT SET "+ "(C)(GK)" +"\0");
-					}else {
-						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
-								+ "$noname$Players$Player"+ row_id + "$img_Text2$txt_Name02*GEOM*TEXT SET "+ "" +"\0");
-					}
+//					if(hs.getCaptainGoalKeeper().equalsIgnoreCase(HockeyUtil.CAPTAIN)) {
+//						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
+//								+ "$noname$Players$Player"+ row_id + "$img_Text2$txt_Name02*GEOM*TEXT SET "+ "(C)" +"\0");
+//					}else if(hs.getCaptainGoalKeeper().equalsIgnoreCase(HockeyUtil.GOAL_KEEPER)) {
+//						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
+//								+ "$noname$Players$Player"+ row_id + "$img_Text2$txt_Name02*GEOM*TEXT SET "+ "(GK)" +"\0");
+//					}else if(hs.getCaptainGoalKeeper().equalsIgnoreCase("CAPTAIN_GOAL_KEEPER")) {
+//						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
+//								+ "$noname$Players$Player"+ row_id + "$img_Text2$txt_Name02*GEOM*TEXT SET "+ "(C)(GK)" +"\0");
+//					}else {
+//						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
+//								+ "$noname$Players$Player"+ row_id + "$img_Text2$txt_Name02*GEOM*TEXT SET "+ "" +"\0");
+//					}
 					
 					
 					
 					for(Formation form : formation) {
 						if(form.getFormId() == match.getHomeTeamFormationId()) {
 							
-							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
-									+ "$noname$Players$Player1*TRANSFORMATION*POSITION*X SET " + form.getFormOrds1X() + "\0");
-							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
-									+ "$noname$Players$Player1*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds1Y() + "\0");
-							
-							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
-									+ "$noname$Players$Player2*TRANSFORMATION*POSITION*X SET " + form.getFormOrds2X() + "\0");
-							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
-									+ "$noname$Players$Player2*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds2Y() + "\0");
-							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
-									+ "$noname$Players$Player3*TRANSFORMATION*POSITION*X SET " + form.getFormOrds3X() + "\0");
-							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
-									+ "$noname$Players$Player3*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds3Y() + "\0");
-							
-							
-							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
-									+ "$noname$Players$Player4*TRANSFORMATION*POSITION*X SET " + form.getFormOrds4X() + "\0");
-							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
-									+ "$noname$Players$Player4*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds4Y() + "\0");
-							
-							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
-									+ "$noname$Players$Player5*TRANSFORMATION*POSITION*X SET " + form.getFormOrds5X() + "\0");
-							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
-									+ "$noname$Players$Player5*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds5Y() + "\0");
-							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
-									+ "$noname$Players$Player6*TRANSFORMATION*POSITION*X SET " + form.getFormOrds6X() + "\0");
-							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
-									+ "$noname$Players$Player6*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds6Y() + "\0");
-							
-							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
-									+ "$noname$Players$Player7*TRANSFORMATION*POSITION*X SET " + form.getFormOrds7X() + "\0");
-							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
-									+ "$noname$Players$Player7*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds7Y() + "\0");
-							
-							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
-									+ "$noname$Players$Player8*TRANSFORMATION*POSITION*X SET " + form.getFormOrds8Y() + "\0");
-							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
-									+ "$noname$Players$Player8*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds8Y() + "\0");
-							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
-									+ "$noname$Players$Player9*TRANSFORMATION*POSITION*X SET " + form.getFormOrds9X() + "\0");
-							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
-									+ "$noname$Players$Player9*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds9Y() + "\0");
-							
-							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
-									+ "$noname$Players$Player10*TRANSFORMATION*POSITION*X SET " + form.getFormOrds10X() + "\0");
-							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
-									+ "$noname$Players$Player10*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds10Y() + "\0");
-							
-							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
-									+ "$noname$Players$Player11*TRANSFORMATION*POSITION*X SET " + form.getFormOrds11X() + "\0");
-							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
-									+ "$noname$Players$Player11*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds11Y() + "\0");
+							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Formation$Formation$Player-Grp$Side" + whichSide
+									+ "$Player1$geom_Position*TRANSFORMATION*POSITION*X SET " + form.getFormOrds1X() + "\0");
+							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Formation$Formation$Player-Grp$Side" + whichSide
+									+ "$Player1$geom_Position*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds1Y() + "\0");
+
+							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Formation$Formation$Player-Grp$Side" + whichSide
+									+ "$Player2$geom_Position*TRANSFORMATION*POSITION*X SET " + form.getFormOrds2X() + "\0");
+							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Formation$Formation$Player-Grp$Side" + whichSide
+									+ "$Player2$geom_Position*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds2Y() + "\0");
+
+							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Formation$Formation$Player-Grp$Side" + whichSide
+									+ "$Player3$geom_Position*TRANSFORMATION*POSITION*X SET " + form.getFormOrds3X() + "\0");
+							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Formation$Formation$Player-Grp$Side" + whichSide
+									+ "$Player3$geom_Position*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds3Y() + "\0");
+
+							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Formation$Formation$Player-Grp$Side" + whichSide
+									+ "$Player4$geom_Position*TRANSFORMATION*POSITION*X SET " + form.getFormOrds4X() + "\0");
+							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Formation$Formation$Player-Grp$Side" + whichSide
+									+ "$Player4$geom_Position*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds4Y() + "\0");
+
+							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Formation$Formation$Player-Grp$Side" + whichSide
+									+ "$Player5$geom_Position*TRANSFORMATION*POSITION*X SET " + form.getFormOrds5X() + "\0");
+							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Formation$Formation$Player-Grp$Side" + whichSide
+									+ "$Player5$geom_Position*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds5Y() + "\0");
+
+							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Formation$Formation$Player-Grp$Side" + whichSide
+									+ "$Player6$geom_Position*TRANSFORMATION*POSITION*X SET " + form.getFormOrds6X() + "\0");
+							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Formation$Formation$Player-Grp$Side" + whichSide
+									+ "$Player6$geom_Position*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds6Y() + "\0");
+
+							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Formation$Formation$Player-Grp$Side" + whichSide
+									+ "$Player7$geom_Position*TRANSFORMATION*POSITION*X SET " + form.getFormOrds7X() + "\0");
+							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Formation$Formation$Player-Grp$Side" + whichSide
+									+ "$Player7$geom_Position*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds7Y() + "\0");
+
+							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Formation$Formation$Player-Grp$Side" + whichSide
+									+ "$Player8$geom_Position*TRANSFORMATION*POSITION*X SET " + form.getFormOrds8X() + "\0");
+							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Formation$Formation$Player-Grp$Side" + whichSide
+									+ "$Player8$geom_Position*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds8Y() + "\0");
+
+							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Formation$Formation$Player-Grp$Side" + whichSide
+									+ "$Player9$geom_Position*TRANSFORMATION*POSITION*X SET " + form.getFormOrds9X() + "\0");
+							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Formation$Formation$Player-Grp$Side" + whichSide
+									+ "$Player9$geom_Position*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds9Y() + "\0");
+
+							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Formation$Formation$Player-Grp$Side" + whichSide
+									+ "$Player10$geom_Position*TRANSFORMATION*POSITION*X SET " + form.getFormOrds10X() + "\0");
+							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Formation$Formation$Player-Grp$Side" + whichSide
+									+ "$Player10$geom_Position*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds10Y() + "\0");
+
+							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Formation$Formation$Player-Grp$Side" + whichSide
+									+ "$Player11$geom_Position*TRANSFORMATION*POSITION*X SET " + form.getFormOrds11X() + "\0");
+							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Formation$Formation$Player-Grp$Side" + whichSide
+									+ "$Player11$geom_Position*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds11Y() + "\0");
 							
 						}
 					}
@@ -2625,120 +2573,125 @@ public class PUNJAB extends Scene{
 				}
 				
 			}else if(TeamId == match.getAwayTeamId()){
-				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$LOGO_ANIM"
-						+ "$noname$img_Logo_Left*TEXTURE*IMAGE SET "+ logo_path + match.getAwayTeam().getTeamBadge() +"\0");
-				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
-						+ "$Header_Out$txt_Header*GEOM*TEXT SET "+ match.getAwayTeam().getTeamName1() +"\0");
+				
+				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Formation$Header$Side" + whichSide + "$Text-1"
+						+ "$img_Flag"+ logo_path + match.getAwayTeam().getTeamBadge() +"\0");
+				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Formation$Header$Side" + whichSide + "$Text-1"
+						+ "$img_Text$img_TeamName*GEOM*TEXT SET "+ match.getAwayTeam().getTeamName1() +"\0");
+				
+				for(Staff st: hockeyService.getStaffs()) {
+					if(st.getClubId() == TeamId && st.getRole().equalsIgnoreCase("HEAD COACH")) {
+						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Formation$Header$Side" + whichSide + "$Text-2"
+								+ "$txt_Info*GEOM*TEXT SET "+ "HEAD COACH: " + st.getName()+"\0");
+					}
+				}
 				
 				for(Player hs : match.getAwaySquad()) {
 					row_id = row_id + 1;
 					
 					
+
+					//forbase
+//					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
+//							+ "$noname$Players$Player"+ row_id + "$img_Base1*TEXTURE*IMAGE SET "+ HOCKEY_BASE1 + match.getHomeTeam().getTeamBadge() +"\0");
+					
+					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Formation$Formation$Player-Grp$Side" + whichSide 
+							+ "$Player"+ row_id + "$Info-P1$Text-P1$txt_Name*GEOM*TEXT SET "+ hs.getFull_name() +"\0");
+					
+					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Formation$Formation$Player-Grp$Side" + whichSide 
+							+ "$Player"+ row_id + "$Info-P1$Text-P1$txt_Number*GEOM*TEXT SET "+ hs.getJersey_number() +"\0");
+					
 					if(IndexController.session_configurations.getIpAddress().equalsIgnoreCase("LOCALHOST")) {
+						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Formation$Formation$Player-Grp$Side" + whichSide 
+								+ "$Player"+ row_id + "$img_Player*TEXTURE*IMAGE SET " + HOCKEY_LOCAL_PHOTO_PATH + "Blank" + ".png" +"\0");
 						
-						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
-								+ "$noname$Players$Player"+ row_id +"$Player$img_Player_Team1*TEXTURE*IMAGE SET " + HOCKEY_LOCAL_PHOTO_PATH + "Blank" + ".png" +"\0");
-						
-						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
-								+ "$noname$Players$Player"+ row_id +"$img_Player_Team1*TEXTURE*IMAGE SET " + HOCKEY_LOCAL_PHOTO_PATH +
-								match.getAwayTeam().getTeamName4() +  "\\\\"  +hs.getPhoto() + ".png" +"\0");
+						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Formation$Formation$Player-Grp$Side" + whichSide 
+								+ "$Player"+ row_id + "$img_Player*TEXTURE*IMAGE SET " + HOCKEY_LOCAL_PHOTO_PATH +
+								match.getHomeTeam().getTeamName4() +  "\\\\"  +hs.getPhoto() + ".png" +"\0");
 						
 					}else {
+						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Formation$Formation$Player-Grp$Side" + whichSide 
+								+ "$Player"+ row_id + "$img_Player*TEXTURE*IMAGE SET " + "\\\\" +  IndexController.session_configurations.getIpAddress() + HOCKEY_PHOTO_PATH + "Blank.png\0");
 						
-						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
-								+ "$noname$Players$Player"+ row_id +"$Player$img_Player_Team1*TEXTURE*IMAGE SET "+ "\\\\" +  IndexController.session_configurations.getIpAddress() + HOCKEY_PHOTO_PATH + "Blank.png\0");
+						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Formation$Formation$Player-Grp$Side" + whichSide 
+								+ "$Player"+ row_id + "$img_Player*TEXTURE*IMAGE SET "  + "\\\\" + IndexController.session_configurations.getIpAddress() + HOCKEY_PHOTO_PATH + 
+								match.getHomeTeam().getTeamName4() +  "\\\\"  +hs.getPhoto() + ".png" +"\0");
 						
-						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
-								+ "$noname$Players$Player"+ row_id +"$img_Player_Team1*TEXTURE*IMAGE SET " + "\\\\" + IndexController.session_configurations.getIpAddress() + HOCKEY_PHOTO_PATH + 
-								match.getAwayTeam().getTeamName4() +  "\\\\"  +hs.getPhoto() + ".png" +"\0");
 					}
 					
-					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
-							+ "$noname$Players$Player"+ row_id + "$img_Base1*TEXTURE*IMAGE SET "+ HOCKEY_BASE1 + match.getAwayTeam().getTeamBadge() +"\0");
-					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
-							+ "$noname$Players$Player"+ row_id + "$img_Base2*TEXTURE*IMAGE SET "+ HOCKEY_BASE2 + match.getAwayTeam().getTeamBadge() +"\0");	
-					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
-							+ "$noname$Players$Player"+ row_id + "$img_Text1*TEXTURE*IMAGE SET "+ HOCKEY_TEXT1 + match.getAwayTeam().getTeamBadge() +"\0");	
-					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
-							+ "$noname$Players$Player"+ row_id + "$img_Text2*TEXTURE*IMAGE SET "+ HOCKEY_TEXT2 + match.getAwayTeam().getTeamBadge() +"\0");	
-					
-					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
-							+ "$noname$Players$Player"+ row_id + "$img_Text1$txt_Name*GEOM*TEXT SET "+ hs.getFull_name() +"\0");
-					
-					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
-							+ "$noname$Players$Player"+ row_id + "$img_Text2$txt_Name*GEOM*TEXT SET "+ hs.getJersey_number() +"\0");
 					
 					
-					
-					if(hs.getCaptainGoalKeeper().equalsIgnoreCase(HockeyUtil.CAPTAIN)) {
-						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
-								+ "$noname$Players$Player"+ row_id + "$img_Text2$txt_Name02*GEOM*TEXT SET "+ "(C)" +"\0");
-					}else if(hs.getCaptainGoalKeeper().equalsIgnoreCase(HockeyUtil.GOAL_KEEPER)) {
-						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
-								+ "$noname$Players$Player"+ row_id + "$img_Text2$txt_Name02*GEOM*TEXT SET "+ "(GK)" +"\0");
-					}else if(hs.getCaptainGoalKeeper().equalsIgnoreCase("CAPTAIN_GOAL_KEEPER")) {
-						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
-								+ "$noname$Players$Player"+ row_id + "$img_Text2$txt_Name02*GEOM*TEXT SET "+ "(C)(GK)" +"\0");
-					}else {
-						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
-								+ "$noname$Players$Player"+ row_id + "$img_Text2$txt_Name02*GEOM*TEXT SET "+ "" +"\0");
-					}
+//					if(hs.getCaptainGoalKeeper().equalsIgnoreCase(HockeyUtil.CAPTAIN)) {
+//						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
+//								+ "$noname$Players$Player"+ row_id + "$img_Text2$txt_Name02*GEOM*TEXT SET "+ "(C)" +"\0");
+//					}else if(hs.getCaptainGoalKeeper().equalsIgnoreCase(HockeyUtil.GOAL_KEEPER)) {
+//						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
+//								+ "$noname$Players$Player"+ row_id + "$img_Text2$txt_Name02*GEOM*TEXT SET "+ "(GK)" +"\0");
+//					}else if(hs.getCaptainGoalKeeper().equalsIgnoreCase("CAPTAIN_GOAL_KEEPER")) {
+//						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
+//								+ "$noname$Players$Player"+ row_id + "$img_Text2$txt_Name02*GEOM*TEXT SET "+ "(C)(GK)" +"\0");
+//					}else {
+//						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
+//								+ "$noname$Players$Player"+ row_id + "$img_Text2$txt_Name02*GEOM*TEXT SET "+ "" +"\0");
+//					}
 					
 					for(Formation form : formation) {
 						if(form.getFormId() == match.getAwayTeamFormationId()) {
 							
-							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
-									+ "$noname$Players$Player1*TRANSFORMATION*POSITION*X SET " + form.getFormOrds1X() + "\0");
-							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
-									+ "$noname$Players$Player1*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds1Y() + "\0");
-							
-							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
-									+ "$noname$Players$Player2*TRANSFORMATION*POSITION*X SET " + form.getFormOrds2X() + "\0");
-							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
-									+ "$noname$Players$Player2*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds2Y() + "\0");
-							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
-									+ "$noname$Players$Player3*TRANSFORMATION*POSITION*X SET " + form.getFormOrds3X() + "\0");
-							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
-									+ "$noname$Players$Player3*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds3Y() + "\0");
-							
-							
-							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
-									+ "$noname$Players$Player4*TRANSFORMATION*POSITION*X SET " + form.getFormOrds4X() + "\0");
-							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
-									+ "$noname$Players$Player4*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds4Y() + "\0");
-							
-							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
-									+ "$noname$Players$Player5*TRANSFORMATION*POSITION*X SET " + form.getFormOrds5X() + "\0");
-							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
-									+ "$noname$Players$Player5*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds5Y() + "\0");
-							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
-									+ "$noname$Players$Player6*TRANSFORMATION*POSITION*X SET " + form.getFormOrds6X() + "\0");
-							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
-									+ "$noname$Players$Player6*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds6Y() + "\0");
-							
-							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
-									+ "$noname$Players$Player7*TRANSFORMATION*POSITION*X SET " + form.getFormOrds7X() + "\0");
-							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
-									+ "$noname$Players$Player7*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds7Y() + "\0");
-							
-							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
-									+ "$noname$Players$Player8*TRANSFORMATION*POSITION*X SET " + form.getFormOrds8Y() + "\0");
-							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
-									+ "$noname$Players$Player8*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds8Y() + "\0");
-							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
-									+ "$noname$Players$Player9*TRANSFORMATION*POSITION*X SET " + form.getFormOrds9X() + "\0");
-							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
-									+ "$noname$Players$Player9*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds9Y() + "\0");
-							
-							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
-									+ "$noname$Players$Player10*TRANSFORMATION*POSITION*X SET " + form.getFormOrds10X() + "\0");
-							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
-									+ "$noname$Players$Player10*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds10Y() + "\0");
-							
-							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
-									+ "$noname$Players$Player11*TRANSFORMATION*POSITION*X SET " + form.getFormOrds11X() + "\0");
-							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11$Data"
-									+ "$noname$Players$Player11*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds11Y() + "\0");
+							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Formation$Formation$Player-Grp$Side" + whichSide
+									+ "$Player1$geom_Position*TRANSFORMATION*POSITION*X SET " + form.getFormOrds1X() + "\0");
+							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Formation$Formation$Player-Grp$Side" + whichSide
+									+ "$Player1$geom_Position*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds1Y() + "\0");
+
+							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Formation$Formation$Player-Grp$Side" + whichSide
+									+ "$Player2$geom_Position*TRANSFORMATION*POSITION*X SET " + form.getFormOrds2X() + "\0");
+							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Formation$Formation$Player-Grp$Side" + whichSide
+									+ "$Player2$geom_Position*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds2Y() + "\0");
+
+							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Formation$Formation$Player-Grp$Side" + whichSide
+									+ "$Player3$geom_Position*TRANSFORMATION*POSITION*X SET " + form.getFormOrds3X() + "\0");
+							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Formation$Formation$Player-Grp$Side" + whichSide
+									+ "$Player3$geom_Position*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds3Y() + "\0");
+
+							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Formation$Formation$Player-Grp$Side" + whichSide
+									+ "$Player4$geom_Position*TRANSFORMATION*POSITION*X SET " + form.getFormOrds4X() + "\0");
+							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Formation$Formation$Player-Grp$Side" + whichSide
+									+ "$Player4$geom_Position*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds4Y() + "\0");
+
+							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Formation$Formation$Player-Grp$Side" + whichSide
+									+ "$Player5$geom_Position*TRANSFORMATION*POSITION*X SET " + form.getFormOrds5X() + "\0");
+							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Formation$Formation$Player-Grp$Side" + whichSide
+									+ "$Player5$geom_Position*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds5Y() + "\0");
+
+							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Formation$Formation$Player-Grp$Side" + whichSide
+									+ "$Player6$geom_Position*TRANSFORMATION*POSITION*X SET " + form.getFormOrds6X() + "\0");
+							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Formation$Formation$Player-Grp$Side" + whichSide
+									+ "$Player6$geom_Position*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds6Y() + "\0");
+
+							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Formation$Formation$Player-Grp$Side" + whichSide
+									+ "$Player7$geom_Position*TRANSFORMATION*POSITION*X SET " + form.getFormOrds7X() + "\0");
+							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Formation$Formation$Player-Grp$Side" + whichSide
+									+ "$Player7$geom_Position*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds7Y() + "\0");
+
+							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Formation$Formation$Player-Grp$Side" + whichSide
+									+ "$Player8$geom_Position*TRANSFORMATION*POSITION*X SET " + form.getFormOrds8X() + "\0");
+							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Formation$Formation$Player-Grp$Side" + whichSide
+									+ "$Player8$geom_Position*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds8Y() + "\0");
+
+							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Formation$Formation$Player-Grp$Side" + whichSide
+									+ "$Player9$geom_Position*TRANSFORMATION*POSITION*X SET " + form.getFormOrds9X() + "\0");
+							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Formation$Formation$Player-Grp$Side" + whichSide
+									+ "$Player9$geom_Position*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds9Y() + "\0");
+
+							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Formation$Formation$Player-Grp$Side" + whichSide
+									+ "$Player10$geom_Position*TRANSFORMATION*POSITION*X SET " + form.getFormOrds10X() + "\0");
+							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Formation$Formation$Player-Grp$Side" + whichSide
+									+ "$Player10$geom_Position*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds10Y() + "\0");
+
+							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Formation$Formation$Player-Grp$Side" + whichSide
+									+ "$Player11$geom_Position*TRANSFORMATION*POSITION*X SET " + form.getFormOrds11X() + "\0");
+							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Formation$Formation$Player-Grp$Side" + whichSide
+									+ "$Player11$geom_Position*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds11Y() + "\0");
 							
 						}
 					}

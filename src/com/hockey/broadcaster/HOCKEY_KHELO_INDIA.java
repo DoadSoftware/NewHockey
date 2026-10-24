@@ -2114,8 +2114,19 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 				cal_mumbai.add(Calendar.DATE, -1);
 				if(fixture.getDate().equalsIgnoreCase(new SimpleDateFormat("dd-MM-yyyy").format(cal_mumbai.getTime()))) {
 					
+					
+				
 					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Match_Id$Data"
 							+ "$Venue_Out$txt_Venue*GEOM*TEXT SET "+ "UP-NEXT" +"\0");
+					for(VariousText vt : hockeyService.getVariousTexts()) {
+						if(vt.getVariousType().equalsIgnoreCase("SINGLEPROMOFOOTER") && vt.getUseThis().equalsIgnoreCase("YES") ) {
+							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Match_Id$Data"
+									+ "$Venue_Out$txt_Venue*GEOM*TEXT SET "+ vt.getVariousText() +"\0");
+						}
+					}
+					
+					
+					
 					for(Ground gn:hockeyService.getGrounds()) {
 						if(gn.getGroundId() == fixture.getVenue()) {
 							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Match_Id$Data"
