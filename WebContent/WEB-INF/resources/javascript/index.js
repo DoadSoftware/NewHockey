@@ -393,10 +393,21 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 			$("#match_configuration").hide();
 			$("#hockey_div").hide();
 			addItemsToList('PLAYINGXI-OPTIONS_SUB',null);
-			break;
-		case 71:
-			processHockeyProcedures('POPULATE-FF-PLAYINGXIBOTHTEAMS');
 			break;		
+		case 71:
+			switch ($('#selectedBroadcaster').val()){ 
+			case 'HOCKEY_KHELO_INDIA': 
+				processHockeyProcedures('POPULATE-FF-PLAYINGXIBOTHTEAMS');
+				break;
+			case 'PUNJAB': 
+				$("#select_event_div").hide();
+				$("#match_configuration").hide();
+				$("#hockey_div").hide();
+				addItemsToList('POPULATE-FF-PLAYINGXI_GRAPHIC-OPTION');
+				break;
+			}
+			break;	
+	
 			
 		/*case 117:
 			switch ($('#selectedBroadcaster').val()){
@@ -959,7 +970,8 @@ function processUserSelection(whichInput)
 	case 'populate_subchange_on_btn': case 'populate_double_promo_btn': case 'populate_ltmatch_promo_btn': case 'populate_scorebug_match_promo_btn': case 'populate_points_table2_btn':
 	case 'populate_result_promo_btn': case 'populate_scorebug_goalScorer_btn': case 'populate_playingxisub_btn': case 'populate_scorecard_btn':
 	case 'populate_match_promo_btnn': case 'populate_refstatus_btn': case 'populate_lt_scoreupdate_btn': case 'populate_ff_scoreupdate_btn':
-
+	case 'populate_playingxiWithSubsCoach_btn':
+		
 		processWaitingButtonSpinner('START_WAIT_TIMER');
 		switch ($(whichInput).attr('name')) {
 		/*case 'populate_refstatus_btn':
@@ -1004,6 +1016,9 @@ function processUserSelection(whichInput)
 		case 'populate_playingxisub_btn':
 			processHockeyProcedures('POPULATE-FF-PLAYINGXISUB');
 			break;	
+		case 'populate_playingxiWithSubsCoach_btn':
+			processHockeyProcedures('POPULATE-FF-PLAYINGXI_WITH_SUBSANDCOACH');
+			break;
 		case 'populate_playingxi_changeon_btn':
 			processHockeyProcedures('POPULATE-FF-PLAYINGXI_CHANGEON');
 			break;
@@ -1476,6 +1491,13 @@ function processHockeyProcedures(whatToProcess, whichInput)
 				break;	
 		}
 		break;
+	case 'POPULATE-FF-PLAYINGXI_WITH_SUBSANDCOACH':
+		switch ($('#selectedBroadcaster').val()) {
+			case 'PUNJAB': 
+				value_to_process =$('#selectPlayingXI option:selected').val();
+				break;	
+		}
+		break;	
 	case 'POPULATE-FF-PLAYINGXISUB':
 		value_to_process =$('#selectPlayingXI option:selected').val();
 		break;	
@@ -1717,7 +1739,7 @@ function processHockeyProcedures(whatToProcess, whichInput)
 			case 'POPULATE-QUAIFIERS': case 'POPULATE-LT-PROMO': case 'POPULATE-POINTS_TABLE2': case 'POPULATE-PLAYOFFS': case 'POPULATE-LT-RESULT': case 'POPULATE-ROAD-TO-FINAL':
 			case 'POPULATE-CONTINENTAL_POINTS_TABLE': case 'POPULATE-SCOREBUG_STATS': case 'POPULATE-SCOREBUG-CARD': case 'POPULATE-SCOREBUG-GOAL_SCORER': case 'POPULATE-LAST_GOAL':
 			case 'POPULATE-FF-PLAYINGXISUB': case 'POPULATE-RED_CARD': case 'POPULATE-QUARTER': case 'POPULATE-LT-PENALTY_SCORES': case 'POPULATE-FF_PROMO':	case 'POPULATE-FF-MATCHSTAT':
-	        case 'POPULATE-FF-PLAYINGXIBOTHTEAMS': case 'POPULATE-REFERRAL':
+	        case 'POPULATE-FF-PLAYINGXIBOTHTEAMS': case 'POPULATE-REFERRAL': case 'POPULATE-FF-PLAYINGXI_WITH_SUBSANDCOACH':
 			case 'POPULATE-FF-MATCHID_IMAGE':
 				if(confirm('Animate In?') == true){
 					switch(whatToProcess){
@@ -1783,7 +1805,10 @@ function processHockeyProcedures(whatToProcess, whichInput)
 						break;
 					case 'POPULATE-FF-PLAYINGXISUB':
 						processHockeyProcedures('ANIMATE-IN-PLAYINGXISUB');		
-						break;		
+						break;
+					case 'POPULATE-FF-PLAYINGXI_WITH_SUBSANDCOACH':
+						processHockeyProcedures('ANIMATE-IN-FF-PLAYINGXI_WITH_SUBSANDCOACH');			
+						break;				
 					case 'POPULATE-FF-PLAYINGXI_CHANGEON':
 						processHockeyProcedures('ANIMATE-IN-PLAYINGXI_CHANGEON');		
 						break;
@@ -2027,7 +2052,7 @@ function addItemsToList(whatToProcess, dataToProcess)
 	case 'SCOREBUG-SUBSTITUTION-OPTIONS': case 'SINGLE_SUBSTITUTE-OPTIONS': case 'HEATMAP_PEAKDISTACE-OPTION': case 'LT_MATCH-PROMO-OPTIONS': case 'SCOREBUGPROMO-OPTIONS':
 	case 'TOP_STATS-OPTIONS': case 'FIXTURES-OPTIONS': case 'POINT_TABLE-OPTIONS': case 'DOUBLE_PROMO-OPTIONS': case 'POINTS_TABLE2_OPTION': case 'RESULT_PROMO-OPTIONS':
 	case 'SCOREBUG-GOALSCORER-OPTIONS': case 'PLAYINGXI-OPTIONS_SUB': case 'FF_PROMO-OPTIONS': case 'REFERRAL-OPTIONS': case 'CARDS-OPTIONS': case 'L3-SCOREUPDATE':
-	case 'FF-MATCHSUMMARY':	
+	case 'FF-MATCHSUMMARY':	case 'POPULATE-FF-PLAYINGXI_GRAPHIC-OPTION':
 		switch ($('#selectedBroadcaster').val().toUpperCase()) {
 		case 'PUNJAB': case 'HOCKEY_KHELO_INDIA':
 
@@ -2860,7 +2885,7 @@ function addItemsToList(whatToProcess, dataToProcess)
 					row.insertCell(cellCount).appendChild(select);
 					cellCount = cellCount + 1;
 					break;	
-				case'PLAYINGXI-OPTIONS': case 'PLAYINGXI-OPTIONS_SUB':
+				case'PLAYINGXI-OPTIONS': case 'PLAYINGXI-OPTIONS_SUB': 	case 'POPULATE-FF-PLAYINGXI_GRAPHIC-OPTION':
 					select = document.createElement('select');
 					select.id = 'selectPlayingXI';
 					select.name = select.id;
@@ -2979,6 +3004,23 @@ function addItemsToList(whatToProcess, dataToProcess)
 						    row.insertCell(cellCount).appendChild(div);
 						    cellCount = cellCount + 1;
 							break;
+						case 'POPULATE-FF-PLAYINGXI_GRAPHIC-OPTION':
+							option = document.createElement('input');
+							option.type = 'button';
+
+							option.name = 'populate_playingxiWithSubsCoach_btn';
+							option.value = 'Populate Teams With Subs  LineUp';
+
+							option.id = option.name;
+							option.setAttribute('onclick',"processUserSelection(this)");
+
+							div = document.createElement('div');
+							div.append(option);
+
+							row.insertCell(cellCount).appendChild(div);
+							cellCount = cellCount + 1;
+							break;
+
 					}
 				    
 					option = document.createElement('input');
