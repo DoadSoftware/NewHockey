@@ -1498,7 +1498,7 @@ function processHockeyProcedures(whatToProcess, whichInput)
 		break;
 	case 'POPULATE-L3-SCOREUPDATE': case 'POPULATE-FF-MATCHSUMMARY':
 		switch ($('#selectedBroadcaster').val()) {
-			case 'HOCKEY_KHELO_INDIA':
+			case 'HOCKEY_KHELO_INDIA': case 'PUNJAB':
 				value_to_process = $('#selectScorer option:selected').val();
 				break;
 		}
