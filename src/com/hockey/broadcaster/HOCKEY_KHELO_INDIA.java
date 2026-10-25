@@ -1061,14 +1061,14 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 									match.getMatchStats().get(i).getStats_type().equalsIgnoreCase(HockeyUtil.PENALTY)) {
 								if(match.getMatchStats().get(i).getPlayerId() == hs.getPlayerId()) {
 									if(match.getMatchStats().get(i).getMatchHalves().equalsIgnoreCase("quarter1")) {
-										time = ((match.getMatchStats().get(i).getTotalMatchSeconds()/1000)/60) + 1;
+										time = (((match.getMatchStats().get(i).getTotalMatchSeconds()/1000)/60) + 1);
 										time = (15-time);
 									}else if(match.getMatchStats().get(i).getMatchHalves().equalsIgnoreCase("quarter2")) {
-										time = 15 + (15 - ((match.getMatchStats().get(i).getTotalMatchSeconds()/1000)/60) + 1);
+										time = 15 + (15 - (((match.getMatchStats().get(i).getTotalMatchSeconds()/1000)/60) + 1));
 									}else if(match.getMatchStats().get(i).getMatchHalves().equalsIgnoreCase("quarter3")) {
-										time = 30 + (15 - ((match.getMatchStats().get(i).getTotalMatchSeconds()/1000)/60) + 1);
+										time = 30 + (15 - (((match.getMatchStats().get(i).getTotalMatchSeconds()/1000)/60) + 1));
 									}else if(match.getMatchStats().get(i).getMatchHalves().equalsIgnoreCase("quarter4")) {
-										time = 45 + (15 - ((match.getMatchStats().get(i).getTotalMatchSeconds()/1000)/60) + 1);
+										time = 45 + (15 - (((match.getMatchStats().get(i).getTotalMatchSeconds()/1000)/60) + 1));
 									}
 									
 									tim = " (" + time + "')";
@@ -1089,13 +1089,13 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 									match.getMatchStats().get(i).getStats_type().equalsIgnoreCase(HockeyUtil.PENALTY)) {
 								if(match.getMatchStats().get(i).getPlayerId() == hsub.getPlayerId()) {
 									if(match.getMatchStats().get(i).getMatchHalves().equalsIgnoreCase("quarter1")) {
-										time = (15 - ((match.getMatchStats().get(i).getTotalMatchSeconds()/1000)/60) + 1);
+										time = (15 - (((match.getMatchStats().get(i).getTotalMatchSeconds()/1000)/60) + 1));
 									}else if(match.getMatchStats().get(i).getMatchHalves().equalsIgnoreCase("quarter2")) {
-										time = 15 + (15 - ((match.getMatchStats().get(i).getTotalMatchSeconds()/1000)/60) + 1);
+										time = 15 + (15 - (((match.getMatchStats().get(i).getTotalMatchSeconds()/1000)/60) + 1));
 									}else if(match.getMatchStats().get(i).getMatchHalves().equalsIgnoreCase("quarter3")) {
-										time = 30 + (15 - ((match.getMatchStats().get(i).getTotalMatchSeconds()/1000)/60) + 1);
+										time = 30 + (15 - (((match.getMatchStats().get(i).getTotalMatchSeconds()/1000)/60) + 1));
 									}else if(match.getMatchStats().get(i).getMatchHalves().equalsIgnoreCase("quarter4")) {
-										time = 45 + (15 - ((match.getMatchStats().get(i).getTotalMatchSeconds()/1000)/60) + 1);
+										time = 45 + (15 - (((match.getMatchStats().get(i).getTotalMatchSeconds()/1000)/60) + 1));
 									}
 									
 									tim = " (" + time + "')";
@@ -1126,13 +1126,13 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 									match.getMatchStats().get(i).getStats_type().equalsIgnoreCase(HockeyUtil.PENALTY)) {
 								if(match.getMatchStats().get(i).getPlayerId() == as.getPlayerId()) {
 									if(match.getMatchStats().get(i).getMatchHalves().equalsIgnoreCase("quarter1")) {
-										time = (15 - ((match.getMatchStats().get(i).getTotalMatchSeconds()/1000)/60) + 1);
+										time = (15 - (((match.getMatchStats().get(i).getTotalMatchSeconds()/1000)/60) + 1));
 									}else if(match.getMatchStats().get(i).getMatchHalves().equalsIgnoreCase("quarter2")) {
-										time = 15 + (15 - ((match.getMatchStats().get(i).getTotalMatchSeconds()/1000)/60) + 1);
+										time = 15 + (15 - (((match.getMatchStats().get(i).getTotalMatchSeconds()/1000)/60) + 1));
 									}else if(match.getMatchStats().get(i).getMatchHalves().equalsIgnoreCase("quarter3")) {
-										time = 30 + (15 - ((match.getMatchStats().get(i).getTotalMatchSeconds()/1000)/60) + 1);
+										time = 30 + (15 - (((match.getMatchStats().get(i).getTotalMatchSeconds()/1000)/60) + 1));
 									}else if(match.getMatchStats().get(i).getMatchHalves().equalsIgnoreCase("quarter4")) {
-										time = 45 + (15 - ((match.getMatchStats().get(i).getTotalMatchSeconds()/1000)/60) + 1);
+										time = 45 + (15 - (((match.getMatchStats().get(i).getTotalMatchSeconds()/1000)/60) + 1));
 									}
 									
 									tim = " (" + time + "')";
@@ -1153,13 +1153,13 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 									match.getMatchStats().get(i).getStats_type().equalsIgnoreCase(HockeyUtil.PENALTY)) {
 								if(match.getMatchStats().get(i).getPlayerId() == asub.getPlayerId()) {
 									if(match.getMatchStats().get(i).getMatchHalves().equalsIgnoreCase("quarter1")) {
-										time = (15 - ((match.getMatchStats().get(i).getTotalMatchSeconds()/1000)/60) + 1);
+										time = (15 - (((match.getMatchStats().get(i).getTotalMatchSeconds()/1000)/60) + 1));
 									}else if(match.getMatchStats().get(i).getMatchHalves().equalsIgnoreCase("quarter2")) {
-										time = 15 + (15 - ((match.getMatchStats().get(i).getTotalMatchSeconds()/1000)/60) + 1);
+										time = 15 + (15 - (((match.getMatchStats().get(i).getTotalMatchSeconds()/1000)/60) + 1));
 									}else if(match.getMatchStats().get(i).getMatchHalves().equalsIgnoreCase("quarter3")) {
-										time = 30 + (15 - ((match.getMatchStats().get(i).getTotalMatchSeconds()/1000)/60) + 1);
+										time = 30 + (15 - (((match.getMatchStats().get(i).getTotalMatchSeconds()/1000)/60) + 1));
 									}else if(match.getMatchStats().get(i).getMatchHalves().equalsIgnoreCase("quarter4")) {
-										time = 45 + (15 - ((match.getMatchStats().get(i).getTotalMatchSeconds()/1000)/60) + 1);
+										time = 45 + (15 - (((match.getMatchStats().get(i).getTotalMatchSeconds()/1000)/60) + 1));
 									}
 									
 									tim = " (" + time + "')";
@@ -1212,13 +1212,13 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 											match.getHomeTeam().getTeamBadge() + "\0");
 									
 									if(match.getMatchStats().get(i).getMatchHalves().equalsIgnoreCase("quarter1")) {
-										time = (15 - ((match.getMatchStats().get(i).getTotalMatchSeconds()/1000)/60) + 1);
+										time = (15 - (((match.getMatchStats().get(i).getTotalMatchSeconds()/1000)/60) + 1));
 									}else if(match.getMatchStats().get(i).getMatchHalves().equalsIgnoreCase("quarter2")) {
-										time = 15 + (15 - ((match.getMatchStats().get(i).getTotalMatchSeconds()/1000)/60) + 1);
+										time = 15 + (15 - (((match.getMatchStats().get(i).getTotalMatchSeconds()/1000)/60) + 1));
 									}else if(match.getMatchStats().get(i).getMatchHalves().equalsIgnoreCase("quarter3")) {
-										time = 30 + (15 - ((match.getMatchStats().get(i).getTotalMatchSeconds()/1000)/60) + 1);
+										time = 30 + (15 - (((match.getMatchStats().get(i).getTotalMatchSeconds()/1000)/60) + 1));
 									}else if(match.getMatchStats().get(i).getMatchHalves().equalsIgnoreCase("quarter4")) {
-										time = 45 + (15 - ((match.getMatchStats().get(i).getTotalMatchSeconds()/1000)/60) + 1);
+										time = 45 + (15 - (((match.getMatchStats().get(i).getTotalMatchSeconds()/1000)/60) + 1));
 									}
 									
 									tim = " (" + time + "')";
@@ -1235,13 +1235,13 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 											match.getAwayTeam().getTeamBadge() + "\0");
 									
 									if(match.getMatchStats().get(i).getMatchHalves().equalsIgnoreCase("quarter1")) {
-										time = (15 - ((match.getMatchStats().get(i).getTotalMatchSeconds()/1000)/60) + 1);
+										time = (15 - (((match.getMatchStats().get(i).getTotalMatchSeconds()/1000)/60) + 1));
 									}else if(match.getMatchStats().get(i).getMatchHalves().equalsIgnoreCase("quarter2")) {
-										time = 15 + (15 - ((match.getMatchStats().get(i).getTotalMatchSeconds()/1000)/60) + 1);
+										time = 15 + (15 - (((match.getMatchStats().get(i).getTotalMatchSeconds()/1000)/60) + 1));
 									}else if(match.getMatchStats().get(i).getMatchHalves().equalsIgnoreCase("quarter3")) {
-										time = 30 + (15 - ((match.getMatchStats().get(i).getTotalMatchSeconds()/1000)/60) + 1);
+										time = 30 + (15 - (((match.getMatchStats().get(i).getTotalMatchSeconds()/1000)/60) + 1));
 									}else if(match.getMatchStats().get(i).getMatchHalves().equalsIgnoreCase("quarter4")) {
-										time = 45 + (15 - ((match.getMatchStats().get(i).getTotalMatchSeconds()/1000)/60) + 1);
+										time = 45 + (15 - (((match.getMatchStats().get(i).getTotalMatchSeconds()/1000)/60) + 1));
 									}
 									
 									tim = " (" + time + "')";
@@ -3435,50 +3435,6 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LT_ScoreLine$Center$txt_Score"
 					+ "*GEOM*TEXT SET "+ match.getHomeTeamScore() + "-" + match.getAwayTeamScore() +"\0");
 			
-			if(viz_scene.equalsIgnoreCase("with")) {
-				if(match.getHomeTeamScore() == 0 ) {
-					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LT_ScoreLine$HomeTeam$Left_Team_Out$Top_Info$Select_data"
-							+ "*FUNCTION*Omo*vis_con SET 0\0");
-					TimeUnit.MILLISECONDS.sleep(l);
-				}else if(match.getHomeTeamScore() > 0 && match.getHomeTeamScore() <= 2) {
-					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LT_ScoreLine$HomeTeam$Left_Team_Out$Top_Info$Select_data"
-							+ "*FUNCTION*Omo*vis_con SET 1\0");
-					TimeUnit.MILLISECONDS.sleep(l);
-				}else if(match.getHomeTeamScore() > 2 && match.getHomeTeamScore() <= 4) {
-					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LT_ScoreLine$HomeTeam$Left_Team_Out$Top_Info$Select_data"
-							+ "*FUNCTION*Omo*vis_con SET 2\0");
-					TimeUnit.MILLISECONDS.sleep(l);
-				}else {
-					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LT_ScoreLine$HomeTeam$Left_Team_Out$Top_Info$Select_data"
-							+ "*FUNCTION*Omo*vis_con SET 3\0");
-					TimeUnit.MILLISECONDS.sleep(l);
-				}
-				
-				if(match.getAwayTeamScore() == 0 ) {
-					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LT_ScoreLine$AwayTeam$Right_Team_Out$Top_Info$Select_data"
-							+ "*FUNCTION*Omo*vis_con SET 0\0");
-					TimeUnit.MILLISECONDS.sleep(l);
-				}else if(match.getAwayTeamScore() > 0 && match.getAwayTeamScore() <= 2) {
-					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LT_ScoreLine$AwayTeam$Right_Team_Out$Top_Info$Select_data"
-							+ "*FUNCTION*Omo*vis_con SET 1\0");
-					TimeUnit.MILLISECONDS.sleep(l);
-				}else if(match.getAwayTeamScore() > 2 && match.getAwayTeamScore() <= 4) {
-					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LT_ScoreLine$AwayTeam$Right_Team_Out$Top_Info$Select_data"
-							+ "*FUNCTION*Omo*vis_con SET 2\0");
-					TimeUnit.MILLISECONDS.sleep(l);
-				}else {
-					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LT_ScoreLine$AwayTeam$Right_Team_Out$Top_Info$Select_data"
-							+ "*FUNCTION*Omo*vis_con SET 3\0");
-					TimeUnit.MILLISECONDS.sleep(l);
-				}
-			}else {
-				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LT_ScoreLine$HomeTeam$Left_Team_Out$Top_Info$Select_data"
-						+ "*FUNCTION*Omo*vis_con SET 0\0");
-				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LT_ScoreLine$AwayTeam$Right_Team_Out$Top_Info$Select_data"
-						+ "*FUNCTION*Omo*vis_con SET 0\0");
-			}
-			
-			
 			List<String> home_stats = new ArrayList<String>();
 			List<String> away_stats = new ArrayList<String>();
 			List<Integer> plyr_ids = new ArrayList<Integer>();
@@ -3611,6 +3567,62 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 			    print_writer.flush();
 
 			    TimeUnit.MILLISECONDS.sleep(l);
+			}
+			
+			if(viz_scene.equalsIgnoreCase("with")) {
+				
+				if(!home_stats.isEmpty()) {
+					if(home_stats.size() == 0 ) {
+						print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LT_ScoreLine$HomeTeam$Left_Team_Out$Top_Info$Select_data"
+								+ "*FUNCTION*Omo*vis_con SET 0\0");
+						TimeUnit.MILLISECONDS.sleep(l);
+					}else if(home_stats.size() > 0 && home_stats.size() <= 2) {
+						print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LT_ScoreLine$HomeTeam$Left_Team_Out$Top_Info$Select_data"
+								+ "*FUNCTION*Omo*vis_con SET 1\0");
+						TimeUnit.MILLISECONDS.sleep(l);
+					}else if(home_stats.size() > 2 && home_stats.size() <= 4) {
+						print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LT_ScoreLine$HomeTeam$Left_Team_Out$Top_Info$Select_data"
+								+ "*FUNCTION*Omo*vis_con SET 2\0");
+						TimeUnit.MILLISECONDS.sleep(l);
+					}else {
+						print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LT_ScoreLine$HomeTeam$Left_Team_Out$Top_Info$Select_data"
+								+ "*FUNCTION*Omo*vis_con SET 3\0");
+						TimeUnit.MILLISECONDS.sleep(l);
+					}
+				}else {
+					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LT_ScoreLine$HomeTeam$Left_Team_Out$Top_Info$Select_data"
+							+ "*FUNCTION*Omo*vis_con SET 0\0");
+				}
+				
+				
+				if(!away_stats.isEmpty()) {
+					if(away_stats.size() == 0 ) {
+						print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LT_ScoreLine$AwayTeam$Right_Team_Out$Top_Info$Select_data"
+								+ "*FUNCTION*Omo*vis_con SET 0\0");
+						TimeUnit.MILLISECONDS.sleep(l);
+					}else if(away_stats.size() > 0 && away_stats.size() <= 2) {
+						print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LT_ScoreLine$AwayTeam$Right_Team_Out$Top_Info$Select_data"
+								+ "*FUNCTION*Omo*vis_con SET 1\0");
+						TimeUnit.MILLISECONDS.sleep(l);
+					}else if(away_stats.size() > 2 && away_stats.size() <= 4) {
+						print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LT_ScoreLine$AwayTeam$Right_Team_Out$Top_Info$Select_data"
+								+ "*FUNCTION*Omo*vis_con SET 2\0");
+						TimeUnit.MILLISECONDS.sleep(l);
+					}else {
+						print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LT_ScoreLine$AwayTeam$Right_Team_Out$Top_Info$Select_data"
+								+ "*FUNCTION*Omo*vis_con SET 3\0");
+						TimeUnit.MILLISECONDS.sleep(l);
+					}
+				}else {
+					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LT_ScoreLine$AwayTeam$Right_Team_Out$Top_Info$Select_data"
+							+ "*FUNCTION*Omo*vis_con SET 0\0");
+				}
+				
+			}else {
+				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LT_ScoreLine$HomeTeam$Left_Team_Out$Top_Info$Select_data"
+						+ "*FUNCTION*Omo*vis_con SET 0\0");
+				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LT_ScoreLine$AwayTeam$Right_Team_Out$Top_Info$Select_data"
+						+ "*FUNCTION*Omo*vis_con SET 0\0");
 			}
 			
 			print_writer.println("-1 RENDERER PREVIEW SCENE*/Default/gfx_Overlays C:/Temp/Preview.tga anim_LT_ScoreLine$Essentials 1.140 anim_LT_ScoreLine$Essentials$In_Out 1.140 "

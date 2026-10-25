@@ -1698,7 +1698,7 @@ public class PUNJAB extends Scene{
 			}
 		}
 		print_writer.println("-1 RENDERER PREVIEW SCENE*/Default/gfx_Overlays C:/Temp/Preview.tga anim_Lowerthird$In_Out 1.240 anim_Lowerthird$In_Out$Essentials 1.240 "
-				+ "anim_Lowerthird$In_Out$Essentials$In 1.240 anim_Lowerthird$In_Out$Cards 1.240  anim_Lowerthird$In_Out$Cards$In 1.240 \0");
+				+ "anim_Lowerthird$In_Out$Essentials$In 1.240 anim_Lowerthird$In_Out$Cards 1.240 anim_Lowerthird$In_Out$Cards$In 1.240 \0");
 	}
 	public void populateNameSuperCard(Socket session_socket, int TeamId, String cardType, int playerId, Match match, String selectedbroadcaster) throws InterruptedException, IOException
 	{
