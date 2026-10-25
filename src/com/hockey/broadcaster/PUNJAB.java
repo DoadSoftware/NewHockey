@@ -1949,7 +1949,9 @@ public class PUNJAB extends Scene{
 				}
 			}
 			
-			print_writer.println("-1 RENDERER PREVIEW SCENE*/Default/anim_Ident C:/Temp/Preview.tga anim_Ident$In_Out 1.280 anim_Ident$In_Out$In_Out 1.In \0");
+			previewCommand = "anim_Ident$In_Out 1.280 anim_Ident$In_Out$In 1.280";
+			
+			print_writer.println("-1 RENDERER PREVIEW SCENE*/Default/gfx_FullFrames " + "C:/Temp/Preview.tga " + previewCommand + "\0");
 			
 		}
 	}
@@ -2028,9 +2030,9 @@ public class PUNJAB extends Scene{
 			    print_writer.println(lineBase + "$txt_Stats2*GEOM*TEXT SET " + away  + "\0");
 			}
 	        
-	        previewCommand = "anim_FullFrame$In_Out 2.540 anim_FullFrame$In_Out$Match_Stats 2.540 anim_FullFrame$In_Out$Match_Stats$In_Out 2.540 anim_FullFrame$In_Out$Match_Stats$In_Out$In 2.540 "
-					+ "anim_FullFrame$In_Out$BG 2.540 anim_FullFrame$In_Out$BG$In_Out 2.540 anim_FullFrame$In_Out$BG$In_Out$In 1.730";
-			print_writer.println("-1 RENDERER PREVIEW SCENE*/Default/gfx_Fullframes " + "C:/Temp/Preview.tga " + previewCommand + "\0");
+			previewCommand = "anim_FullFrames$In_Out 1.800 anim_FullFrames$In_Out$Essentials 1.800 anim_FullFrames$In_Out$Essentials$In 1.800 anim_FullFrames$In_Out$Header$In 1.800 "
+					+ "anim_FullFrames$In_Out$Flags 1.800 anim_FullFrames$In_Out$Flags$In 1.800 anim_FullFrames$In_Out$Main 1.800 anim_FullFrames$In_Out$Main$In 1.800";
+			print_writer.println("-1 RENDERER PREVIEW SCENE*/Default/gfx_FullFrames " + "C:/Temp/Preview.tga " + previewCommand + "\0");
 	    }
 	}
 	public void populateFFMatchPromo(Socket session_socket,int teamID, Match match, String session_selected_broadcaster,int whichSide,HockeyService hockeyService) throws InterruptedException, IOException
@@ -2106,7 +2108,8 @@ public class PUNJAB extends Scene{
 				}
 			}
 			previewCommand = "anim_Ident$In_Out 1.280 anim_Ident$In_Out$In 1.280";
-			print_writer.println("-1 RENDERER PREVIEW SCENE*/Default/anim_Ident SET " + "C:/Temp/Preview.tga " + previewCommand + "\0");
+			
+			print_writer.println("-1 RENDERER PREVIEW SCENE*/Default/gfx_FullFrames " + "C:/Temp/Preview.tga " + previewCommand + "\0");
 		}
 	}	
 	
@@ -2335,9 +2338,9 @@ public class PUNJAB extends Scene{
 					}
 				}
 				
-			previewCommand = "anim_FullFrame$In_Out 2.540 anim_FullFrame$In_Out$TeamList_Both 2.540 anim_FullFrame$In_Out$TeamList_Both$In_Out 2.540 anim_FullFrame$In_Out$TeamList_Both$In_Out$In 2.100 "
-					+ "anim_FullFrame$In_Out$BG 2.540 anim_FullFrame$In_Out$BG$In_Out 2.540 anim_FullFrame$In_Out$BG$In_Out$In 1.730";
-			print_writer.println("-1 RENDERER PREVIEW SCENE*/Default/gfx_Fullframes " + "C:/Temp/Preview.tga " + previewCommand + "\0");
+			previewCommand = "anim_Formation$In_Out 1.960 anim_Formation$In_Out$Essentials 1.960 anim_Formation$In_Out$Essentials$In 1.960 "
+					+ "anim_Formation$In_Out$Header 1.960 anim_Formation$In_Out$Header$In 0.800 anim_Formation$In_Out$Players 1.960 anim_Formation$In_Out$Players$In 1.940";
+			print_writer.println("-1 RENDERER PREVIEW SCENE*/Default/gfx_FullFrames " + "C:/Temp/Preview.tga " + previewCommand + "\0");
 			
 		}
 	}
@@ -2616,9 +2619,9 @@ public class PUNJAB extends Scene{
 				}
 				
 			}
-			previewCommand = "anim_FullFrame$In_Out 2.540 anim_FullFrame$In_Out$Playing_11 2.540 anim_FullFrame$In_Out$Playing_11$InOut 2.540 anim_FullFrame$In_Out$Playing_11$InOut$In 2.100 "
-					+ "anim_FullFrame$In_Out$BG 2.540 anim_FullFrame$In_Out$BG$In_Out 2.540 anim_FullFrame$In_Out$BG$In_Out$In 1.730";
-			print_writer.println("-1 RENDERER PREVIEW SCENE*/Default/gfx_Fullframes " + "C:/Temp/Preview.tga " + previewCommand + "\0");
+			previewCommand = "anim_Formation$In_Out 1.960 anim_Formation$In_Out$Essentials 1.960 anim_Formation$In_Out$Essentials$In 1.960 "
+					+ "anim_Formation$In_Out$Header 1.960 anim_Formation$In_Out$Header$In 0.800 anim_Formation$In_Out$Players 1.960 anim_Formation$In_Out$Players$In 1.940";
+			print_writer.println("-1 RENDERER PREVIEW SCENE*/Default/gfx_FullFrames " + "C:/Temp/Preview.tga " + previewCommand + "\0");
 			
 		}
 	}
@@ -2753,9 +2756,9 @@ public class PUNJAB extends Scene{
 				}
 			}
 			
-			previewCommand = "anim_FullFrame$In_Out 1.800 anim_FullFrame$In_Out$Essentials 1.800 anim_FullFrame$In_Out$Essentials$In 1.800 anim_FullFrame$In_Out$Header$In 1.800 "
-					+ "anim_FullFrame$In_Out$Flags 1.800 anim_FullFrame$In_Out$Flags$In 1.800 anim_FullFrame$In_Out$Main 1.800 anim_FullFrame$In_Out$Main$In 1.800";
-			print_writer.println("-1 RENDERER PREVIEW SCENE*/Default/anim_FullFrames " + "C:/Temp/Preview.tga " + previewCommand + "\0");
+			previewCommand = "anim_FullFrames$In_Out 1.800 anim_FullFrames$In_Out$Essentials 1.800 anim_FullFrames$In_Out$Essentials$In 1.800 anim_FullFrames$In_Out$Header$In 1.800 "
+					+ "anim_FullFrames$In_Out$Flags 1.800 anim_FullFrames$In_Out$Flags$In 1.800 anim_FullFrames$In_Out$Main 1.800 anim_FullFrames$In_Out$Main$In 1.800";
+			print_writer.println("-1 RENDERER PREVIEW SCENE*/Default/gfx_FullFrames " + "C:/Temp/Preview.tga " + previewCommand + "\0");
 		}
 	}
 
@@ -3398,9 +3401,9 @@ public class PUNJAB extends Scene{
 				}
 			}
 			
-			previewCommand = "anim_FullFrame$In_Out 1.800 anim_FullFrame$In_Out$Essentials 1.800 anim_FullFrame$In_Out$Essentials$In 1.800 anim_FullFrame$In_Out$Header$In 1.800 "
-					+ "anim_FullFrame$In_Out$Flags 1.800 anim_FullFrame$In_Out$Flags$In 1.800 anim_FullFrame$In_Out$Main 1.800 anim_FullFrame$In_Out$Main$In 1.800";
-			print_writer.println("-1 RENDERER PREVIEW SCENE*/Default/anim_FullFrames " + "C:/Temp/Preview.tga " + previewCommand + "\0");
+			previewCommand = "anim_FullFrames$In_Out 1.800 anim_FullFrames$In_Out$Essentials 1.800 anim_FullFrames$In_Out$Essentials$In 1.800 anim_FullFrames$In_Out$Header$In 1.800 "
+					+ "anim_FullFrames$In_Out$Flags 1.800 anim_FullFrames$In_Out$Flags$In 1.800 anim_FullFrames$In_Out$Main 1.800 anim_FullFrames$In_Out$Main$In 1.800";
+			print_writer.println("-1 RENDERER PREVIEW SCENE*/Default/gfx_FullFrames " + "C:/Temp/Preview.tga " + previewCommand + "\0");
 		}
 	}
 	public void populateScoreUpdate(Socket session_socket,String viz_scene,HockeyService hockeyService,Match match,Clock clock, String session_selected_broadcaster) throws InterruptedException, IOException{
