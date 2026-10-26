@@ -2219,13 +2219,13 @@ function addItemsToList(whatToProcess, dataToProcess)
 							option.value = 'TOMORROW';
 							option.text = 'TOMORROW';
 							select.appendChild(option);
-							/*
+							
 							
 							option = document.createElement('option');
 							option.value = 'DAY_AFTER_TOMORROW';
 							option.text = 'DAY AFTER TOMORROW';
 							select.appendChild(option);
-							*/
+							
 							row.insertCell(0).appendChild(select);
 							
 							option = document.createElement('input');
@@ -3513,7 +3513,7 @@ function addItemsToList(whatToProcess, dataToProcess)
 					select.appendChild(option);
 	
 					option = document.createElement('option');
-					option.value = 'Player Of The Match';
+					option.value = 'Player_Of_The_Match';
 					option.text = 'Hero Of The Match';
 					select.appendChild(option);
 					

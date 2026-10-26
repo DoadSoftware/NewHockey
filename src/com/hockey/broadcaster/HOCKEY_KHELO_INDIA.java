@@ -1577,11 +1577,6 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 						+ captainGoalKeeper.toUpperCase() + " , " + Home_or_Away +"\0");
 				TimeUnit.MILLISECONDS.sleep(l);
 				break;
-			case "PLAYER OF THE MATCH":
-				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_lowerthird_Player$Designation_Out$txt_Designation*GEOM*TEXT SET " 
-						+ "HERO OF THE MATCH " +"\0");
-				TimeUnit.MILLISECONDS.sleep(l);
-				break;
 			case "GOAL_KEEPER":
 				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_lowerthird_Player$Designation_Out$txt_Designation*GEOM*TEXT SET " 
 						+ "GOAL KEEPER" + " , " + Home_or_Away +"\0");

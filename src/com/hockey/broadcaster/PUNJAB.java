@@ -686,7 +686,7 @@ public class PUNJAB extends Scene{
 				which_graphics_onscreen = "PROMO";
 				break;
 			case "ANIMATE-IN-DOUBLE_PROMO":
-				print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_FullFrame$In_Out START \0");
+				print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_FullFrames$In_Out START \0");
 				print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Loop START \0");
 				which_graphics_onscreen = "DOUBLE_PROMO";
 				break;
@@ -811,9 +811,16 @@ public class PUNJAB extends Scene{
 				print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_MatchID SHOW 0.0\0");
 				print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_Lowerthird SHOW 0.0\0");
 				print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_UmpireSuper SHOW 0.0\0");
+
 				print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_Bug SHOW 0.0\0");
 				print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_BugMatchScore SHOW 0.0\0");
 				print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_FullFrames$In_Out SHOW 0.0\0");
+				
+				print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_Ident$In_Out SHOW 0.0\0");
+				print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_FullFrames$In_Out SHOW 0.0\0");
+				print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_Formation$In_Out SHOW 0.0\0");
+				print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*change_Formation SHOW 0.0\0");
+
 				break;
 			}
 			break;
@@ -1067,13 +1074,13 @@ public class PUNJAB extends Scene{
 									
 									print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$Home_Team$Player_Image$img_Player*TEXTURE*IMAGE SET " + HOCKEY_LOCAL_PHOTO_PATH + "Blank.png\0");
 									print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$Home_Team$Player_Image$img_Player*TEXTURE*IMAGE SET " + HOCKEY_LOCAL_PHOTO_PATH + 
-											match.getHomeTeam().getTeamName4() + "\\\\" + hs.getPhoto() + ".png" + "\0");
+											match.getHomeTeam().getTeamName4() + "\\\\" + match.getHomeTeamGKJerseyColor() + "\\\\" + hs.getPhoto() + ".png" + "\0");
 									
 								}else {
 									
 									print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$Home_Team$Player_Image$img_Player*TEXTURE*IMAGE SET " + "\\\\" + IndexController.session_configurations.getIpAddress() + HOCKEY_PHOTO_PATH + "Blank.png\0");
 									print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$Home_Team$Player_Image$img_Player*TEXTURE*IMAGE SET " + "\\\\" + IndexController.session_configurations.getIpAddress() + HOCKEY_PHOTO_PATH + 
-											match.getHomeTeam().getTeamName4() + "\\\\" + hs.getPhoto() + ".png" + "\0");
+											match.getHomeTeam().getTeamName4() + "\\\\" + match.getHomeTeamGKJerseyColor() + "\\\\" + hs.getPhoto() + ".png" + "\0");
 								}
 								
 								print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$Penalty_Card$Home_Team$Player_Image$Select_image*FUNCTION*Omo*vis_con SET 1\0");
@@ -1094,13 +1101,13 @@ public class PUNJAB extends Scene{
 									
 									print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$Home_Team$Player_Image$img_Player*TEXTURE*IMAGE SET " + HOCKEY_LOCAL_PHOTO_PATH + "Blank.png\0");
 									print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$Home_Team$Player_Image$img_Player*TEXTURE*IMAGE SET " + HOCKEY_LOCAL_PHOTO_PATH + 
-											match.getHomeTeam().getTeamName4() + "\\\\" + hsub.getPhoto() + ".png" + "\0");
+											match.getHomeTeam().getTeamName4() + "\\\\" + match.getHomeTeamGKJerseyColor() + "\\\\" + hsub.getPhoto() + ".png" + "\0");
 									
 								}else {
 									
 									print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$Home_Team$Player_Image$img_Player*TEXTURE*IMAGE SET " + "\\\\" + IndexController.session_configurations.getIpAddress() + HOCKEY_PHOTO_PATH + "Blank.png\0");
 									print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$Home_Team$Player_Image$img_Player*TEXTURE*IMAGE SET " + "\\\\" + IndexController.session_configurations.getIpAddress() + HOCKEY_PHOTO_PATH + 
-											match.getHomeTeam().getTeamName4() + "\\\\" + hsub.getPhoto() + ".png" + "\0");
+											match.getHomeTeam().getTeamName4() + "\\\\" + match.getHomeTeamGKJerseyColor() + "\\\\" + hsub.getPhoto() + ".png" + "\0");
 								}
 								
 								print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$Penalty_Card$Home_Team$Player_Image$Select_image*FUNCTION*Omo*vis_con SET 1\0");
@@ -1152,13 +1159,13 @@ public class PUNJAB extends Scene{
 									
 									print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$Away_Team$Player_Image$img_Player*TEXTURE*IMAGE SET " + HOCKEY_LOCAL_PHOTO_PATH + "Blank.png\0");
 									print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$Away_Team$Player_Image$img_Player*TEXTURE*IMAGE SET " + HOCKEY_LOCAL_PHOTO_PATH + 
-											match.getAwayTeam().getTeamName4() + "\\\\" + as.getPhoto() + ".png" + "\0");
+											match.getAwayTeam().getTeamName4() + "\\\\" + match.getAwayTeamGKJerseyColor() + "\\\\" + as.getPhoto() + ".png" + "\0");
 									
 								}else {
 									
 									print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$Away_Team$Player_Image$img_Player*TEXTURE*IMAGE SET " + "\\\\" + IndexController.session_configurations.getIpAddress() + HOCKEY_PHOTO_PATH + "Blank.png\0");
 									print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$Away_Team$Player_Image$img_Player*TEXTURE*IMAGE SET " + "\\\\" + IndexController.session_configurations.getIpAddress() + HOCKEY_PHOTO_PATH + 
-											match.getAwayTeam().getTeamName4() + "\\\\" + as.getPhoto() + ".png" + "\0");
+											match.getAwayTeam().getTeamName4() + "\\\\" + match.getAwayTeamGKJerseyColor() + "\\\\" + as.getPhoto() + ".png" + "\0");
 								}
 								
 								print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$Penalty_Card$Away_Team$Player_Image$Select_image*FUNCTION*Omo*vis_con SET 1\0");
@@ -1179,13 +1186,13 @@ public class PUNJAB extends Scene{
 									
 									print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$Away_Team$Player_Image$img_Player*TEXTURE*IMAGE SET " + HOCKEY_LOCAL_PHOTO_PATH + "Blank.png\0");
 									print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$Away_Team$Player_Image$img_Player*TEXTURE*IMAGE SET " + HOCKEY_LOCAL_PHOTO_PATH + 
-											match.getAwayTeam().getTeamName4() + "\\\\" + asub.getPhoto() + ".png" + "\0");
+											match.getAwayTeam().getTeamName4() + "\\\\" + match.getAwayTeamGKJerseyColor() + "\\\\" + asub.getPhoto() + ".png" + "\0");
 									
 								}else {
 									
 									print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$Away_Team$Player_Image$img_Player*TEXTURE*IMAGE SET " + "\\\\" + IndexController.session_configurations.getIpAddress() + HOCKEY_PHOTO_PATH + "Blank.png\0");
 									print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$Away_Team$Player_Image$img_Player*TEXTURE*IMAGE SET " + "\\\\" + IndexController.session_configurations.getIpAddress() + HOCKEY_PHOTO_PATH + 
-											match.getAwayTeam().getTeamName4() + "\\\\" + asub.getPhoto() + ".png" + "\0");
+											match.getAwayTeam().getTeamName4() + "\\\\" + match.getAwayTeamGKJerseyColor() + "\\\\" + asub.getPhoto() + ".png" + "\0");
 								}
 								
 								print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$Penalty_Card$Away_Team$Player_Image$Select_image*FUNCTION*Omo*vis_con SET 1\0");
@@ -1705,9 +1712,9 @@ public class PUNJAB extends Scene{
 						+ captainGoalKeeper.toUpperCase() + " , " + Home_or_Away +"\0");
 				TimeUnit.MILLISECONDS.sleep(l);
 				break;
-			case "PLAYER OF THE MATCH":
+			case "PLAYER_OF_THE_MATCH":
 				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$BottomLIne$Side1$txt_Info*GEOM*TEXT SET " 
-						+ "HERO OF THE MATCH " +"\0");
+						+ "PLAYER OF THE MATCH " +"\0");
 				TimeUnit.MILLISECONDS.sleep(l);
 				break;
 			case "GOAL_KEEPER":
@@ -1749,6 +1756,11 @@ public class PUNJAB extends Scene{
 						+ "CAPTAIN & GOAL KEEPER" + " , " + Home_or_Away +"\0");
 				TimeUnit.MILLISECONDS.sleep(l);
 				break;
+			case "STRIKER_OF_THE_MATCH":	
+				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$BottomLIne$Side1$txt_Info*GEOM*TEXT SET " 
+						+ "STRIKER OF THE MATCH" +"\0");
+				TimeUnit.MILLISECONDS.sleep(l);
+				break;	
 			}
 			
 			
@@ -2687,6 +2699,13 @@ public class PUNJAB extends Scene{
 		}else {
 			 String previewCommand ="";
 			 int row_id=0;
+			 
+			 for(int i = 1; i <=11; i++ ) {
+					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Formation$Formation$Player-Grp$Side" + whichSide
+							+ "$Player" + i + "*TRANSFORMATION*POSITION*X SET " + "0" + "\0");
+					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Formation$Formation$Player-Grp$Side" + whichSide
+							+ "$Player" + i + "*TRANSFORMATION*POSITION*Y SET " + "0" + "\0");
+				}
 			
 			if(TeamId == match.getHomeTeamId()) {
 				
@@ -2728,7 +2747,7 @@ public class PUNJAB extends Scene{
 						
 						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Formation$Formation$Player-Grp$Side" + whichSide 
 								+ "$Player"+ row_id + "$img_Player*TEXTURE*IMAGE SET " + HOCKEY_LOCAL_PHOTO_PATH +
-								match.getHomeTeam().getTeamName4() +  "\\\\"  +hs.getPhoto() + ".png" +"\0");
+								match.getHomeTeam().getTeamName4() + "\\\\" + match.getHomeTeamGKJerseyColor() + "\\\\" + hs.getPhoto() + ".png" +"\0");
 						
 					}else {
 						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Formation$Formation$Player-Grp$Side" + whichSide 
@@ -2736,7 +2755,7 @@ public class PUNJAB extends Scene{
 						
 						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Formation$Formation$Player-Grp$Side" + whichSide 
 								+ "$Player"+ row_id + "$img_Player*TEXTURE*IMAGE SET "  + "\\\\" + IndexController.session_configurations.getIpAddress() + HOCKEY_PHOTO_PATH + 
-								match.getHomeTeam().getTeamName4() +  "\\\\"  +hs.getPhoto() + ".png" +"\0");
+								match.getHomeTeam().getTeamName4() + "\\\\" + match.getHomeTeamGKJerseyColor() + "\\\\" + hs.getPhoto() + ".png" +"\0");
 						
 					}
 					
@@ -2859,7 +2878,7 @@ public class PUNJAB extends Scene{
 						
 						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Formation$Formation$Player-Grp$Side" + whichSide 
 								+ "$Player"+ row_id + "$img_Player*TEXTURE*IMAGE SET " + HOCKEY_LOCAL_PHOTO_PATH +
-								match.getHomeTeam().getTeamName4() +  "\\\\"  +hs.getPhoto() + ".png" +"\0");
+								match.getAwayTeam().getTeamName4() + "\\\\" + match.getAwayTeamJerseyColor() + "\\\\" +hs.getPhoto() + ".png" +"\0");
 						
 					}else {
 						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Formation$Formation$Player-Grp$Side" + whichSide 
@@ -2867,7 +2886,7 @@ public class PUNJAB extends Scene{
 						
 						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Formation$Formation$Player-Grp$Side" + whichSide 
 								+ "$Player"+ row_id + "$img_Player*TEXTURE*IMAGE SET "  + "\\\\" + IndexController.session_configurations.getIpAddress() + HOCKEY_PHOTO_PATH + 
-								match.getHomeTeam().getTeamName4() +  "\\\\"  +hs.getPhoto() + ".png" +"\0");
+								match.getAwayTeam().getTeamName4() + "\\\\" + match.getAwayTeamJerseyColor() + "\\\\" + hs.getPhoto() + ".png" +"\0");
 						
 					}
 					
@@ -2981,6 +3000,25 @@ public class PUNJAB extends Scene{
 			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide 
 					+ "$select_Graphics$LineUP$Substitues_Coach$txt_Header*GEOM*TEXT SET "+ "SUBSTITUTES" +"\0");
 			
+			for(int i = 0; i <= match.getHomeSubstitutesPerTeam()-1; i++) {
+				row_id_sub = row_id_sub + 1;
+				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$select_Graphics$LineUP$Substitues_Coach"
+						+ "$P"+ row_id_sub + "$txt_Name*GEOM*TEXT SET "+ "" +"\0");
+			
+				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$select_Graphics$LineUP$Substitues_Coach"
+						+ "$P"+ row_id_sub + "$txt_JerseyNumber*GEOM*TEXT SET "+ "" +"\0");
+				
+			}
+			row_id_sub = 0;
+			for(int i = 0; i <= match.getAwaySubstitutesPerTeam()-1; i++) {
+				row_id_sub = row_id_sub + 1;
+				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$select_Graphics$LineUP$Substitues_Coach"
+						+ "$P"+ row_id_sub + "$txt_Name*GEOM*TEXT SET "+ "" +"\0");
+			
+				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$select_Graphics$LineUP$Substitues_Coach"
+						+ "$P"+ row_id_sub + "$txt_JerseyNumber*GEOM*TEXT SET "+ "" +"\0");
+			}
+			row_id_sub = 0;
 			if(TeamId == match.getHomeTeamId()) {
 				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*gfx_FullFrames$Header-UD$Header$Flags$Side" + whichSide + "$select_Flag$Flag1"
 						+ "$Flag_UD$img_Flag*TEXTURE*IMAGE SET "+ HOCKEY_LOGO + match.getHomeTeam().getTeamBadge() +"\0");
@@ -3010,6 +3048,7 @@ public class PUNJAB extends Scene{
 				
 				for(int i = 0; i <= match.getHomeSubstitutesPerTeam()-1; i++) {
 					row_id_sub = row_id_sub + 1;
+					
 					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$select_Graphics$LineUP$Substitues_Coach"
 							+ "$P"+ row_id_sub + "$txt_Name*GEOM*TEXT SET "+ match.getHomeSubstitutes().get(i).getFull_name().toUpperCase() +"\0");
 				
@@ -3026,12 +3065,14 @@ public class PUNJAB extends Scene{
 								+ "$Coach$txt_Coach_Name*GEOM*TEXT SET "+ st.getName() +"\0");
 						hc=true;
 					}
-					if(st.getClubId() == TeamId && st.getRole().equalsIgnoreCase("ASSISTANT COACH")) {
-						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$select_Graphics$LineUP$Substitues_Coach"
-								+ "$Coach$txt_CoachHead*GEOM*TEXT SET "+ "ASSISTANT COACH" +"\0");
-						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$select_Graphics$LineUP$Substitues_Coach"
-								+ "$Coach$txt_Coach_Name*GEOM*TEXT SET "+ st.getName() +"\0");
-						ac=true;
+					if(hc == false) {
+						if(st.getClubId() == TeamId && st.getRole().equalsIgnoreCase("ASSISTANT COACH")) {
+							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$select_Graphics$LineUP$Substitues_Coach"
+									+ "$Coach$txt_CoachHead*GEOM*TEXT SET "+ "ASSISTANT COACH" +"\0");
+							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$select_Graphics$LineUP$Substitues_Coach"
+									+ "$Coach$txt_Coach_Name*GEOM*TEXT SET "+ st.getName() +"\0");
+							ac=true;
+						}
 					}
 				}
 				
@@ -3079,12 +3120,14 @@ public class PUNJAB extends Scene{
 								+ "$Coach$txt_Coach_Name*GEOM*TEXT SET "+ st.getName() +"\0");
 						hc=true;
 					}
-					if(st.getClubId() == TeamId && st.getRole().equalsIgnoreCase("ASSISTANT COACH")) {
-						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$select_Graphics$LineUP$Substitues_Coach"
-								+ "$Coach$txt_CoachHead*GEOM*TEXT SET "+ "ASSISTANT COACH" +"\0");
-						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$select_Graphics$LineUP$Substitues_Coach"
-								+ "$Coach$txt_Coach_Name*GEOM*TEXT SET "+ st.getName() +"\0");
-						ac=true;
+					if(hc == false) {
+						if(st.getClubId() == TeamId && st.getRole().equalsIgnoreCase("ASSISTANT COACH")) {
+							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$select_Graphics$LineUP$Substitues_Coach"
+									+ "$Coach$txt_CoachHead*GEOM*TEXT SET "+ "ASSISTANT COACH" +"\0");
+							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$select_Graphics$LineUP$Substitues_Coach"
+									+ "$Coach$txt_Coach_Name*GEOM*TEXT SET "+ st.getName() +"\0");
+							ac=true;
+						}
 					}
 				}
 			}
@@ -3157,7 +3200,7 @@ public class PUNJAB extends Scene{
 						
 						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
 								+ "$Substitute_Players$Player"+ row_id_sub + "$img_Player_Team1*TEXTURE*IMAGE SET " + HOCKEY_LOCAL_PHOTO_PATH + 
-								match.getHomeTeam().getTeamName4() +  "\\\\"  +match.getHomeSubstitutes().get(i).getPhoto() + ".png" +"\0");
+								match.getHomeTeam().getTeamName4() + "\\\\" + match.getHomeTeamGKJerseyColor() + "\\\\" + match.getHomeSubstitutes().get(i).getPhoto() + ".png" +"\0");
 						
 					}else {
 						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
@@ -3165,7 +3208,7 @@ public class PUNJAB extends Scene{
 						
 						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
 								+ "$Substitute_Players$Player"+ row_id_sub + "$img_Player_Team1*TEXTURE*IMAGE SET " + "\\\\" + IndexController.session_configurations.getIpAddress() + HOCKEY_PHOTO_PATH + 
-								match.getHomeTeam().getTeamName4() +  "\\\\"  +match.getHomeSubstitutes().get(i).getPhoto() + ".png" +"\0");
+								match.getHomeTeam().getTeamName4() + "\\\\" + match.getHomeTeamGKJerseyColor() + "\\\\" + match.getHomeSubstitutes().get(i).getPhoto() + ".png" +"\0");
 					}
 					
 					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
@@ -3215,7 +3258,7 @@ public class PUNJAB extends Scene{
 						
 						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
 								+ "$Players$Player"+ row_id + "$img_Player_Team1*TEXTURE*IMAGE SET " + HOCKEY_LOCAL_PHOTO_PATH + 
-								match.getHomeTeam().getTeamName4() +  "\\\\"  + hs.getPhoto() + ".png" +"\0");
+								match.getHomeTeam().getTeamName4() + "\\\\" + match.getHomeTeamGKJerseyColor() + "\\\\" + hs.getPhoto() + ".png" +"\0");
 						
 					}else {
 						
@@ -3224,7 +3267,7 @@ public class PUNJAB extends Scene{
 						
 						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
 								+ "$Players$Player"+ row_id + "$img_Player_Team1*TEXTURE*IMAGE SET " + "\\\\" + IndexController.session_configurations.getIpAddress() + HOCKEY_PHOTO_PATH + 
-								match.getHomeTeam().getTeamName4() +  "\\\\"  + hs.getPhoto() + ".png" +"\0");
+								match.getHomeTeam().getTeamName4() + "\\\\" + match.getHomeTeamGKJerseyColor() + "\\\\" + hs.getPhoto() + ".png" +"\0");
 					}
 					
 					
@@ -3340,7 +3383,7 @@ public class PUNJAB extends Scene{
 						
 						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
 								+ "$Substitute_Players$Player"+ row_id_sub + "$img_Player_Team1*TEXTURE*IMAGE SET " + HOCKEY_LOCAL_PHOTO_PATH + 
-								match.getAwayTeam().getTeamName4() +  "\\\\"  +match.getAwaySubstitutes().get(i).getPhoto() + ".png" +"\0");
+								match.getAwayTeam().getTeamName4() + "\\\\" + match.getAwayTeamGKJerseyColor() + "\\\\" + match.getAwaySubstitutes().get(i).getPhoto() + ".png" +"\0");
 						
 					}else {
 						
@@ -3349,7 +3392,7 @@ public class PUNJAB extends Scene{
 						
 						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
 								+ "$Substitute_Players$Player"+ row_id_sub + "$img_Player_Team1*TEXTURE*IMAGE SET " + "\\\\" + IndexController.session_configurations.getIpAddress() + HOCKEY_PHOTO_PATH + 
-								match.getAwayTeam().getTeamName4() +  "\\\\"  +match.getAwaySubstitutes().get(i).getPhoto() + ".png" +"\0");
+								match.getAwayTeam().getTeamName4() + "\\\\" + match.getAwayTeamGKJerseyColor() + "\\\\" + match.getAwaySubstitutes().get(i).getPhoto() + ".png" +"\0");
 					}
 					
 					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
@@ -3395,7 +3438,7 @@ public class PUNJAB extends Scene{
 						
 						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
 								+ "$Players$Player"+ row_id + "$img_Player_Team1*TEXTURE*IMAGE SET " + HOCKEY_LOCAL_PHOTO_PATH + 
-								match.getAwayTeam().getTeamName4() +  "\\\\"  + hs.getPhoto() + ".png" +"\0");
+								match.getAwayTeam().getTeamName4() + "\\\\" + match.getAwayTeamGKJerseyColor() + "\\\\" + hs.getPhoto() + ".png" +"\0");
 						
 					}else {
 						
@@ -3404,7 +3447,7 @@ public class PUNJAB extends Scene{
 						
 						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
 								+ "$Players$Player"+ row_id + "$img_Player_Team1*TEXTURE*IMAGE SET " + "\\\\" + IndexController.session_configurations.getIpAddress() + HOCKEY_PHOTO_PATH + 
-								match.getAwayTeam().getTeamName4() +  "\\\\"  + hs.getPhoto() + ".png" +"\0");
+								match.getAwayTeam().getTeamName4() + "\\\\" + match.getAwayTeamGKJerseyColor() + "\\\\" + hs.getPhoto() + ".png" +"\0");
 					}
 					
 					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
@@ -4126,42 +4169,27 @@ public class PUNJAB extends Scene{
 
 					"th", "st" };
 			
-			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$FF_Gfx*FUNCTION*Omo*vis_con SET 8 \0");
+			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Header-UD$Header$FF_Title_SEL$Side" + whichSide + "$select_HeaderStyle*FUNCTION*Omo*vis_con SET 3 \0");
 			
-			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Side" + whichSide + "$FF_Gfx$Match_Id_Double"
-					+ "$Match1$Date_Out*ACTIVE SET 0\0");
-			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Side" + whichSide + "$FF_Gfx$Match_Id_Double"
-					+ "$Match2$Date_Out*ACTIVE SET 0\0");
+			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Header-UD$Flags$Side" + whichSide + "$select_Flag*FUNCTION*Omo*vis_con SET 0\0");
+			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Header-UD$Header$FF_Title_SEL$Side" + whichSide + "$select_HeaderStyle$TitleCenter"
+					+ "$txt_Title*GEOM*TEXT SET " + match.getTournament() + "\0");
+			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Header-UD$Header$FF_Title_SEL$Side" + whichSide + "$select_HeaderStyle$TitleCenter"
+					+ "$Tournament_Logo*TEXTURE*IMAGE SET " + eventlogo_path + "EventLogo" + "\0");
 			
-			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Side" + whichSide + "$FF_Gfx$Match_Id_Double"
-					+ "$Match1$Venue_Out$txt_Location*GEOM*TEXT SET "+ "INTERNATIONAL HOCKEY STADIUM" +"\0");
+			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$select_Graphics*FUNCTION*Omo*vis_con SET 2 \0");
 			
-			
+			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$select_Graphics$Fixtures$Line_GRP$select_LineNumber*FUNCTION*Omo*vis_con SET  6\0");
 			
 			if (day.toUpperCase().equalsIgnoreCase("TODAY")) {
 				Date = new SimpleDateFormat("dd-MM-yyyy").format(cal.getTime());
-				
-				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Side" + whichSide + "$FF_Gfx$Match_Id_Double"
-						+ "$Match1$Venue_Out$txt_Venue*GEOM*TEXT SET "+ "SARDAR VALLABHBHAI PATEL" +"\0");
-				
-				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Side" + whichSide + "$FF_Gfx$Match_Id_Double"
-						+ "$Match2$Venue_Out$txt_Venue*GEOM*TEXT SET "+ "UP NEXT" +"\0");
-				
-				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Side" + whichSide + "$FF_Gfx$Match_Id_Double"
-						+ "$Match2$Venue_Out$txt_Location*GEOM*TEXT SET "+ "LIVE FROM RAIPUR, CHHATTISGARH" +"\0");
-				
+				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$select_Graphics$Fixtures"
+						+ "$Line_GRP$txt_Header*GEOM*TEXT SET TODAY'S FIXTURE\0");
 			} else if (day.toUpperCase().equalsIgnoreCase("TOMORROW")) {
 				cal.add(Calendar.DATE, +1);
 				Date = new SimpleDateFormat("dd-MM-yyyy").format(cal.getTime());
-				
-				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Side" + whichSide + "$FF_Gfx$Match_Id_Double"
-						+ "$Match1$Venue_Out$txt_Venue*GEOM*TEXT SET "+ "SARDAR VALLABHBHAI PATEL" +"\0");
-				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Side" + whichSide + "$FF_Gfx$Match_Id_Double"
-						+ "$Match2$Venue_Out$txt_Venue*GEOM*TEXT SET "+ "TOMORROW'S MATCHES" +"\0");
-				
-				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Side" + whichSide + "$FF_Gfx$Match_Id_Double"
-						+ "$Match2$Venue_Out$txt_Location*GEOM*TEXT SET "+ "FROM RAIPUR, CHHATTISGARH" +"\0");
-
+				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$select_Graphics$Fixtures"
+						+ "$Line_GRP$txt_Header*GEOM*TEXT SET TOMORROW'S FIXTURE\0");
 			} else if (day.toUpperCase().equalsIgnoreCase("DAY_AFTER_TOMORROW")) {
 				cal.add(Calendar.DATE, +2);
 				Date = new SimpleDateFormat("dd-MM-yyyy").format(cal.getTime());
@@ -4170,50 +4198,119 @@ public class PUNJAB extends Scene{
 				if (Integer.valueOf(newDate) < 10) {
 					newDate = newDate.replaceFirst("0", "");
 				}
-				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Side" + whichSide + "$FF_Gfx$Match_Id_Double"
-						+ "$Match1$Venue_Out$txt_Venue*GEOM*TEXT SET "+ newDate + dateSuffix[Integer.valueOf(newDate)] + " "
-						+ Month.of(Integer.valueOf(Date.split("-")[1])) +"\0");
-				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Side" + whichSide + "$FF_Gfx$Match_Id_Double"
-						+ "$Match2$Venue_Out$txt_Venue*GEOM*TEXT SET "+ newDate + dateSuffix[Integer.valueOf(newDate)] + " "
-						+ Month.of(Integer.valueOf(Date.split("-")[1])) +"\0");
+				
+				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$select_Graphics$Fixtures"
+						+ "$Line_GRP$txt_Header*GEOM*TEXT SET " + newDate + dateSuffix[Integer.valueOf(newDate)] + " " + 
+						Month.of(Integer.valueOf(Date.split("-")[1])) + " 2026\0");
 			}
 
 			for (int i = 0; i <= fix.size() - 1; i++) {
 				if (fix.get(i).getDate().equalsIgnoreCase(Date)) {
+					
 					row = row + 1;
 					
-					print_writer.println(
-							"-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side1$Match_Id_Double$Match" + row
-									+ "$Logos_Vs$Left_Logo_Out$img_Logo_Left*TEXTURE*IMAGE SET " + HOCKEY_LOGO
-									+ fix.get(i).getHome_Team().getTeamBadge() + "\0");
-					
-					print_writer.println(
-							"-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side1$Match_Id_Double$Match" + row
-									+ "$Logos_Vs$Right_Logo_Out$img_Logo_Right*TEXTURE*IMAGE SET " + HOCKEY_LOGO
-									+ fix.get(i).getAway_Team().getTeamBadge() + "\0");
-					
-					
-					
-					if( fix.get(i).getMatchfilename().contains("SEMI")) {
-						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Match_Id_Double$Match" + row
-								+ "$Match_Number_Out$Match$Druk-Trial-Medium*GEOM*TEXT SET "+ "S-FINAL  " +"\0");
-						
-						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Match_Id_Double$Match" + row
-								+ "$Match_Number_Out$Number$txt_Match_Number*GEOM*TEXT SET "+ row +"\0");
-						
+					if(fix.get(i).getMatchnumber() > 9) {
+						match_name = fix.get(i).getMatchfilename();
 					}else {
-						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Match_Id_Double$Match" + row
-								+ "$Match_Number_Out$Match$Druk-Trial-Medium*GEOM*TEXT SET "+ "MATCH" +"\0");
-						
-						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Match_Id_Double$Match" + row
-								+ "$Match_Number_Out$Number$txt_Match_Number*GEOM*TEXT SET "+ fix.get(i).getMatchnumber() +"\0");
+						match_name = "MATCH " + fix.get(i).getMatchnumber();
 					}
-					row_id = row_id + 1;
+					
+					if(fix.get(i).getWinnerteam() != null && fix.get(i).getMargin() !=null) {
+						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$select_Graphics$Fixtures"
+								+ "$Line_GRP$Line" + (row+1) + "$select_Info*FUNCTION*Omo*vis_con SET 2\0");
+
+						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$select_Graphics$Fixtures"
+								+ "$Line_GRP$Line" + (row+1) + "$Results$V*GEOM*TEXT SET -\0");
+						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$select_Graphics$Fixtures"
+								+ "$Line_GRP$Line" + (row+1) + "$Results$txt_GamePart*GEOM*TEXT SET FULL TIME\0");
+						
+						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$select_Graphics$Fixtures"
+								+ "$Line_GRP$Line" + (row+1) + "$Results$txt_Score1*GEOM*TEXT SET " + fix.get(i).getMargin().split("-")[0] + "\0");
+						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$select_Graphics$Fixtures"
+								+ "$Line_GRP$Line" + (row+1) + "$Results$txt_Score2*GEOM*TEXT SET " + fix.get(i).getMargin().split("-")[1] + "\0");
+						
+						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$select_Graphics$Fixtures"
+								+ "$Line_GRP$Line" + (row+1) + "$Results$txt_Team1*GEOM*TEXT SET " + fix.get(i).getHome_Team().getTeamName1() + "\0");
+						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$select_Graphics$Fixtures"
+								+ "$Line_GRP$Line" + (row+1) + "$Results$txt_Team2*GEOM*TEXT SET " + fix.get(i).getAway_Team().getTeamName1() + "\0");
+						
+						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$select_Graphics$Fixtures"
+								+ "$Line_GRP$Line" + (row+1) + "$Results$img_Flag1*TEXTURE*IMAGE SET " + HOCKEY_LOGO + fix.get(i).getHome_Team().getTeamBadge() + "\0");
+						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$select_Graphics$Fixtures"
+								+ "$Line_GRP$Line" + (row+1) + "$Results$img_Flag2*TEXTURE*IMAGE SET "  + HOCKEY_LOGO + fix.get(i).getAway_Team().getTeamBadge() + "\0");
+						
+						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$select_Graphics$Fixtures"
+								+ "$Line_GRP$Line" + (row ) + "$select_Info*FUNCTION*Omo*vis_con SET 0\0");
+						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$select_Graphics$Fixtures"
+								+ "$Line_GRP$Line" + (row) + "$select_Info$Time$txt_Info1*GEOM*TEXT SET\0");
+						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$select_Graphics$Fixtures"
+								+ "$Line_GRP$Line" + (row) + "$select_Info$Time$txt_Info2*GEOM*TEXT SET "+ match_name + "\0");
+					}else {
+						if(match.getMatchFileName().replace(".json", "").equalsIgnoreCase(fix.get(i).getMatchfilename())) {
+							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$select_Graphics$Fixtures"
+									+ "$Line_GRP$Line" + (row+1) + "$select_Info*FUNCTION*Omo*vis_con SET 2\0");
+							
+							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$select_Graphics$Fixtures"
+									+ "$Line_GRP$Line" + (row+1) + "$Results$V*GEOM*TEXT SET -\0");
+							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$select_Graphics$Fixtures"
+									+ "$Line_GRP$Line" + (row+1) + "$Results$txt_GamePart*GEOM*TEXT SET FULL TIME\0");
+							
+							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$select_Graphics$Fixtures"
+									+ "$Line_GRP$Line" + (row+1) + "$Results$txt_Score1*GEOM*TEXT SET " + match.getHomeTeamScore() + "\0");
+							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$select_Graphics$Fixtures"
+									+ "$Line_GRP$Line" + (row+1) + "$Results$txt_Score2*GEOM*TEXT SET " + match.getAwayTeamScore() + "\0");
+							
+							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$select_Graphics$Fixtures"
+									+ "$Line_GRP$Line" + (row+1) + "$Results$txt_Team1*GEOM*TEXT SET " +  match.getHomeTeam().getTeamName1() + "\0");
+							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$select_Graphics$Fixtures"
+									+ "$Line_GRP$Line" + (row+1) + "$Results$txt_Team2*GEOM*TEXT SET " +  match.getAwayTeam().getTeamName1() + "\0");
+							
+							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$select_Graphics$Fixtures"
+									+ "$Line_GRP$Line" + (row+1) + "$Results$img_Flag1*TEXTURE*IMAGE SET " + HOCKEY_LOGO + match.getHomeTeam().getTeamBadge() + "\0");
+							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$select_Graphics$Fixtures"
+									+ "$Line_GRP$Line" + (row+1) + "$Results$img_Flag2*TEXTURE*IMAGE SET "  + HOCKEY_LOGO + match.getAwayTeam().getTeamBadge() + "\0");
+							
+							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$select_Graphics$Fixtures"
+									+ "$Line_GRP$Line" + (row) + "$select_Info*FUNCTION*Omo*vis_con SET 0\0");
+							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$select_Graphics$Fixtures"
+									+ "$Line_GRP$Line" + (row) + "$select_Info$Time$txt_Info1*GEOM*TEXT SET\0");
+							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$select_Graphics$Fixtures"
+									+ "$Line_GRP$Line" + (row) + "$select_Info$Time$txt_Info2*GEOM*TEXT SET "+ match_name + "\0");
+						}else {
+							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$select_Graphics$Fixtures"
+									+ "$Line_GRP$Line" + (row+1) + "$select_Info*FUNCTION*Omo*vis_con SET 1\0");
+							
+							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$select_Graphics$Fixtures"
+									+ "$Line_GRP$Line" + (row+1) + "$Fixture$V*GEOM*TEXT SET -\0");
+							
+							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$select_Graphics$Fixtures"
+									+ "$Line_GRP$Line" + (row+1) + "$Fixture$txt_Team1*GEOM*TEXT SET " +  fix.get(i).getHome_Team().getTeamName1() + "\0");
+							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$select_Graphics$Fixtures"
+									+ "$Line_GRP$Line" + (row+1) + "$Fixture$txt_Team2*GEOM*TEXT SET " +  fix.get(i).getAway_Team().getTeamName1() + "\0");
+							
+							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$select_Graphics$Fixtures"
+									+ "$Line_GRP$Line" + (row+1) + "$Fixture$img_Flag1*TEXTURE*IMAGE SET " + HOCKEY_LOGO + fix.get(i).getHome_Team().getTeamBadge() + "\0");
+							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$select_Graphics$Fixtures"
+									+ "$Line_GRP$Line" + (row+1) + "$Fixture$img_Flag2*TEXTURE*IMAGE SET "  + HOCKEY_LOGO + fix.get(i).getAway_Team().getTeamBadge() + "\0");
+							
+							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$select_Graphics$Fixtures"
+									+ "$Line_GRP$Line" + (row) + "$select_Info*FUNCTION*Omo*vis_con SET 0\0");
+							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$select_Graphics$Fixtures"
+									+ "$Line_GRP$Line" + (row) + "$select_Info$Time$txt_Info1*GEOM*TEXT SET\0");
+							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$select_Graphics$Fixtures"
+									+ "$Line_GRP$Line" + (row) + "$select_Info$Time$txt_Info2*GEOM*TEXT SET "+ match_name + "\0");
+						}
+					}
+					row = row + 1;
 				}
 			}
-			previewCommand = "anim_FullFrame$In_Out 2.540 anim_FullFrame$In_Out$Match_Id_Double 2.540 anim_FullFrame$In_Out$Match_Id_Double$In_Out 2.540 anim_FullFrame$In_Out$Match_Id_Double$In_Out$In 2.100 "
-					+ "anim_FullFrame$In_Out$BG 2.540 anim_FullFrame$In_Out$BG$In_Out 2.540 anim_FullFrame$In_Out$BG$In_Out$In 1.730";
-			print_writer.println("-1 RENDERER PREVIEW SCENE*/Default/gfx_Fullframes " + "C:/Temp/Preview.tga " + previewCommand + "\0");
+			
+			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$select_Graphics$Fixtures"
+					+ "$txt_Footer*GEOM*TEXT SET #HeroACT2026\0");
+			
+			previewCommand = "anim_FullFrames$In_Out 1.800 anim_FullFrames$In_Out$Essentials 1.800 anim_FullFrames$In_Out$Essentials$In 1.800 anim_FullFrames$In_Out$Header$In 1.800 "
+					+ "anim_FullFrames$In_Out$Flags 1.800 anim_FullFrames$In_Out$Flags$In 1.800 anim_FullFrames$In_Out$Main 1.800 anim_FullFrames$In_Out$Main$In 1.800";
+			print_writer.println("-1 RENDERER PREVIEW SCENE*/Default/gfx_FullFrames " + "C:/Temp/Preview.tga " + previewCommand + "\0");
 		}
 	}
 	public void populateStaff(Socket session_socket,String viz_scene, Staff st,List<Team> team ,Match match, String selectedbroadcaster) throws InterruptedException, IOException{
