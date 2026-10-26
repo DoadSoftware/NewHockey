@@ -689,7 +689,7 @@ public class PUNJAB extends Scene{
 				which_graphics_onscreen = "DOUBLE_PROMO";
 				break;
 			case "ANIMATE-IN-POINTS_TABLE":
-				processAnimation(session_socket, "In", "START", session_selected_broadcaster,2);
+				print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_FullFrame$In_Out START \0");
 				which_graphics_onscreen = "POINTS_TABLE";
 				break;
 			case "ANIMATE-IN-SCOREBUG":
@@ -4266,6 +4266,7 @@ public class PUNJAB extends Scene{
 	{		
 		print_writer = new PrintWriter(session_socket.getOutputStream(), true);
 		int row_no=0,l=4;
+		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side1$select_Graphics*FUNCTION*Omo*vis_con SET 5\0");
 		print_writer.println("LAYER2*EVEREST*TREEVIEW*Main*FUNCTION*TAG_CONTROL SET tHeader " + "HOCKEY POINTS TABLE" + ";");
 		TimeUnit.MILLISECONDS.sleep(l);
 		print_writer.println("LAYER2*EVEREST*TREEVIEW*Main*FUNCTION*TAG_CONTROL SET vTableType 0;");
