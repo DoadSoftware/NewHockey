@@ -332,7 +332,17 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 			addItemsToList('EXTRA-TIME-BOTH_OPTION',null);
 			break;
 		case 72:
-			processHockeyProcedures('ANIMATE-IN-SPONSOR');
+			switch ($('#selectedBroadcaster').val()){ 
+			case 'HOCKEY_KHELO_INDIA': 
+				processHockeyProcedures('ANIMATE-IN-SPONSOR');
+				break;
+			case 'PUNJAB': 
+				processHockeyProcedures('POPULATE-FF-HEADTOHEAD_DATA');
+				break;
+			}
+			break;
+		case 52:
+			processHockeyProcedures('POPULATE-FF-POINTS_EXCEL_DATA');
 			break;
 		case 74:
 			processHockeyProcedures('ANIMATE-OUT-SPONSOR');
@@ -1377,6 +1387,20 @@ function processHockeyProcedures(whatToProcess, whichInput)
 				break;
 		}
 		break;
+	case 'POPULATE-FF-HEADTOHEAD_DATA':
+		switch ($('#selectedBroadcaster').val()) {
+			case 'SUPER_CUP': case 'CONTINENTAL':
+				value_to_process = '/Default/FullFrames';
+				break;
+		}
+		break;
+	case 'POPULATE-FF-POINTS_EXCEL_DATA':
+		switch ($('#selectedBroadcaster').val()) {
+			case 'SUPER_CUP': case 'CONTINENTAL':
+				value_to_process = '/Default/FullFrames';
+				break;
+		}
+		break;
 	case 'POPULATE-LT-MATCHID':
 		switch ($('#selectedBroadcaster').val()) {
 			case 'SUPER_CUP': case 'CONTINENTAL':
@@ -1746,7 +1770,8 @@ function processHockeyProcedures(whatToProcess, whichInput)
 			case 'POPULATE-QUAIFIERS': case 'POPULATE-LT-PROMO': case 'POPULATE-POINTS_TABLE2': case 'POPULATE-PLAYOFFS': case 'POPULATE-LT-RESULT': case 'POPULATE-ROAD-TO-FINAL':
 			case 'POPULATE-CONTINENTAL_POINTS_TABLE': case 'POPULATE-SCOREBUG_STATS': case 'POPULATE-SCOREBUG-CARD': case 'POPULATE-SCOREBUG-GOAL_SCORER': case 'POPULATE-LAST_GOAL':
 			case 'POPULATE-FF-PLAYINGXISUB': case 'POPULATE-RED_CARD': case 'POPULATE-QUARTER': case 'POPULATE-LT-PENALTY_SCORES': case 'POPULATE-FF_PROMO':	case 'POPULATE-FF-MATCHSTAT':
-	        case 'POPULATE-FF-PLAYINGXIBOTHTEAMS': case 'POPULATE-REFERRAL': case 'POPULATE-FF-PLAYINGXI_WITH_SUBSANDCOACH':
+	        case 'POPULATE-FF-PLAYINGXIBOTHTEAMS': case 'POPULATE-REFERRAL': case 'POPULATE-FF-PLAYINGXI_WITH_SUBSANDCOACH': case 'POPULATE-FF-HEADTOHEAD_DATA':
+			case 'POPULATE-FF-POINTS_EXCEL_DATA':
 			case 'POPULATE-FF-MATCHID_IMAGE':
 				if(confirm('Animate In?') == true){
 					switch(whatToProcess){
@@ -1798,6 +1823,12 @@ function processHockeyProcedures(whatToProcess, whichInput)
 					case 'POPULATE-FF-MATCHSTAT':
 						processHockeyProcedures('ANIMATE-IN-MATCHSTAT');			
 						break;	
+					case 'POPULATE-FF-HEADTOHEAD_DATA':
+						processHockeyProcedures('ANIMATE-IN-HEADTOHEAD_DATA');
+						break;
+					case 'POPULATE-FF-POINTS_EXCEL_DATA':
+						processHockeyProcedures('ANIMATE-IN-POINTS_EXCEL_DATA');
+						break;
 					case 'POPULATE-LT-MATCHID':
 						processHockeyProcedures('ANIMATE-IN-LT_MATCHID');			
 						break;
