@@ -301,7 +301,14 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 			processHockeyProcedures('ANIMATE-OUT-SCOREBUG_STAT');
 			break;
 		case 75:
-			processHockeyProcedures('ANIMATE-HOME_WIPE');
+			switch ($('#selectedBroadcaster').val()){
+			case 'PUNJAB':
+				processHockeyProcedures('ANIMATE-SOCIAL_MEDIA');
+				break;
+			default:
+				processHockeyProcedures('ANIMATE-HOME_WIPE');
+				break;	
+			}
 			break;
 		case 76:
 			processHockeyProcedures('ANIMATE-AWAY_WIPE');

@@ -501,6 +501,7 @@ public class IndexController
 		
 		case "NAMESUPER_GRAPHICS-OPTIONS": case "BUG_DB_GRAPHICS-OPTIONS": case "STAFF_GRAPHICS-OPTIONS": case "PROMO_GRAPHICS-OPTIONS": case "LTPROMO_GRAPHICS-OPTIONS":
 		case "SCOREBUGPROMO_GRAPHICS-OPTIONS":	case "RESULT_PROMO_GRAPHICS-OPTIONS":
+			
 			switch (session_selected_broadcaster) {
 			case HockeyUtil.HOCKEY_KHELO_INDIA:
 				return session_khelo_india.ProcessGraphicOption(whatToProcess,session_match,session_clock, 
