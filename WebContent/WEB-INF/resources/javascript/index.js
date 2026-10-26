@@ -341,6 +341,9 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 				break;
 			}
 			break;
+		case 53:
+			processHockeyProcedures('POPULATE-HIGHLIGHT');
+			break;	
 		case 52:
 			processHockeyProcedures('POPULATE-FF-POINTS_EXCEL_DATA');
 			break;
@@ -1500,7 +1503,10 @@ function processHockeyProcedures(whatToProcess, whichInput)
 			case 'SUPER_CUP': case 'CONTINENTAL':
 				value_to_process = '/Default/LT' + ',' + $('#selectTeam option:selected').val() + ',' + $('#selectStatsType option:selected').val() ;
 				//alert(value_to_process);
-				break;	
+				break;
+			case 'PUNJAB':
+				value_to_process = $('#selectTeam option:selected').val();
+				break;		
 		}
 		break;
 	case 'POPULATE-L3-SINGLE_SUBSTITUTE':
@@ -2790,45 +2796,51 @@ function addItemsToList(whatToProcess, dataToProcess)
 					row.insertCell(cellCount).appendChild(select);
 					cellCount = cellCount + 1;
 					
-					select = document.createElement('select');
-					select.id = 'selectStatsType';
-					select.name = select.id;
-					
-					option = document.createElement('option');
-					option.value = 'single';
-					option.text = 'Single Substitution';
-					select.appendChild(option);
-					
-					/*option = document.createElement('option');
-					option.value = 'double';
-					option.text = 'Double Substitution';
-					select.appendChild(option);
-					
-					option = document.createElement('option');
-					option.value = 'triple';
-					option.text = 'Triple Substitution';
-					select.appendChild(option);*/
-					
-				    select.setAttribute('onchange',"processUserSelection(this)");
-					row.insertCell(cellCount).appendChild(select);
-					
-					cellCount = cellCount + 1;
-					
-					option = document.createElement('input');
-		    		option.type = 'button';
-		    		
-		    		option.name = 'populate_subchange_on_btn';
-		    		option.value = 'ChangeOn';
-		    		
-		    		option.id = option.name;
-				    option.setAttribute('onclick',"processUserSelection(this)");
-				    
-				    div = document.createElement('div');
-					div.append(option);
-						    
-				    row.insertCell(cellCount).appendChild(div);
-					cellCount = cellCount + 1;
-					
+					switch ($('#selectedBroadcaster').val().toUpperCase()) {
+					case 'PUNJAB':
+						//formationScene = 'D:/DOAD_In_House_Everest/Everest_Sports/Everest_I-League_2022/Scenes/Formation_NO_Image.sum';
+						break;
+					default:
+						select = document.createElement('select');
+						select.id = 'selectStatsType';
+						select.name = select.id;
+
+						option = document.createElement('option');
+						option.value = 'single';
+						option.text = 'Single Substitution';
+						select.appendChild(option);
+
+						/*option = document.createElement('option');
+						option.value = 'double';
+						option.text = 'Double Substitution';
+						select.appendChild(option);
+
+						option = document.createElement('option');
+						option.value = 'triple';
+						option.text = 'Triple Substitution';
+						select.appendChild(option);*/
+
+						select.setAttribute('onchange',"processUserSelection(this)");
+						row.insertCell(cellCount).appendChild(select);
+
+						cellCount = cellCount + 1;
+
+						option = document.createElement('input');
+						option.type = 'button';
+
+						option.name = 'populate_subchange_on_btn';
+						option.value = 'ChangeOn';
+
+						option.id = option.name;
+						option.setAttribute('onclick',"processUserSelection(this)");
+
+						div = document.createElement('div');
+						div.append(option);
+							    
+						row.insertCell(cellCount).appendChild(div);
+						cellCount = cellCount + 1;
+						break;
+					}
 					
 					option = document.createElement('input');
 		    		option.type = 'button';
