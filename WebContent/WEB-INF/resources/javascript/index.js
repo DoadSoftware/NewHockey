@@ -1514,7 +1514,7 @@ function processHockeyProcedures(whatToProcess, whichInput)
 				break;
 		}
 		break;
-	case 'POPULATE-FF-PLAYINGXI':
+	case 'POPULATE-FF-PLAYINGXI': case 'POPULATE-PLAYING-CHANGE':
 		switch ($('#selectedBroadcaster').val()) {
 			case 'HOCKEY_KHELO_INDIA': case 'PUNJAB': 
 				value_to_process =$('#selectPlayingXI option:selected').val();

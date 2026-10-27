@@ -44,7 +44,8 @@ public class PUNJAB extends Scene{
 	@JsonIgnore
 	public PrintWriter print_writer;
 	public ScoreBug scorebug = new ScoreBug(); 
-	public String which_graphics_onscreen = "",which_stats_on_screen = "",sponsor_on_screen = "",red_card_on_screen = "",referral_on_screen = "";
+	public String which_graphics_onscreen = "",which_stats_on_screen = "",sponsor_on_screen = "",red_card_on_screen = "",referral_on_screen = "",vtp = "";
+	public int whichSide = 1;
 	public boolean is_infobar = false;
 	private String eventlogo_path = "IMAGE*/Default/EventLogo";
 	//private String colors_path = "C:\\Images\\KHELO_INDIA\\Colours\\";
@@ -299,7 +300,7 @@ public class PUNJAB extends Scene{
 		case "POPULATE-FF-MATCHID_IMAGE": case "POPULATE-SCORECARD": case "POPULATE-FF-HEADTOHEAD_DATA": case "POPULATE-FF-POINTS_EXCEL_DATA":
 		case "POPULATE-LAST_GOAL":	case "POPULATE-RED_CARD": case "POPULATE-QUARTER": case "POPULATE-LT-PENALTY_SCORES":
 		case "POPULATE-FF_PROMO":	case "POPULATE-FF-MATCHSTAT": case "POPULATE-CHANGE_PENALTY": case "POPULATE-SCORETEAM":
-		case "POPULATE-FF-PLAYINGXI_WITH_SUBSANDCOACH": case "POPULATE-HIGHLIGHT":
+		case "POPULATE-FF-PLAYINGXI_WITH_SUBSANDCOACH": case "POPULATE-HIGHLIGHT": case "POPULATE-PLAYING-CHANGE":
 	
 			
 		case "HOME_YELLOW1": case "HOME_YELLOW2": case "HOME_RED1": case "HOME_RED2": case "HOME_GREEN1": case "HOME_GREEN2":
@@ -373,7 +374,14 @@ public class PUNJAB extends Scene{
 					}
 				break;
 			case "POPULATE-L3-NAMESUPER-PLAYER":
-				populateNameSuperPlayer(session_socket, valueToProcess.split(",")[1], Integer.valueOf(valueToProcess.split(",")[2]), 
+				if(!which_graphics_onscreen.isEmpty()) {
+					whichSide = 2;
+				}else {
+					whichSide = 1;
+				}
+				vtp = valueToProcess;
+				
+				populateNameSuperPlayer(session_socket, whichSide,valueToProcess.split(",")[1], Integer.valueOf(valueToProcess.split(",")[2]), 
 						valueToProcess.split(",")[3], Integer.valueOf(valueToProcess.split(",")[4]),valueToProcess.split(",")[5],valueToProcess.split(",")[6], match, session_selected_broadcaster);
 				break;
 			case "POPULATE-L3-NAMESUPER-CARD":
@@ -401,8 +409,14 @@ public class PUNJAB extends Scene{
 				populateMatchStats(session_socket,valueToProcess.split(",")[1], hockeyService,match,clock, session_selected_broadcaster);
 				break;
 			case "POPULATE-FF-PLAYINGXI":
+				if(!which_graphics_onscreen.isEmpty()) {
+					whichSide = 2;
+				}else {
+					whichSide = 1;
+				}
+				vtp = valueToProcess;
 				populatePlayingXI(session_socket, Integer.valueOf(valueToProcess.split(",")[1]),hockeyService.getFormations(), 
-						hockeyService.getTeams(),match, session_selected_broadcaster,1,hockeyService);
+						hockeyService.getTeams(),match, session_selected_broadcaster,whichSide,hockeyService);
 				break;
 			case "POPULATE-FF-PLAYINGXIBOTHTEAMS":
 				populatePlayingXIBOTH(session_socket,hockeyService.getFormations(), 
@@ -452,7 +466,14 @@ public class PUNJAB extends Scene{
 						hockeyService.getFixtures(),hockeyService.getGrounds(),match , session_selected_broadcaster);
 				break;
 			case "POPULATE-DOUBLE_PROMO":
-				populateMatchDoublePromo(session_socket, valueToProcess.split(",")[1], match,HockeyFunctions.processAllFixtures(hockeyService),hockeyService.getTeams(),hockeyService.getGrounds(), session_selected_broadcaster,1);
+				if(!which_graphics_onscreen.isEmpty()) {
+					whichSide = 2;
+				}else {
+					whichSide = 1;
+				}
+				vtp = valueToProcess;
+				populateMatchDoublePromo(session_socket, valueToProcess.split(",")[1], match,HockeyFunctions.processAllFixtures(hockeyService),hockeyService.getTeams(),
+						hockeyService.getGrounds(), session_selected_broadcaster,whichSide);
 				break;
 			case "POPULATE-POINTS_TABLE":
 				LeagueTable league_table1 = null;
@@ -586,7 +607,22 @@ public class PUNJAB extends Scene{
 				which_graphics_onscreen = "NAMESUPER_CARD";
 				break;
 			case "ANIMATE-IN-NAMESUPER":
-				print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_Lowerthird START\0");
+				
+				if(whichSide == 2) {
+					print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Change_Lowerthird START\0");
+					TimeUnit.MILLISECONDS.sleep(2000);
+					
+					populateNameSuperPlayer(session_socket, whichSide,vtp.split(",")[1], Integer.valueOf(vtp.split(",")[2]), 
+							vtp.split(",")[3], Integer.valueOf(vtp.split(",")[4]),vtp.split(",")[5],vtp.split(",")[6], match, session_selected_broadcaster);
+					
+					print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_Lowerthird SHOW 1.240\0");
+					TimeUnit.MILLISECONDS.sleep(500);
+					print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Change_Lowerthird SHOW 0.0\0");
+					
+				}else {
+					print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_Lowerthird START\0");
+				}
+				
 //				print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Loop START\0");
 				which_graphics_onscreen = "NAMESUPER";
 				break;
@@ -631,17 +667,40 @@ public class PUNJAB extends Scene{
 				which_graphics_onscreen = "MATCHSTATS";
 				break;
 			case "ANIMATE-IN-PLAYINGXI":
-				print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*change_Formation SHOW 0.0\0");
 				
-				TimeUnit.MILLISECONDS.sleep(500);
-				print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_Formation$In_Out$Essentials$In START \0");
-				print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_Formation$In_Out$Essentials$Out START \0");
-				
-				print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_Formation$In_Out$Header$In START \0");
-				print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_Formation$In_Out$Header$Out START \0");
-				
-				print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_Formation$In_Out$Players$In START \0");
-				print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_Formation$In_Out$Players$Out START \0");
+				if(whichSide == 2) {
+					print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*change_Formation START\0");
+					TimeUnit.MILLISECONDS.sleep(2000);
+					
+					populatePlayingXI(session_socket, Integer.valueOf(vtp.split(",")[1]),hockeyService.getFormations(), 
+							hockeyService.getTeams(),match, session_selected_broadcaster,1,hockeyService);
+					
+					
+					print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_Formation$In_Out$Essentials$In SHOW 1.960\0");
+					print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_Formation$In_Out$Essentials$Out SHOW 1.960\0");
+					
+					print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_Formation$In_Out$Header$In SHOW 1.960\0");
+					print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_Formation$In_Out$Header$Out SHOW 1.960\0");
+					
+					print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_Formation$In_Out$Players$In SHOW 1.960\0");
+					print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_Formation$In_Out$Players$Out SHOW 1.960\0");
+					
+					TimeUnit.MILLISECONDS.sleep(500);
+					
+					print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*change_Formation SHOW 0.0\0");
+				}else {
+					print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*change_Formation SHOW 0.0\0");
+					
+					TimeUnit.MILLISECONDS.sleep(500);
+					print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_Formation$In_Out$Essentials$In START \0");
+					print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_Formation$In_Out$Essentials$Out START \0");
+					
+					print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_Formation$In_Out$Header$In START \0");
+					print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_Formation$In_Out$Header$Out START \0");
+					
+					print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_Formation$In_Out$Players$In START \0");
+					print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_Formation$In_Out$Players$Out START \0");
+				}
 				which_graphics_onscreen = "PLAYINGXI";
 				break;
 			case "ANIMATE-IN-PLAYINGXISUB":
@@ -686,8 +745,22 @@ public class PUNJAB extends Scene{
 				which_graphics_onscreen = "PROMO";
 				break;
 			case "ANIMATE-IN-DOUBLE_PROMO":
-				print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_FullFrames$In_Out START \0");
-				print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Loop START \0");
+				
+				if(whichSide == 2) {
+					print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*change_Fullframes START\0");
+					TimeUnit.MILLISECONDS.sleep(2000);
+					
+					populateMatchDoublePromo(session_socket, vtp.split(",")[1], match,HockeyFunctions.processAllFixtures(hockeyService),hockeyService.getTeams(),
+							hockeyService.getGrounds(), session_selected_broadcaster,1);
+					
+					print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_FullFrames$In_Out SHOW 1.800\0");
+					TimeUnit.MILLISECONDS.sleep(500);
+					print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*change_Fullframes SHOW 0.0\0");
+				}else {
+					print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_FullFrames$In_Out START\0");
+					print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Loop START \0");
+				}
+				
 				which_graphics_onscreen = "DOUBLE_PROMO";
 				break;
 			case "ANIMATE-IN-POINTS_TABLE":
@@ -1597,7 +1670,7 @@ public class PUNJAB extends Scene{
 		print_writer.println("-1 RENDERER PREVIEW SCENE*/Default/gfx_Overlays C:/Temp/Preview.tga anim_UmpireSuper$In_Out 1.000 anim_UmpireSuper$In_Out$In 1.000 \0");
 		
 	}
-	public void populateNameSuperPlayer(Socket session_socket,String viz_scene, int TeamId, String captainGoalKeeper, int playerId,String cardType,String Photo, Match match, String selectedbroadcaster) throws InterruptedException, IOException
+	public void populateNameSuperPlayer(Socket session_socket,int whichSide,String viz_scene, int TeamId, String captainGoalKeeper, int playerId,String cardType,String Photo, Match match, String selectedbroadcaster) throws InterruptedException, IOException
 	{
 		if (match == null) {
 			this.status = "ERROR: Match is null";
@@ -1611,13 +1684,13 @@ public class PUNJAB extends Scene{
 			
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$select_ToplineNumbers*FUNCTION*Omo*vis_con SET 1\0");
 			
-			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$select_ToplineNumbers$TopLine1$Data$Side1$Jersey$select_Jersey*FUNCTION*Omo*vis_con SET 1\0");
-			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$select_ToplineNumbers$TopLine1$Data$Side1$select_TextType*FUNCTION*Omo*vis_con SET 1\0");
-			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$select_ToplineNumbers$TopLine1$Data$Side1$select_TextType$Text2$select_Flag*FUNCTION*Omo*vis_con SET 1\0");
+			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$select_ToplineNumbers$TopLine1$Data$Side" + whichSide + "$Jersey$select_Jersey*FUNCTION*Omo*vis_con SET 1\0");
+			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$select_ToplineNumbers$TopLine1$Data$Side" + whichSide + "$select_TextType*FUNCTION*Omo*vis_con SET 1\0");
+			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$select_ToplineNumbers$TopLine1$Data$Side" + whichSide + "$select_TextType$Text2$select_Flag*FUNCTION*Omo*vis_con SET 1\0");
 			
 			if(TeamId == match.getHomeTeamId()) {
 				
-				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$select_ToplineNumbers$TopLine1$Data$Side1$Text2$img_Flag*TEXTURE*IMAGE SET " 
+				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$select_ToplineNumbers$TopLine1$Data$Side" + whichSide + "$Text2$img_Flag*TEXTURE*IMAGE SET " 
 						+ HOCKEY_LOGO + match.getHomeTeam().getTeamBadge() +"\0");
 				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$BottomLIne$img_Base*TEXTURE*IMAGE SET " 
 						+ HOCKEY_BASE1 + match.getHomeTeam().getTeamBadge() +"\0");
@@ -1625,19 +1698,19 @@ public class PUNJAB extends Scene{
 				Home_or_Away = match.getHomeTeam().getTeamName1().toUpperCase();
 				for(Player hs : match.getHomeSquad()) {
 					if(playerId == hs.getPlayerId()) {
-						print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$select_ToplineNumbers$TopLine1$Data$Side1$Jersey$txt_Jersey*GEOM*TEXT SET " 
+						print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$select_ToplineNumbers$TopLine1$Data$Side" + whichSide + "$Jersey$txt_Jersey*GEOM*TEXT SET " 
 								+ hs.getJersey_number() +"\0");
-						print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$select_ToplineNumbers$TopLine1$Data$Side1$Text2$txt_Name*GEOM*TEXT SET " 
+						print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$select_ToplineNumbers$TopLine1$Data$Side" + whichSide + "$Text2$txt_Name*GEOM*TEXT SET " 
 								+ hs.getFull_name().toUpperCase() +"\0");
 						
 						TimeUnit.MILLISECONDS.sleep(l);
 						
 						if(captainGoalKeeper.toUpperCase().equalsIgnoreCase("PLAYER")) {
-							print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$BottomLIne$Side1$txt_Info*GEOM*TEXT SET " 
+							print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$BottomLIne$Side" + whichSide + "$txt_Info*GEOM*TEXT SET " 
 									+ match.getHomeTeam().getTeamName1().toUpperCase() +"\0");
 							
 						}else if(captainGoalKeeper.toUpperCase().equalsIgnoreCase("Player_Role")) {
-							print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$BottomLIne$Side1$txt_Info*GEOM*TEXT SET " 
+							print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$BottomLIne$Side" + whichSide + "$txt_Info*GEOM*TEXT SET " 
 									+ hs.getRole().toUpperCase() + " , " + match.getHomeTeam().getTeamName4().toUpperCase() +"\0");
 						}
 					}
@@ -1645,19 +1718,19 @@ public class PUNJAB extends Scene{
 				for(Player hsub : match.getHomeSubstitutes()) {
 					if(playerId == hsub.getPlayerId()) {
 						
-						print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$select_ToplineNumbers$TopLine1$Data$Side1$Jersey$txt_Jersey*GEOM*TEXT SET " 
+						print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$select_ToplineNumbers$TopLine1$Data$Side" + whichSide + "$Jersey$txt_Jersey*GEOM*TEXT SET " 
 								+ hsub.getJersey_number() +"\0");
-						print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$select_ToplineNumbers$TopLine1$Data$Side1$Text2$txt_Name*GEOM*TEXT SET " 
+						print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$select_ToplineNumbers$TopLine1$Data$Side" + whichSide + "$Text2$txt_Name*GEOM*TEXT SET " 
 								+ hsub.getFull_name().toUpperCase() +"\0");
 						
 						TimeUnit.MILLISECONDS.sleep(l);
 						
 						if(captainGoalKeeper.toUpperCase().equalsIgnoreCase("PLAYER")) {
-							print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$BottomLIne$Side1$txt_Info*GEOM*TEXT SET " 
+							print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$BottomLIne$Side" + whichSide + "$txt_Info*GEOM*TEXT SET " 
 									+ match.getHomeTeam().getTeamName1().toUpperCase() +"\0");
 							
 						}else if(captainGoalKeeper.toUpperCase().equalsIgnoreCase("Player_Role")) {
-							print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$BottomLIne$Side1$txt_Info*GEOM*TEXT SET " 
+							print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$BottomLIne$Side" + whichSide + "$txt_Info*GEOM*TEXT SET " 
 									+ hsub.getRole().toUpperCase() + " , " + match.getHomeTeam().getTeamName4().toUpperCase() +"\0");
 						}
 					}
@@ -1665,7 +1738,7 @@ public class PUNJAB extends Scene{
 			}
 			else {
 
-				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$select_ToplineNumbers$TopLine1$Data$Side1$Text2$img_Flag*TEXTURE*IMAGE SET " 
+				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$select_ToplineNumbers$TopLine1$Data$Side" + whichSide + "$Text2$img_Flag*TEXTURE*IMAGE SET " 
 						+ HOCKEY_LOGO + match.getAwayTeam().getTeamBadge() +"\0");
 				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$BottomLIne$img_Base*TEXTURE*IMAGE SET " 
 						+ HOCKEY_BASE1 + match.getAwayTeam().getTeamBadge() +"\0");
@@ -1673,38 +1746,38 @@ public class PUNJAB extends Scene{
 				Home_or_Away = match.getAwayTeam().getTeamName1().toUpperCase();
 				for(Player as : match.getAwaySquad()) {
 					if(playerId == as.getPlayerId()) {
-						print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$select_ToplineNumbers$TopLine1$Data$Side1$Jersey$txt_Jersey*GEOM*TEXT SET " 
+						print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$select_ToplineNumbers$TopLine1$Data$Side" + whichSide + "$Jersey$txt_Jersey*GEOM*TEXT SET " 
 								+ as.getJersey_number() +"\0");
-						print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$select_ToplineNumbers$TopLine1$Data$Side1$Text2$txt_Name*GEOM*TEXT SET " 
+						print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$select_ToplineNumbers$TopLine1$Data$Side" + whichSide + "$Text2$txt_Name*GEOM*TEXT SET " 
 								+ as.getFull_name().toUpperCase() +"\0");
 						
 						TimeUnit.MILLISECONDS.sleep(l);
 						
 						if(captainGoalKeeper.toUpperCase().equalsIgnoreCase("PLAYER")) {
-							print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$BottomLIne$Side1$txt_Info*GEOM*TEXT SET " 
+							print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$BottomLIne$Side" + whichSide + "$txt_Info*GEOM*TEXT SET " 
 									+ match.getAwayTeam().getTeamName1().toUpperCase() +"\0");
 							
 						}else if(captainGoalKeeper.toUpperCase().equalsIgnoreCase("Player_Role")) {
-							print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$BottomLIne$Side1$txt_Info*GEOM*TEXT SET " 
+							print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$BottomLIne$Side" + whichSide + "$txt_Info*GEOM*TEXT SET " 
 									+ as.getRole().toUpperCase() + " , " + match.getAwayTeam().getTeamName4().toUpperCase() +"\0");
 						}
 					}
 				}
 				for(Player asub : match.getAwaySubstitutes()) {
 					if(playerId == asub.getPlayerId()) {
-						print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$select_ToplineNumbers$TopLine1$Data$Side1$Jersey$txt_Jersey*GEOM*TEXT SET " 
+						print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$select_ToplineNumbers$TopLine1$Data$Side" + whichSide + "$Jersey$txt_Jersey*GEOM*TEXT SET " 
 								+ asub.getJersey_number() +"\0");
-						print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$select_ToplineNumbers$TopLine1$Data$Side1$Text2$txt_Name*GEOM*TEXT SET " 
+						print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$select_ToplineNumbers$TopLine1$Data$Side" + whichSide + "$Text2$txt_Name*GEOM*TEXT SET " 
 								+ asub.getFull_name().toUpperCase() +"\0");
 						
 						TimeUnit.MILLISECONDS.sleep(l);
 						
 						if(captainGoalKeeper.toUpperCase().equalsIgnoreCase("PLAYER")) {
-							print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$BottomLIne$Side1$txt_Info*GEOM*TEXT SET " 
+							print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$BottomLIne$Side" + whichSide + "$txt_Info*GEOM*TEXT SET " 
 									+ match.getAwayTeam().getTeamName1().toUpperCase() +"\0");
 							
 						}else if(captainGoalKeeper.toUpperCase().equalsIgnoreCase("Player_Role")) {
-							print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$BottomLIne$Side1$txt_Info*GEOM*TEXT SET " 
+							print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$BottomLIne$Side" + whichSide + "$txt_Info*GEOM*TEXT SET " 
 									+ asub.getRole().toUpperCase() + " , " + match.getAwayTeam().getTeamName4().toUpperCase() +"\0");
 						}
 					}
@@ -1714,17 +1787,17 @@ public class PUNJAB extends Scene{
 			switch(captainGoalKeeper.toUpperCase())
 			{
 			case "CAPTAIN":
-				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$BottomLIne$Side1$txt_Info*GEOM*TEXT SET " 
+				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$BottomLIne$Side" + whichSide + "$txt_Info*GEOM*TEXT SET " 
 						+ captainGoalKeeper.toUpperCase() + " , " + Home_or_Away +"\0");
 				TimeUnit.MILLISECONDS.sleep(l);
 				break;
 			case "PLAYER_OF_THE_MATCH":
-				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$BottomLIne$Side1$txt_Info*GEOM*TEXT SET " 
+				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$BottomLIne$Side" + whichSide + "$txt_Info*GEOM*TEXT SET " 
 						+ "PLAYER OF THE MATCH " +"\0");
 				TimeUnit.MILLISECONDS.sleep(l);
 				break;
 			case "GOAL_KEEPER":
-				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$BottomLIne$Side1$txt_Info*GEOM*TEXT SET " 
+				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$BottomLIne$Side" + whichSide + "$txt_Info*GEOM*TEXT SET " 
 						+ "GOAL KEEPER" + " , " + Home_or_Away +"\0");
 				TimeUnit.MILLISECONDS.sleep(l);
 				break;
@@ -1742,41 +1815,41 @@ public class PUNJAB extends Scene{
 					}
 				}
 				if(player_goal_count != 0) {
-					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$BottomLIne$Side1$txt_Info*GEOM*TEXT SET " 
+					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$BottomLIne$Side" + whichSide + "$txt_Info*GEOM*TEXT SET " 
 							+ "GOALS TODAY - " + player_goal_count +"\0");
 					TimeUnit.MILLISECONDS.sleep(l);
 				}else {
-					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$BottomLIne$Side1$txt_Info*GEOM*TEXT SET " 
+					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$BottomLIne$Side" + whichSide + "$txt_Info*GEOM*TEXT SET " 
 							+ Home_or_Away +"\0");
 					TimeUnit.MILLISECONDS.sleep(l);
 				}
 				
 				break;
 			case "GOAL_SCORER":
-				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$BottomLIne$Side1$txt_Info*GEOM*TEXT SET " 
+				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$BottomLIne$Side" + whichSide + "$txt_Info*GEOM*TEXT SET " 
 						+ "GOAL SCORER" + " , " + Home_or_Away +"\0");
 				TimeUnit.MILLISECONDS.sleep(l);
 				break;
 			case "CAPTAIN-GOALKEEPER":
-				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$BottomLIne$Side1$txt_Info*GEOM*TEXT SET " 
+				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$BottomLIne$Side" + whichSide + "$txt_Info*GEOM*TEXT SET " 
 						+ "CAPTAIN & GOAL KEEPER" + " , " + Home_or_Away +"\0");
 				TimeUnit.MILLISECONDS.sleep(l);
 				break;
 			case "STRIKER_OF_THE_MATCH":	
-				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$BottomLIne$Side1$txt_Info*GEOM*TEXT SET " 
+				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$BottomLIne$Side" + whichSide + "$txt_Info*GEOM*TEXT SET " 
 						+ "STRIKER OF THE MATCH" +"\0");
 			case "2_MIN_SUSPENSION":
-				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$BottomLIne$Side1$txt_Info*GEOM*TEXT SET " 
+				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$BottomLIne$Side" + whichSide + "$txt_Info*GEOM*TEXT SET " 
 						+ "2 MIN SUSPENSION" +"\0");
 				TimeUnit.MILLISECONDS.sleep(l);
 				break;	
 			case "5_MIN_SUSPENSION":
-				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$BottomLIne$Side1$txt_Info*GEOM*TEXT SET " 
+				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$BottomLIne$Side" + whichSide + "$txt_Info*GEOM*TEXT SET " 
 						+ "5 MIN SUSPENSION" +"\0");
 				TimeUnit.MILLISECONDS.sleep(l);
 				break;
 			case "10_MIN_SUSPENSION":
-				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$BottomLIne$Side1$txt_Info*GEOM*TEXT SET " 
+				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$BottomLIne$Side" + whichSide + "$txt_Info*GEOM*TEXT SET " 
 						+ "10 MIN SUSPENSION" +"\0");
 				TimeUnit.MILLISECONDS.sleep(l);
 				break;	
@@ -1786,29 +1859,35 @@ public class PUNJAB extends Scene{
 			switch(cardType.toUpperCase())
 			{
 			case "NO_CARD":
-				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$select_ToplineNumbers$TopLine1$Card$Side1$select_Card*FUNCTION*Omo*vis_con SET 0\0");
+				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$select_ToplineNumbers$TopLine1$Card$Side" + whichSide + "$select_Card*FUNCTION*Omo*vis_con SET 0\0");
 				TimeUnit.MILLISECONDS.sleep(l);
 				break;
 			case "GREEN":
-				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$select_ToplineNumbers$TopLine1$Card$Side1$select_Card*FUNCTION*Omo*vis_con SET 1\0");
+				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$select_ToplineNumbers$TopLine1$Card$Side" + whichSide + "$select_Card*FUNCTION*Omo*vis_con SET 1\0");
 				TimeUnit.MILLISECONDS.sleep(l);
 				break;
 			case HockeyUtil.YELLOW:
-				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$select_ToplineNumbers$TopLine1$Card$Side1$select_Card*FUNCTION*Omo*vis_con SET 2\0");
+				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$select_ToplineNumbers$TopLine1$Card$Side" + whichSide + "$select_Card*FUNCTION*Omo*vis_con SET 2\0");
 				TimeUnit.MILLISECONDS.sleep(l);
 				break;
 			case HockeyUtil.RED:
-				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$select_ToplineNumbers$TopLine1$Card$Side1$select_Card*FUNCTION*Omo*vis_con SET 3\0");
+				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$select_ToplineNumbers$TopLine1$Card$Side" + whichSide + "$select_Card*FUNCTION*Omo*vis_con SET 3\0");
 				TimeUnit.MILLISECONDS.sleep(l);
 				break;
 			case "YELLOW_RED":
-				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$select_ToplineNumbers$TopLine1$Card$Side1$select_Card*FUNCTION*Omo*vis_con SET 2\0");
+				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$select_ToplineNumbers$TopLine1$Card$Side" + whichSide + "$select_Card*FUNCTION*Omo*vis_con SET 2\0");
 				TimeUnit.MILLISECONDS.sleep(l);
 				break;
 			}
 		}
-		print_writer.println("-1 RENDERER PREVIEW SCENE*/Default/gfx_Overlays C:/Temp/Preview.tga anim_Lowerthird$In_Out 1.240 anim_Lowerthird$In_Out$Essentials 1.240 "
-				+ "anim_Lowerthird$In_Out$Essentials$In 1.240 anim_Lowerthird$In_Out$Cards 1.240 anim_Lowerthird$In_Out$Cards$In 1.240 \0");
+		
+		if(whichSide == 1) {
+			print_writer.println("-1 RENDERER PREVIEW SCENE*/Default/gfx_Overlays C:/Temp/Preview.tga anim_Lowerthird$In_Out 1.240 anim_Lowerthird$In_Out$Essentials 1.240 "
+					+ "anim_Lowerthird$In_Out$Essentials$In 1.240 anim_Lowerthird$In_Out$Cards 1.240 anim_Lowerthird$In_Out$Cards$In 1.240 \0");
+		}else {
+			print_writer.println("-1 RENDERER PREVIEW SCENE*/Default/gfx_Overlays C:/Temp/Preview.tga Change_Lowerthird 0.780 Change_Lowerthird$TopLine 0.600 "
+					+ "Change_Lowerthird$Cards 0.780 Change_Lowerthird$BottomLine 0.600\0");
+		}
 	}
 	public void populateNameSuperCard(Socket session_socket, int TeamId, String cardType, int playerId, Match match, String selectedbroadcaster) throws InterruptedException, IOException
 	{
@@ -3036,8 +3115,15 @@ public class PUNJAB extends Scene{
 				}
 				
 			}
-			previewCommand = "anim_Formation$In_Out 1.960 anim_Formation$In_Out$Essentials 1.960 anim_Formation$In_Out$Essentials$In 1.960 "
-					+ "anim_Formation$In_Out$Header 1.960 anim_Formation$In_Out$Header$In 0.800 anim_Formation$In_Out$Players 1.960 anim_Formation$In_Out$Players$In 1.940";
+			
+			if(whichSide == 1) {
+				previewCommand = "anim_Formation$In_Out 1.960 anim_Formation$In_Out$Essentials 1.960 anim_Formation$In_Out$Essentials$In 1.960 "
+						+ "anim_Formation$In_Out$Header 1.960 anim_Formation$In_Out$Header$In 0.800 anim_Formation$In_Out$Players 1.960 anim_Formation$In_Out$Players$In 1.940";
+			}else {
+				previewCommand = "change_Formation 1.460 change_Formation$Header 1.100 change_Formation$Header$Change_Out 0.300 "
+						+ "change_Formation$Header$Change_In 1.100 change_Formation$Players 1.460 change_Formation$Players$Change_Out 0.400 change_Formation$Players$Change_In 1.460";
+			}
+			
 			print_writer.println("-1 RENDERER PREVIEW SCENE*/Default/gfx_FullFrames " + "C:/Temp/Preview.tga " + previewCommand + "\0");
 			
 		}
@@ -4457,12 +4543,17 @@ public class PUNJAB extends Scene{
 					row = row + 1;
 				}
 			}
-			
 			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$select_Graphics$Fixtures"
 					+ "$txt_Footer*GEOM*TEXT SET #HeroACT2026\0");
 			
-			previewCommand = "anim_FullFrames$In_Out 1.800 anim_FullFrames$In_Out$Essentials 1.800 anim_FullFrames$In_Out$Essentials$In 1.800 anim_FullFrames$In_Out$Header$In 1.800 "
-					+ "anim_FullFrames$In_Out$Flags 1.800 anim_FullFrames$In_Out$Flags$In 1.800 anim_FullFrames$In_Out$Main 1.800 anim_FullFrames$In_Out$Main$In 1.800";
+			if(whichSide == 1) {
+				previewCommand = "anim_FullFrames$In_Out 1.800 anim_FullFrames$In_Out$Essentials 1.800 anim_FullFrames$In_Out$Essentials$In 1.800 anim_FullFrames$In_Out$Header$In 1.800 "
+						+ "anim_FullFrames$In_Out$Flags 1.800 anim_FullFrames$In_Out$Flags$In 1.800 anim_FullFrames$In_Out$Main 1.800 anim_FullFrames$In_Out$Main$In 1.800";
+			}else {
+				previewCommand = "change_Fullframes 1.980 change_Fullframes$Essentials 1.380 change_Fullframes$Header 1.300 change_Fullframes$Flags 1.300 "
+						+ "change_Fullframes$Main 1.980";
+			}
+			
 			print_writer.println("-1 RENDERER PREVIEW SCENE*/Default/gfx_FullFrames " + "C:/Temp/Preview.tga " + previewCommand + "\0");
 		}
 	}
