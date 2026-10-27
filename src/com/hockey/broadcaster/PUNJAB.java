@@ -17,6 +17,12 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.io.File;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Row;
@@ -70,6 +76,7 @@ public class PUNJAB extends Scene{
 	public final static String HOCKEY_SPONSOR = "IMAGE*/Default/Assests/Spnsor/";
 	public final static String HOCKEY_LOCAL_PHOTO_PATH = "C:\\\\Images\\\\Hockey\\\\Photos\\\\";
 	public final static String HOCKEY_PHOTO_PATH = "\\c\\Images\\Hockey\\Photos\\";
+	private static final String MATCHES_FOLDER = "C:/Sports/Hockey/Matches";
 	
 	private boolean homeScoreChanged = false;
 	private boolean awayScoreChanged = false;
@@ -2146,112 +2153,189 @@ public class PUNJAB extends Scene{
 	}
 	
 	
+//	public void populateMatchPointsExcelData(Socket session_socket, String viz_scene, Match match,
+//	        String session_selected_broadcaster, int whichSide, HockeyService hockeyService)
+//	        throws InterruptedException, IOException
+//	{	
+//		String previewCommand = "";
+//	    if (match == null) {
+//	        this.status = "ERROR: Match is null";
+//	    } else {
+//	    	
+//	    	// ---- CHANGE 1: file reading moved to the top ----
+//	    	String sideBase = "-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$HeadToHead";
+//
+//			String filePath = "C:/Sports/Hockey/TeamPoints.xlsx";
+//			if (!Files.exists(Paths.get(filePath))) {
+//			    this.status = "ERROR: TeamPoints.xlsx not found";
+//			    return;
+//			}
+//
+//			List<String[]> rows = new ArrayList<>();
+//			for (String line : Files.readAllLines(Paths.get(filePath), StandardCharsets.UTF_8)) {
+//			    line = line.trim();
+//			    if (line.isEmpty()) continue;
+//
+//			    String[] p = line.split(",");
+//			    if (p.length >= 3) {
+//			        rows.add(new String[] { p[0].trim(), p[1].trim(), p[2].trim() }); // home, label, away
+//			    }
+//			}
+//			
+//			// ---- CHANGE 2: player lookup from first row of txt (TICKER,PLAYER,TICKER) ----
+//			if (rows.isEmpty()) {
+//			    this.status = "ERROR: HeadToHead.txt has no data";
+//			    return;
+//			}
+//	    	
+//	    	print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Header-UD$FF_Title_SEL$Side1$select_HeaderStyle"
+//					+ "*FUNCTION*Omo*vis_con SET 3\0");
+//	    	
+//	    	print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Header-UD$FF_Title_SEL$Side1$select_HeaderStyle"
+//					+ "$TitleCenter$txt_Title*GEOM*TEXT SET "+ "HEAD TO HEAD" +"\0");
+//	    	print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Header-UD$FF_Title_SEL$Side1$select_HeaderStyle"
+//					+ "$TitleCenter$Tournament_Logo*ACTIVE SET 0\0");
+//			
+//	    	
+//	    	print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Header-UD$Flags$Side1$select_Flag"
+//					+ "*FUNCTION*Omo*vis_con SET 5\0");
+//	    	
+//	    	print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$select_Graphics"
+//	    			+ "$Standings$TitleGrp$txt_Play*ACTIVE SET 0\0");
+//	    	print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$select_Graphics"
+//	    			+ "$Standings$TitleGrp$txt_Win*ACTIVE SET 0\0");
+//	    	
+//	    	print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$select_Graphics"
+//					+ "$Standings$TitleGrp$txt_Group*GEOM*TEXT SET "+ "TEAMS" +"\0");
+//	    	print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$select_Graphics"
+//					+ "$Standings$TitleGrp$txt_Draw*GEOM*TEXT SET "+ "FG" +"\0");
+//	    	print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$select_Graphics"
+//					+ "$Standings$TitleGrp$txt_Lost*GEOM*TEXT SET "+ "PC" +"\0");
+//	    	print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$select_Graphics"
+//					+ "$Standings$TitleGrp$txt_GoalDifference*GEOM*TEXT SET "+ "PS" +"\0");
+//	    	print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$select_Graphics"
+//					+ "$Standings$TitleGrp$txt_Points*GEOM*TEXT SET "+ "Total" +"\0");
+//	    	
+//	    	
+//			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Header-UD$Flags$Side1"
+//					+ "$Flag2$Flag1$img_Flag*TEXTURE*IMAGE SET "+ HOCKEY_LOGO + match.getHomeTeam().getTeamBadge() +"\0");
+//			
+//			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Header-UD$Flags$Side1"
+//					+ "$Flag2$Flag2$img_Flag*TEXTURE*IMAGE SET "+ HOCKEY_LOGO + match.getAwayTeam().getTeamBadge() +"\0");
+//	    	
+//			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side1$select_Graphics"
+//					+ "*FUNCTION*Omo*vis_con SET 1\0");
+//			
+//			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side1$select_Graphics"
+//					+ "$HeadToHead$Player1*ACTIVE SET 0\0");
+//			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side1$select_Graphics"
+//					+ "$HeadToHead$Plater2*ACTIVE SET 0\0");
+//			
+//			
+//			for (int i = 1; i < rows.size() && i <= 5; i++) {
+//			    String home  = rows.get(i)[0];
+//			    String label = rows.get(i)[1];
+//			    String away  = rows.get(i)[2];
+//
+//			    String lineBase = sideBase + "$Info-" + i + "$HeadToHeadData";
+//
+//			    print_writer.println(lineBase + "$txt_Title*GEOM*TEXT SET "  + label + "\0");
+//			    print_writer.println(lineBase + "$txt_Stat1*GEOM*TEXT SET " + home  + "\0");
+//			    print_writer.println(lineBase + "$txt_Stat2*GEOM*TEXT SET " + away  + "\0");
+//			}
+//			
+//			for (int i = rows.size(); i <= 5; i++) {
+//			    String emptyBase = sideBase + "$Info-" + i + "$HeadToHeadData";
+//			    print_writer.println(emptyBase + "$txt_Title*GEOM*TEXT SET  \0");
+//			    print_writer.println(emptyBase + "$txt_Stat1*GEOM*TEXT SET  \0");
+//			    print_writer.println(emptyBase + "$txt_Stat2*GEOM*TEXT SET  \0");
+//			}
+//			
+//			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side1$select_Graphics"
+//					+ "$HeadToHead$txt_Footer*GEOM*TEXT SET "+ "#HeroACT2026" + "\0");
+//	        
+//			previewCommand = "anim_FullFrames$In_Out 1.800 anim_FullFrames$In_Out$Essentials 1.800 anim_FullFrames$In_Out$Essentials$In 1.800 anim_FullFrames$In_Out$Header$In 1.800 "
+//					+ "anim_FullFrames$In_Out$Flags 1.800 anim_FullFrames$In_Out$Flags$In 1.800 anim_FullFrames$In_Out$Main 1.800 anim_FullFrames$In_Out$Main$In 1.800";
+//			print_writer.println("-1 RENDERER PREVIEW SCENE*/Default/gfx_FullFrames " + "C:/Temp/Preview.tga " + previewCommand + "\0");
+//	    }
+//	}
+	
 	public void populateMatchPointsExcelData(Socket session_socket, String viz_scene, Match match,
 	        String session_selected_broadcaster, int whichSide, HockeyService hockeyService)
 	        throws InterruptedException, IOException
 	{	
+		
+		System.out.println("coming insde");
 		String previewCommand = "";
 	    if (match == null) {
 	        this.status = "ERROR: Match is null";
 	    } else {
-	    	
-	    	// ---- CHANGE 1: file reading moved to the top ----
-	    	String sideBase = "-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$HeadToHead";
+	    	List<Scorer> top = getAllGoalScorers(MATCHES_FOLDER);
 
-			String filePath = "C:/Sports/Hockey/TeamPoints.xlsx";
-			if (!Files.exists(Paths.get(filePath))) {
-			    this.status = "ERROR: TeamPoints.xlsx not found";
-			    return;
-			}
-
-			List<String[]> rows = new ArrayList<>();
-			for (String line : Files.readAllLines(Paths.get(filePath), StandardCharsets.UTF_8)) {
-			    line = line.trim();
-			    if (line.isEmpty()) continue;
-
-			    String[] p = line.split(",");
-			    if (p.length >= 3) {
-			        rows.add(new String[] { p[0].trim(), p[1].trim(), p[2].trim() }); // home, label, away
-			    }
-			}
-			
-			// ---- CHANGE 2: player lookup from first row of txt (TICKER,PLAYER,TICKER) ----
-			if (rows.isEmpty()) {
-			    this.status = "ERROR: HeadToHead.txt has no data";
-			    return;
-			}
 	    	
 	    	print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Header-UD$FF_Title_SEL$Side1$select_HeaderStyle"
 					+ "*FUNCTION*Omo*vis_con SET 3\0");
-	    	
 	    	print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Header-UD$FF_Title_SEL$Side1$select_HeaderStyle"
-					+ "$TitleCenter$txt_Title*GEOM*TEXT SET "+ "HEAD TO HEAD" +"\0");
+					+ "$TitleCenter$txt_Title*GEOM*TEXT SET "+ "LEADING SCORER" +"\0");
+	    	
 	    	print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Header-UD$FF_Title_SEL$Side1$select_HeaderStyle"
 					+ "$TitleCenter$Tournament_Logo*ACTIVE SET 0\0");
 			
 	    	
 	    	print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Header-UD$Flags$Side1$select_Flag"
-					+ "*FUNCTION*Omo*vis_con SET 5\0");
-	    	
-	    	print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$select_Graphics"
-	    			+ "$Standings$TitleGrp$txt_Play*ACTIVE SET 0\0");
-	    	print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$select_Graphics"
-	    			+ "$Standings$TitleGrp$txt_Win*ACTIVE SET 0\0");
-	    	
-	    	print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$select_Graphics"
-					+ "$Standings$TitleGrp$txt_Group*GEOM*TEXT SET "+ "TEAMS" +"\0");
-	    	print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$select_Graphics"
-					+ "$Standings$TitleGrp$txt_Draw*GEOM*TEXT SET "+ "FG" +"\0");
-	    	print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$select_Graphics"
-					+ "$Standings$TitleGrp$txt_Lost*GEOM*TEXT SET "+ "PC" +"\0");
-	    	print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$select_Graphics"
-					+ "$Standings$TitleGrp$txt_GoalDifference*GEOM*TEXT SET "+ "PS" +"\0");
-	    	print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$select_Graphics"
-					+ "$Standings$TitleGrp$txt_Points*GEOM*TEXT SET "+ "Total" +"\0");
-	    	
-	    	
-			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Header-UD$Flags$Side1"
-					+ "$Flag2$Flag1$img_Flag*TEXTURE*IMAGE SET "+ HOCKEY_LOGO + match.getHomeTeam().getTeamBadge() +"\0");
-			
-			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Header-UD$Flags$Side1"
-					+ "$Flag2$Flag2$img_Flag*TEXTURE*IMAGE SET "+ HOCKEY_LOGO + match.getAwayTeam().getTeamBadge() +"\0");
-	    	
-			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side1$select_Graphics"
 					+ "*FUNCTION*Omo*vis_con SET 1\0");
-			
-			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side1$select_Graphics"
-					+ "$HeadToHead$Player1*ACTIVE SET 0\0");
-			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side1$select_Graphics"
-					+ "$HeadToHead$Plater2*ACTIVE SET 0\0");
-			
-			
-			for (int i = 1; i < rows.size() && i <= 5; i++) {
-			    String home  = rows.get(i)[0];
-			    String label = rows.get(i)[1];
-			    String away  = rows.get(i)[2];
-
-			    String lineBase = sideBase + "$Info-" + i + "$HeadToHeadData";
-
-			    print_writer.println(lineBase + "$txt_Title*GEOM*TEXT SET "  + label + "\0");
-			    print_writer.println(lineBase + "$txt_Stat1*GEOM*TEXT SET " + home  + "\0");
-			    print_writer.println(lineBase + "$txt_Stat2*GEOM*TEXT SET " + away  + "\0");
-			}
-			
-			for (int i = rows.size(); i <= 5; i++) {
-			    String emptyBase = sideBase + "$Info-" + i + "$HeadToHeadData";
-			    print_writer.println(emptyBase + "$txt_Title*GEOM*TEXT SET  \0");
-			    print_writer.println(emptyBase + "$txt_Stat1*GEOM*TEXT SET  \0");
-			    print_writer.println(emptyBase + "$txt_Stat2*GEOM*TEXT SET  \0");
-			}
-			
-			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side1$select_Graphics"
-					+ "$HeadToHead$txt_Footer*GEOM*TEXT SET "+ "#HeroACT2026" + "\0");
-	        
-			previewCommand = "anim_FullFrames$In_Out 1.800 anim_FullFrames$In_Out$Essentials 1.800 anim_FullFrames$In_Out$Essentials$In 1.800 anim_FullFrames$In_Out$Header$In 1.800 "
-					+ "anim_FullFrames$In_Out$Flags 1.800 anim_FullFrames$In_Out$Flags$In 1.800 anim_FullFrames$In_Out$Main 1.800 anim_FullFrames$In_Out$Main$In 1.800";
-			print_writer.println("-1 RENDERER PREVIEW SCENE*/Default/gfx_FullFrames " + "C:/Temp/Preview.tga " + previewCommand + "\0");
-	    }
+	    	print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Header-UD$Flags$Side1"
+					+ "$Flag1$Flag_UD$img_Flag*TEXTURE*IMAGE SET "+ eventlogo_path +"\0");
+	    	
+	    	print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side1$select_Graphics"
+					+ "*FUNCTION*Omo*vis_con SET 10\0");
+	    	
+	    	print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side1$select_Graphics$TopScorer$txt_Footer"
+					+ "*ACTIVE SET 0\0");
+	    	
+	    	for (int i = 0; i < top.size() && i < 3; i++) {
+	    	    Scorer s = top.get(i);
+	    	    System.out.println((i + 1) + ". " + s.name + " | " + s.team + " | Goals: " + s.goals);
+	    	    
+	    	    print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side1$select_Graphics"
+						+ "$TopScorer$"+ (i+1) +"$txt_Position*GEOM*TEXT SET "+  s.name + "\0");
+	    	    print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side1$select_Graphics"
+						+ "$TopScorer$"+ (i+1) +"$img_Text$txt_PlayerName*GEOM*TEXT SET "+  s.team + "\0");
+	    	    print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side1$select_Graphics"
+						+ "$TopScorer$"+ (i+1) +"$txt_Value*GEOM*TEXT SET "+  s.goals + "\0");
+	    	    print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side1$select_Graphics"
+						+ "$TopScorer$"+ (i+1) +"$txt_Title*GEOM*TEXT SET "+  "GOALS" + "\0");
+	    	    
+	    	    for(Team tm:hockeyService.getTeams()) {
+	    	    	if(tm.getTeamName1().equalsIgnoreCase(s.team)) {
+	    	    		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side1$select_Graphics"
+	    						+ "$TopScorer$"+ (i+1) +"$img_Flag*TEXTURE*IMAGE SET "+ HOCKEY_LOGO + tm.getTeamBadge() +"\0");	
+	    	    		
+//	    	    		
+	    	    		if(IndexController.session_configurations.getIpAddress().equalsIgnoreCase("LOCALHOST")) {
+							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Formation$Formation$Player-Grp$Side" + whichSide 
+									+ "$Player"+ (i+1) + "$img_Player*TEXTURE*IMAGE SET " + HOCKEY_LOCAL_PHOTO_PATH + "Blank" + ".png" +"\0");
+							
+//							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Formation$Formation$Player-Grp$Side" + whichSide 
+//									+ "$Player"+ (i+1) + "$img_Player*TEXTURE*IMAGE SET " + HOCKEY_LOCAL_PHOTO_PATH +
+//									match.getHomeTeam().getTeamName4() + "\\\\" + match.getHomeTeamGKJerseyColor() + "\\\\" + hs.getPhoto() + ".png" +"\0");
+							
+						}else {
+							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Formation$Formation$Player-Grp$Side" + whichSide 
+									+ "$Player"+ (i+1) + "$img_Player*TEXTURE*IMAGE SET " + "\\\\" +  IndexController.session_configurations.getIpAddress() + HOCKEY_PHOTO_PATH + "Blank.png\0");
+							
+//							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Formation$Formation$Player-Grp$Side" + whichSide 
+//									+ "$Player"+ (i+1) + "$img_Player*TEXTURE*IMAGE SET "  + "\\\\" + IndexController.session_configurations.getIpAddress() + HOCKEY_PHOTO_PATH + 
+//									match.getHomeTeam().getTeamName4() + "\\\\" + match.getHomeTeamGKJerseyColor() + "\\\\" + hs.getPhoto() + ".png" +"\0");
+							
+						}	
+	    	    	
+	    	}
+	     }
+	   }
+	  }
 	}
+	
 	
 	public void populateMatchHeadToHead(Socket session_socket, String viz_scene, Match match,
 	        String session_selected_broadcaster, int whichSide, HockeyService hockeyService)
@@ -2389,7 +2473,8 @@ public class PUNJAB extends Scene{
 			
 			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side1$select_Graphics"
 					+ "$TitleCenter$txt_Title*GEOM*TEXT SET "+ "MATCH STATS" +"\0");
-	    	
+			 print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side1$select_Graphics$MatchStats$txt_Score1*ACTIVE SET 1\0");
+			 print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side1$select_Graphics$MatchStats$txt_Score2*ACTIVE SET 1\0");
 	    	
 			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side1$select_Graphics"
 					+ "*FUNCTION*Omo*vis_con SET 4\0");
@@ -5293,5 +5378,76 @@ public class PUNJAB extends Scene{
 	        }
 	    }
 	    return rows;
+	}
+	
+	public record Scorer(int playerId, String name, String team, int goals) {}
+
+	private static final ObjectMapper MAPPER = new ObjectMapper();
+	private static final String[] SQUAD_KEYS = { "homeSquad", "homeSubstitutes", "awaySquad",
+			"awaySubstitutes", "homeOtherSquad", "awayOtherSquad" };
+
+	
+	public static List<Scorer> getAllGoalScorers(String folderPath) {
+		Map<Integer, Integer> goalsById = new LinkedHashMap<>();   
+		Map<Integer, String[]> infoById = new HashMap<>();         
+
+		for (File f : getJsonFiles(folderPath)) {
+			JsonNode root = readMatchFile(f);
+			if (root == null) continue;
+
+			addPlayerInfo(root, infoById);
+			addGoals(root, goalsById);
+		}
+
+		List<Scorer> result = new ArrayList<>();
+		for (Map.Entry<Integer, Integer> e : goalsById.entrySet()) {
+			String[] info = infoById.get(e.getKey());
+			String name = (info != null) ? info[0] : "PLAYER " + e.getKey();
+			String team = (info != null) ? info[1] : "";
+			result.add(new Scorer(e.getKey(), name, team, e.getValue()));
+		}
+
+		result.sort((a, b) -> b.goals() != a.goals()
+				? Integer.compare(b.goals(), a.goals())
+				: a.name().compareTo(b.name()));
+		return result;
+	}
+
+	private static File[] getJsonFiles(String folderPath) {
+		File[] files = new File(folderPath).listFiles((dir, name) -> name.toLowerCase().endsWith(".json"));
+		return files == null ? new File[0] : files;
+	}
+
+	private static JsonNode readMatchFile(File f) {
+		try {
+			return MAPPER.readTree(f);
+		} catch (IOException e) {
+			return null;
+		}
+	}
+
+	// HELPER 3: collect playerId -> {name, team} from one match file
+	private static void addPlayerInfo(JsonNode root, Map<Integer, String[]> infoById) {
+		int homeId = root.path("homeTeam").path("teamId").asInt();
+		String homeName = root.path("homeTeam").path("teamName1").asText();
+		String awayName = root.path("awayTeam").path("teamName1").asText();
+
+		for (String key : SQUAD_KEYS) {
+			for (JsonNode p : root.path(key)) {
+				String team = (p.path("teamId").asInt() == homeId) ? homeName : awayName;
+				infoById.putIfAbsent(p.path("playerId").asInt(),
+						new String[] { p.path("full_name").asText().trim(), team });
+			}
+		}
+	}
+
+	// HELPER 4: add the goals of one file to the running totals (own goals excluded)
+	private static void addGoals(JsonNode root, Map<Integer, Integer> goalsById) {
+		for (JsonNode ms : root.path("matchStats")) {
+			String type = ms.path("stats_type").asText();
+			if (!type.equalsIgnoreCase(HockeyUtil.GOAL) && !type.equalsIgnoreCase(HockeyUtil.PENALTY)) continue;
+
+			goalsById.merge(ms.path("playerId").asInt(), ms.path("statsCount").asInt(1), Integer::sum);
+		}
 	}
 }
