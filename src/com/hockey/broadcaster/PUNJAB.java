@@ -2354,18 +2354,45 @@ public class PUNJAB extends Scene{
 			    }
 			}
 
+			final int OMO_STATS = 0; 
+			final int OMO_CARDS = 1;
+
 			for (int i = 0; i < rows.size() && i < 6; i++) {
 			    String home  = rows.get(i)[0];
 			    String label = rows.get(i)[1];
 			    String away  = rows.get(i)[2];
 
 			    String lineBase = sideBase + "$Line" + (i + 1) + "$MatchStatsData";
+			    boolean isCards = label.trim().equalsIgnoreCase("CARDS");
 
-			    print_writer.println(lineBase + "$txt_Title*GEOM*TEXT SET "  + label + "\0");
-			    print_writer.println(lineBase + "$txt_Stats1*GEOM*TEXT SET " + home  + "\0");
-			    print_writer.println(lineBase + "$txt_Stats2*GEOM*TEXT SET " + away  + "\0");
+			    String team1 = lineBase + "$Team1$select_StatType";
+			    String team2 = lineBase + "$Team2$select_StatType";
+
+			    print_writer.println(lineBase + "$txt_Title*GEOM*TEXT SET " + label + "\0");
+
+			    if (isCards) {
+			        // "1/4/1" -> green=1, yellow=4, red=1
+			        String[] h = home.split("/");
+			        String[] a = away.split("/");
+
+			        String[] names = { "txt_Green", "txt_Yellow", "txt_Red" };
+			        for (int k = 0; k < 3; k++) {
+			            String hv = k < h.length ? h[k].trim() : "0";
+			            String av = k < a.length ? a[k].trim() : "0";
+
+			            print_writer.println(team1 + "$Cards$" + names[k] + "*GEOM*TEXT SET " + hv + "\0");
+			            print_writer.println(team2 + "$Cards$" + names[k] + "*GEOM*TEXT SET " + av + "\0");
+			        }
+			    } else {
+			        print_writer.println(team1 + "$txt_Stats*GEOM*TEXT SET " + home + "\0");
+			        print_writer.println(team2 + "$txt_Stats*GEOM*TEXT SET " + away + "\0");
+			    }
+
+			    int omo = isCards ? OMO_CARDS : OMO_STATS;
+			    print_writer.println(team1 + "*FUNCTION*Omo*vis_con SET " + omo + "\0");
+			    print_writer.println(team2 + "*FUNCTION*Omo*vis_con SET " + omo + "\0");
 			}
-	        
+			
 			previewCommand = "anim_FullFrames$In_Out 1.800 anim_FullFrames$In_Out$Essentials 1.800 anim_FullFrames$In_Out$Essentials$In 1.800 anim_FullFrames$In_Out$Header$In 1.800 "
 					+ "anim_FullFrames$In_Out$Flags 1.800 anim_FullFrames$In_Out$Flags$In 1.800 anim_FullFrames$In_Out$Main 1.800 anim_FullFrames$In_Out$Main$In 1.800";
 			print_writer.println("-1 RENDERER PREVIEW SCENE*/Default/gfx_FullFrames " + "C:/Temp/Preview.tga " + previewCommand + "\0");
@@ -4214,10 +4241,34 @@ public class PUNJAB extends Scene{
 			
 			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$select_Graphics$Fixtures$Line_GRP$select_LineNumber*FUNCTION*Omo*vis_con SET  6\0");
 			
-			if (day.toUpperCase().equalsIgnoreCase("TODAY")) {
-				Date = new SimpleDateFormat("dd-MM-yyyy").format(cal.getTime());
-				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$select_Graphics$Fixtures"
-						+ "$Line_GRP$txt_Header*GEOM*TEXT SET TODAY'S FIXTURE\0");
+			if (day.equalsIgnoreCase("TODAY")) {
+			    Date = new SimpleDateFormat("dd-MM-yyyy").format(cal.getTime());
+
+			    boolean hasTodayMatch = false;
+			    boolean anyComplete   = false;
+
+			    for (int i = 0; i < fix.size(); i++) {
+			        if (fix.get(i).getDate().equalsIgnoreCase(Date)) {
+			            hasTodayMatch = true;
+
+			            String winner = fix.get(i).getWinnerteam();
+			            String margin = fix.get(i).getMargin();
+
+			            // a match is complete when both winner and margin have a value
+			            if (winner != null && !winner.trim().isEmpty()
+			                    && margin != null && !margin.trim().isEmpty()) {
+			                anyComplete = true;
+			                break; // one complete match is enough
+			            }
+			        }
+			    }
+
+			    if (hasTodayMatch) {
+			        String header = anyComplete ? "TODAY'S FIXTURE AND RESULT" : "TODAY'S FIXTURE";
+
+			        print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide
+			                + "$select_Graphics$Fixtures$Line_GRP$txt_Header*GEOM*TEXT SET " + header + "\0");
+			    }
 			} else if (day.toUpperCase().equalsIgnoreCase("TOMORROW")) {
 				cal.add(Calendar.DATE, +1);
 				Date = new SimpleDateFormat("dd-MM-yyyy").format(cal.getTime());
@@ -4285,8 +4336,39 @@ public class PUNJAB extends Scene{
 							
 							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$select_Graphics$Fixtures"
 									+ "$Line_GRP$Line" + (row+1) + "$Results$V*GEOM*TEXT SET -\0");
-							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$select_Graphics$Fixtures"
-									+ "$Line_GRP$Line" + (row+1) + "$Results$txt_GamePart*GEOM*TEXT SET FULL TIME\0");
+							
+							if(match.getClock().getMatchHalves().equalsIgnoreCase("quarter1")) {
+								print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$select_Graphics$Fixtures"
+										+ "$Line_GRP$Line" + (row+1) + "$Results$txt_GamePart*GEOM*TEXT SET QUARTER 1\0");
+							}else if(match.getClock().getMatchHalves().equalsIgnoreCase("quarter2")) {
+								print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$select_Graphics$Fixtures"
+										+ "$Line_GRP$Line" + (row+1) + "$Results$txt_GamePart*GEOM*TEXT SET QUARTER 2\0");
+							}else if(match.getClock().getMatchHalves().equalsIgnoreCase("quarter3")) {
+								print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$select_Graphics$Fixtures"
+										+ "$Line_GRP$Line" + (row+1) + "$Results$txt_GamePart*GEOM*TEXT SET QUARTER 3\0");
+							}else if(match.getClock().getMatchHalves().equalsIgnoreCase("quarter4")) {
+								print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$select_Graphics$Fixtures"
+										+ "$Line_GRP$Line" + (row+1) + "$Results$txt_GamePart*GEOM*TEXT SET QUARTER 4\0");
+							}else if(match.getClock().getMatchHalves().equalsIgnoreCase("half")) {
+								print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$select_Graphics$Fixtures"
+										+ "$Line_GRP$Line" + (row+1) + "$Results$txt_GamePart*GEOM*TEXT SET HALF TIME\0");
+							}else if(match.getClock().getMatchHalves().equalsIgnoreCase("full")) {
+								print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$select_Graphics$Fixtures"
+										+ "$Line_GRP$Line" + (row+1) + "$Results$txt_GamePart*GEOM*TEXT SET FULL TIME\0");
+							}else if(match.getClock().getMatchHalves().equalsIgnoreCase(HockeyUtil.EXTRA1)) {
+								print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$select_Graphics$Fixtures"
+										+ "$Line_GRP$Line" + (row+1) + "$Results$txt_GamePart*GEOM*TEXT SET EXTRA TIME 1\0");
+							}else if(match.getClock().getMatchHalves().equalsIgnoreCase(HockeyUtil.EXTRA2)) {
+								print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$select_Graphics$Fixtures"
+										+ "$Line_GRP$Line" + (row+1) + "$Results$txt_GamePart*GEOM*TEXT SET EXTRA TIME 2\0");
+							}else if(match.getClock().getMatchHalves().equalsIgnoreCase("END1")) {
+								print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$select_Graphics$Fixtures"
+										+ "$Line_GRP$Line" + (row+1) + "$Results$txt_GamePart*GEOM*TEXT SET END OF QUARTER 1\0");
+							}else if(match.getClock().getMatchHalves().equalsIgnoreCase("END3")) {
+								print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$select_Graphics$Fixtures"
+										+ "$Line_GRP$Line" + (row+1) + "$Results$txt_GamePart*GEOM*TEXT SET END OF QUARTER 3\0");
+							}
+							
 							
 							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$select_Graphics$Fixtures"
 									+ "$Line_GRP$Line" + (row+1) + "$Results$txt_Score1*GEOM*TEXT SET " + match.getHomeTeamScore() + "\0");
