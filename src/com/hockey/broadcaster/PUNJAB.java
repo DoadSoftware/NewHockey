@@ -3011,7 +3011,7 @@ public class PUNJAB extends Scene{
 						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Formation$Formation$Player-Grp$Side" + whichSide
 								+ "$Player11*TRANSFORMATION*POSITION*X SET " + form.getFormOrds11X() + "\0");
 						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Formation$Formation$Player-Grp$Side" + whichSide
-								+ "$Player11$geom_Position*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds11Y() + "\0");
+								+ "$Player11*TRANSFORMATION*POSITION*Y SET " + form.getFormOrds11Y() + "\0");
 						
 					}
 				}
