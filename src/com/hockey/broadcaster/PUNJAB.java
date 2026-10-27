@@ -2184,7 +2184,7 @@ public class PUNJAB extends Scene{
 	    } else {
 	    	
 	    	// ---- CHANGE 1: file reading moved to the top ----
-	    	String sideBase = "-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$HeadToHead";
+	    	String sideBase = "-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$MatchStats";
 
 			String filePath = "C:/Sports/Hockey/HeadToHead.txt";
 			if (!Files.exists(Paths.get(filePath))) {
@@ -2201,12 +2201,6 @@ public class PUNJAB extends Scene{
 			    if (p.length >= 3) {
 			        rows.add(new String[] { p[0].trim(), p[1].trim(), p[2].trim() }); // home, label, away
 			    }
-			}
-			
-			// ---- CHANGE 2: player lookup from first row of txt (TICKER,PLAYER,TICKER) ----
-			if (rows.isEmpty()) {
-			    this.status = "ERROR: HeadToHead.txt has no data";
-			    return;
 			}
 	    	
 	    	print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Header-UD$FF_Title_SEL$Side1$select_HeaderStyle"
@@ -2228,32 +2222,53 @@ public class PUNJAB extends Scene{
 					+ "$Flag2$Flag2$img_Flag*TEXTURE*IMAGE SET "+ HOCKEY_LOGO + match.getAwayTeam().getTeamBadge() +"\0");
 	    	
 			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side1$select_Graphics"
-					+ "*FUNCTION*Omo*vis_con SET 1\0");
+					+ "*FUNCTION*Omo*vis_con SET 4\0");
 			
 			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side1$select_Graphics"
-					+ "$HeadToHead$Player1*ACTIVE SET 0\0");
-			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side1$select_Graphics"
-					+ "$HeadToHead$Plater2*ACTIVE SET 0\0");
+					+ "$MatchStats$StatsAll$Line6*ACTIVE SET 0\0");
 			
-			
-			for (int i = 1; i < rows.size() && i <= 5; i++) {
-			    String home  = rows.get(i)[0];
-			    String label = rows.get(i)[1];
-			    String away  = rows.get(i)[2];
+			 print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side1$select_Graphics$MatchStats$txt_GamePart*GEOM*TEXT SET HEAD TO HEAD\0");
+			 print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side1$select_Graphics$MatchStats$txt_Score1*ACTIVE SET 0\0");
+			 print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side1$select_Graphics$MatchStats$txt_Score2*ACTIVE SET 0\0");
+			 
+			 final int OMO_STATS = 0; 
+				final int OMO_CARDS = 1;
 
-			    String lineBase = sideBase + "$Info-" + i + "$HeadToHeadData";
+				for (int i = 0; i < rows.size() && i < 6; i++) {
+				    String home  = rows.get(i)[0];
+				    String label = rows.get(i)[1];
+				    String away  = rows.get(i)[2];
 
-			    print_writer.println(lineBase + "$txt_Title*GEOM*TEXT SET "  + label + "\0");
-			    print_writer.println(lineBase + "$txt_Stat1*GEOM*TEXT SET " + home  + "\0");
-			    print_writer.println(lineBase + "$txt_Stat2*GEOM*TEXT SET " + away  + "\0");
-			}
-			
-			for (int i = rows.size(); i <= 5; i++) {
-			    String emptyBase = sideBase + "$Info-" + i + "$HeadToHeadData";
-			    print_writer.println(emptyBase + "$txt_Title*GEOM*TEXT SET  \0");
-			    print_writer.println(emptyBase + "$txt_Stat1*GEOM*TEXT SET  \0");
-			    print_writer.println(emptyBase + "$txt_Stat2*GEOM*TEXT SET  \0");
-			}
+				    String lineBase = sideBase + "$Line" + (i + 1) + "$MatchStatsData";
+				    boolean isCards = label.trim().equalsIgnoreCase("CARDS");
+
+				    String team1 = lineBase + "$Team1$select_StatType";
+				    String team2 = lineBase + "$Team2$select_StatType";
+
+				    print_writer.println(lineBase + "$txt_Title*GEOM*TEXT SET " + label + "\0");
+
+				    if (isCards) {
+				        // "1/4/1" -> green=1, yellow=4, red=1
+				        String[] h = home.split("/");
+				        String[] a = away.split("/");
+
+				        String[] names = { "txt_Green", "txt_Yellow", "txt_Red" };
+				        for (int k = 0; k < 3; k++) {
+				            String hv = k < h.length ? h[k].trim() : "0";
+				            String av = k < a.length ? a[k].trim() : "0";
+
+				            print_writer.println(team1 + "$Cards$" + names[k] + "*GEOM*TEXT SET " + hv + "\0");
+				            print_writer.println(team2 + "$Cards$" + names[k] + "*GEOM*TEXT SET " + av + "\0");
+				        }
+				    } else {
+				        print_writer.println(team1 + "$txt_Stats*GEOM*TEXT SET " + home + "\0");
+				        print_writer.println(team2 + "$txt_Stats*GEOM*TEXT SET " + away + "\0");
+				    }
+
+				    int omo = isCards ? OMO_CARDS : OMO_STATS;
+				    print_writer.println(team1 + "*FUNCTION*Omo*vis_con SET " + omo + "\0");
+				    print_writer.println(team2 + "*FUNCTION*Omo*vis_con SET " + omo + "\0");
+				}
 			
 			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side1$select_Graphics"
 					+ "$HeadToHead$txt_Footer*GEOM*TEXT SET "+ "#HeroACT2026" + "\0");
