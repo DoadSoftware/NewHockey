@@ -1701,6 +1701,8 @@ public class PUNJAB extends Scene{
 						+ HOCKEY_LOGO + match.getHomeTeam().getTeamBadge() +"\0");
 				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$BottomLIne$img_Base*TEXTURE*IMAGE SET " 
 						+ HOCKEY_BASE1 + match.getHomeTeam().getTeamBadge() +"\0");
+				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$BottomLIne$txt_Info*TEXTURE*IMAGE SET " 
+						+ HOCKEY_TEXT1 + match.getHomeTeam().getTeamBadge() +"\0");
 				
 				Home_or_Away = match.getHomeTeam().getTeamName1().toUpperCase();
 				for(Player hs : match.getHomeSquad()) {
@@ -1749,6 +1751,8 @@ public class PUNJAB extends Scene{
 						+ HOCKEY_LOGO + match.getAwayTeam().getTeamBadge() +"\0");
 				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$BottomLIne$img_Base*TEXTURE*IMAGE SET " 
 						+ HOCKEY_BASE1 + match.getAwayTeam().getTeamBadge() +"\0");
+				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$BottomLIne$txt_Info*TEXTURE*IMAGE SET " 
+						+ HOCKEY_TEXT1 + match.getAwayTeam().getTeamBadge() +"\0");
 				
 				Home_or_Away = match.getAwayTeam().getTeamName1().toUpperCase();
 				for(Player as : match.getAwaySquad()) {
@@ -2685,6 +2689,7 @@ public class PUNJAB extends Scene{
 				
 				for(int i = 0; i <= match.getHomeSubstitutesPerTeam()-1; i++) {
 					
+					System.out.println("PHOTO ================ " + match.getHomeSubstitutes().get(i).getPhoto());
 					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LineUp$select_PlayerNumber*FUNCTION*Grid*num_col SET " + (i+1) + "\0");
 					
 					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LineUp$select_PlayerNumber$Pos-" + (i+1) + "$Flags$select-ActiveFlag*FUNCTION*Omo*vis_con SET 1\0");
