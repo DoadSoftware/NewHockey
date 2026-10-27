@@ -2340,6 +2340,10 @@ public class PUNJAB extends Scene{
 			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side1$select_Graphics"
 					+ "$MatchStats$txt_Footer*GEOM*TEXT SET #HeroACT2026\0");
 			
+			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side1$select_Graphics"
+					+ "$MatchStats$StatsAll$Line6*ACTIVE SET 0\0");
+			
+			
 			
 			String sideBase = "-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$MatchStats";
 
