@@ -2280,7 +2280,7 @@ public class PUNJAB extends Scene{
 	    	print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Header-UD$FF_Title_SEL$Side1$select_HeaderStyle"
 					+ "*FUNCTION*Omo*vis_con SET 3\0");
 	    	print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Header-UD$FF_Title_SEL$Side1$select_HeaderStyle"
-					+ "$TitleCenter$txt_Title*GEOM*TEXT SET "+ "LEADING SCORER" +"\0");
+					+ "$TitleCenter$txt_Title*GEOM*TEXT SET "+ "LEADING SCORERS" +"\0");
 	    	
 	    	print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Header-UD$FF_Title_SEL$Side1$select_HeaderStyle"
 					+ "$TitleCenter$Tournament_Logo*ACTIVE SET 0\0");
@@ -2315,28 +2315,35 @@ public class PUNJAB extends Scene{
 	    	    		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side1$select_Graphics"
 	    						+ "$TopScorer$"+ (i+1) +"$img_Flag*TEXTURE*IMAGE SET "+ HOCKEY_LOGO + tm.getTeamBadge() +"\0");	
 	    	    		
-//	    	    		
-	    	    		if(IndexController.session_configurations.getIpAddress().equalsIgnoreCase("LOCALHOST")) {
-							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Formation$Formation$Player-Grp$Side" + whichSide 
-									+ "$Player"+ (i+1) + "$img_Player*TEXTURE*IMAGE SET " + HOCKEY_LOCAL_PHOTO_PATH + "Blank" + ".png" +"\0");
-							
-//							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Formation$Formation$Player-Grp$Side" + whichSide 
-//									+ "$Player"+ (i+1) + "$img_Player*TEXTURE*IMAGE SET " + HOCKEY_LOCAL_PHOTO_PATH +
-//									match.getHomeTeam().getTeamName4() + "\\\\" + match.getHomeTeamGKJerseyColor() + "\\\\" + hs.getPhoto() + ".png" +"\0");
-							
-						}else {
-							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Formation$Formation$Player-Grp$Side" + whichSide 
-									+ "$Player"+ (i+1) + "$img_Player*TEXTURE*IMAGE SET " + "\\\\" +  IndexController.session_configurations.getIpAddress() + HOCKEY_PHOTO_PATH + "Blank.png\0");
-							
-//							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Formation$Formation$Player-Grp$Side" + whichSide 
-//									+ "$Player"+ (i+1) + "$img_Player*TEXTURE*IMAGE SET "  + "\\\\" + IndexController.session_configurations.getIpAddress() + HOCKEY_PHOTO_PATH + 
-//									match.getHomeTeam().getTeamName4() + "\\\\" + match.getHomeTeamGKJerseyColor() + "\\\\" + hs.getPhoto() + ".png" +"\0");
-							
-						}	
-	    	    	
+	    	    		for(Player pl:hockeyService.getAllPlayer()) {
+	    	    			if(pl.getPlayerId() == s.playerId) {
+	    	    				if(IndexController.session_configurations.getIpAddress().equalsIgnoreCase("LOCALHOST")) {
+	    	    					
+	    	    					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side1$select_Graphics"
+	    		    						+ "$TopScorer$"+ (i+1) +"$img_Player*TEXTURE*IMAGE SET "+ HOCKEY_LOCAL_PHOTO_PATH + "Blank" + ".png" +"\0");
+	    	    					
+	    	    					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side1$select_Graphics"
+	    		    						+ "$TopScorer$"+ (i+1) +"$img_Player*TEXTURE*IMAGE SET "+ HOCKEY_LOCAL_PHOTO_PATH + 
+	    	    					tm.getTeamName4() + "\\\\" + "Jersey_1" + "\\\\" + pl.getPhoto() + ".png" +"\0");
+	    							
+	    						}else {
+	    							
+	    							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side1$select_Graphics"
+	    		    						+ "$TopScorer$"+ (i+1) +"$img_Player*TEXTURE*IMAGE SET " + "\\\\" +  IndexController.session_configurations.getIpAddress() + HOCKEY_PHOTO_PATH + "Blank.png\0");
+	    	    					
+	    	    					
+	    	    					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side1$select_Graphics"
+	    		    						+ "$TopScorer$"+ (i+1) +"$img_Player*TEXTURE*IMAGE SET "+ "\\\\" + IndexController.session_configurations.getIpAddress() + HOCKEY_PHOTO_PATH + 
+	    	    					tm.getTeamName4() + "\\\\"  + "Jersey_1" +  "\\\\" + pl.getPhoto() + ".png" +"\0");
+	    			}	
+	    	    }
+	    	  }
 	    	}
 	     }
 	   }
+	    	previewCommand = "anim_FullFrames$In_Out 1.800 anim_FullFrames$In_Out$Essentials 1.800 anim_FullFrames$In_Out$Essentials$In 1.800 anim_FullFrames$In_Out$Header$In 1.800 "
+					+ "anim_FullFrames$In_Out$Flags 1.800 anim_FullFrames$In_Out$Flags$In 1.800 anim_FullFrames$In_Out$Main 1.800 anim_FullFrames$In_Out$Main$In 1.800";
+			print_writer.println("-1 RENDERER PREVIEW SCENE*/Default/gfx_FullFrames " + "C:/Temp/Preview.tga " + previewCommand + "\0");
 	  }
 	}
 	
