@@ -301,14 +301,7 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 			processHockeyProcedures('ANIMATE-OUT-SCOREBUG_STAT');
 			break;
 		case 75:
-			switch ($('#selectedBroadcaster').val()){
-			case 'PUNJAB':
-				processHockeyProcedures('ANIMATE-SOCIAL_MEDIA');
-				break;
-			default:
-				processHockeyProcedures('ANIMATE-HOME_WIPE');
-				break;	
-			}
+			processHockeyProcedures('ANIMATE-HOME_WIPE');
 			break;
 		case 76:
 			processHockeyProcedures('ANIMATE-AWAY_WIPE');
@@ -3550,6 +3543,21 @@ function addItemsToList(whatToProcess, dataToProcess)
 					option = document.createElement('option');
 					option.value = 'Player_of_the_Match';
 					option.text = 'Player of the Match';
+					select.appendChild(option);
+					
+					option = document.createElement('option');
+					option.value = '2_min_Suspension';
+					option.text = '2 Min Suspension';
+					select.appendChild(option);
+					
+					option = document.createElement('option');
+					option.value = '5_min_Suspension';
+					option.text = '5 Min Suspension';
+					select.appendChild(option);
+					
+					option = document.createElement('option');
+					option.value = '10_min_Suspension';
+					option.text = '10 Min Suspension';
 					select.appendChild(option);
 					
 					select.setAttribute('onchange',"processUserSelection(this)");

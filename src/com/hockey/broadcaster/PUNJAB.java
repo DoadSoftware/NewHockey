@@ -1404,13 +1404,13 @@ public class PUNJAB extends Scene{
 											match.getHomeTeam().getTeamBadge() + "\0");
 									
 									if(match.getMatchStats().get(i).getMatchHalves().equalsIgnoreCase("quarter1")) {
-										time = ((match.getMatchStats().get(i).getTotalMatchSeconds()/1000)/60) + 1;
+										time = (((match.getMatchStats().get(i).getTotalMatchSeconds()/1000)/60) + 1);
 									}else if(match.getMatchStats().get(i).getMatchHalves().equalsIgnoreCase("quarter2")) {
-										time = 15 + ((match.getMatchStats().get(i).getTotalMatchSeconds()/1000)/60) + 1;
+										time = 15 + (((match.getMatchStats().get(i).getTotalMatchSeconds()/1000)/60) + 1);
 									}else if(match.getMatchStats().get(i).getMatchHalves().equalsIgnoreCase("quarter3")) {
-										time = 30 + ((match.getMatchStats().get(i).getTotalMatchSeconds()/1000)/60) + 1;
+										time = 30 + (((match.getMatchStats().get(i).getTotalMatchSeconds()/1000)/60) + 1);
 									}else if(match.getMatchStats().get(i).getMatchHalves().equalsIgnoreCase("quarter4")) {
-										time = 45 + ((match.getMatchStats().get(i).getTotalMatchSeconds()/1000)/60) + 1;
+										time = 45 + (((match.getMatchStats().get(i).getTotalMatchSeconds()/1000)/60) + 1);
 									}
 									
 									tim = " (" + time + "')";
@@ -1432,13 +1432,13 @@ public class PUNJAB extends Scene{
 											match.getAwayTeam().getTeamBadge() + "\0");
 									
 									if(match.getMatchStats().get(i).getMatchHalves().equalsIgnoreCase("quarter1")) {
-										time = ((match.getMatchStats().get(i).getTotalMatchSeconds()/1000)/60) + 1;
+										time = (((match.getMatchStats().get(i).getTotalMatchSeconds()/1000)/60) + 1);
 									}else if(match.getMatchStats().get(i).getMatchHalves().equalsIgnoreCase("quarter2")) {
-										time = 15 + ((match.getMatchStats().get(i).getTotalMatchSeconds()/1000)/60) + 1;
+										time = 15 + (((match.getMatchStats().get(i).getTotalMatchSeconds()/1000)/60) + 1);
 									}else if(match.getMatchStats().get(i).getMatchHalves().equalsIgnoreCase("quarter3")) {
-										time = 30 + ((match.getMatchStats().get(i).getTotalMatchSeconds()/1000)/60) + 1;
+										time = 30 + (((match.getMatchStats().get(i).getTotalMatchSeconds()/1000)/60) + 1);
 									}else if(match.getMatchStats().get(i).getMatchHalves().equalsIgnoreCase("quarter4")) {
-										time = 45 + ((match.getMatchStats().get(i).getTotalMatchSeconds()/1000)/60) + 1;
+										time = 45 + (((match.getMatchStats().get(i).getTotalMatchSeconds()/1000)/60) + 1);
 									}
 									
 									tim = " (" + time + "')";
@@ -1759,6 +1759,19 @@ public class PUNJAB extends Scene{
 			case "STRIKER_OF_THE_MATCH":	
 				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$BottomLIne$Side1$txt_Info*GEOM*TEXT SET " 
 						+ "STRIKER OF THE MATCH" +"\0");
+			case "2_MIN_SUSPENSION":
+				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$BottomLIne$Side1$txt_Info*GEOM*TEXT SET " 
+						+ "2 MIN SUSPENSION" +"\0");
+				TimeUnit.MILLISECONDS.sleep(l);
+				break;	
+			case "5_MIN_SUSPENSION":
+				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$BottomLIne$Side1$txt_Info*GEOM*TEXT SET " 
+						+ "5 MIN SUSPENSION" +"\0");
+				TimeUnit.MILLISECONDS.sleep(l);
+				break;
+			case "10_MIN_SUSPENSION":
+				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$BottomLIne$Side1$txt_Info*GEOM*TEXT SET " 
+						+ "10 MIN SUSPENSION" +"\0");
 				TimeUnit.MILLISECONDS.sleep(l);
 				break;	
 			}
@@ -3814,8 +3827,28 @@ public class PUNJAB extends Scene{
 				
 			}else {
 				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Lt_MatchId$MatchID$BOTTOM$select_Info*FUNCTION*Omo*vis_con SET 0\0");
-				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Lt_MatchId$MatchID$BOTTOM$select_Info$BaseInfo$txt_Info*GEOM*TEXT SET " 
-						+ match.getMatchIdent() + " - FROM " + match.getVenueName() +"\0");
+				
+				if(match.getClock().getMatchHalves().equalsIgnoreCase("quarter1")) {
+					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Lt_MatchId$MatchID$BOTTOM$select_Info$BaseInfo$txt_Info*GEOM*TEXT SET QUARTER 1\0");
+				}else if(match.getClock().getMatchHalves().equalsIgnoreCase("quarter2")) {
+					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Lt_MatchId$MatchID$BOTTOM$select_Info$BaseInfo$txt_Info*GEOM*TEXT SET QUARTER 2\0");
+				}else if(match.getClock().getMatchHalves().equalsIgnoreCase("quarter3")) {
+					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Lt_MatchId$MatchID$BOTTOM$select_Info$BaseInfo$txt_Info*GEOM*TEXT SET QUARTER 3\0");
+				}else if(match.getClock().getMatchHalves().equalsIgnoreCase("quarter4")) {
+					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Lt_MatchId$MatchID$BOTTOM$select_Info$BaseInfo$txt_Info*GEOM*TEXT SET QUARTER 4\0");
+				}else if(match.getClock().getMatchHalves().equalsIgnoreCase("half")) {
+					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Lt_MatchId$MatchID$BOTTOM$select_Info$BaseInfo$txt_Info*GEOM*TEXT SET HALF TIME\0");
+				}else if(match.getClock().getMatchHalves().equalsIgnoreCase("full")) {
+					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Lt_MatchId$MatchID$BOTTOM$select_Info$BaseInfo$txt_Info*GEOM*TEXT SET FULL TIME\0");
+				}else if(match.getClock().getMatchHalves().equalsIgnoreCase("end1")) {
+					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Lt_MatchId$MatchID$BOTTOM$select_Info$BaseInfo$txt_Info*GEOM*TEXT SET END OF QUARTER 1\0");
+				}else if(match.getClock().getMatchHalves().equalsIgnoreCase("end3")) {
+					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Lt_MatchId$MatchID$BOTTOM$select_Info$BaseInfo$txt_Info*GEOM*TEXT SET END OF QUARTER 3\0");
+				}else if(match.getClock().getMatchHalves().equalsIgnoreCase(HockeyUtil.EXTRA1)) {
+					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Lt_MatchId$MatchID$BOTTOM$select_Info$BaseInfo$txt_Info*GEOM*TEXT SET EXTRA TIME 1\0");
+				}else if(match.getClock().getMatchHalves().equalsIgnoreCase(HockeyUtil.EXTRA2)) {
+					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Lt_MatchId$MatchID$BOTTOM$select_Info$BaseInfo$txt_Info*GEOM*TEXT SET EXTRA TIME 2\0");
+				}
 			}
 //			if(match.getHomeTeamScore() == 0 ) {
 //				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LT_ScoreLine$HomeTeam$Left_Team_Out$Top_Info$Select_data"
