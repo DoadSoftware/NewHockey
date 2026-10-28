@@ -340,6 +340,9 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 		case 52:
 			processHockeyProcedures('POPULATE-FF-POINTS_EXCEL_DATA');
 			break;
+		case 55:
+			processHockeyProcedures('POPULATE-FF-TOP_SCORER_EXCEL_DATA');
+			break;
 		case 74:
 			processHockeyProcedures('ANIMATE-OUT-SPONSOR');
 			break;
@@ -1770,7 +1773,7 @@ function processHockeyProcedures(whatToProcess, whichInput)
 			case 'POPULATE-CONTINENTAL_POINTS_TABLE': case 'POPULATE-SCOREBUG_STATS': case 'POPULATE-SCOREBUG-CARD': case 'POPULATE-SCOREBUG-GOAL_SCORER': case 'POPULATE-LAST_GOAL':
 			case 'POPULATE-FF-PLAYINGXISUB': case 'POPULATE-RED_CARD': case 'POPULATE-QUARTER': case 'POPULATE-LT-PENALTY_SCORES': case 'POPULATE-FF_PROMO':	case 'POPULATE-FF-MATCHSTAT':
 	        case 'POPULATE-FF-PLAYINGXIBOTHTEAMS': case 'POPULATE-REFERRAL': case 'POPULATE-FF-PLAYINGXI_WITH_SUBSANDCOACH': case 'POPULATE-FF-HEADTOHEAD_DATA':
-			case 'POPULATE-FF-POINTS_EXCEL_DATA':
+			case 'POPULATE-FF-POINTS_EXCEL_DATA': case 'POPULATE-FF-TOP_SCORER_EXCEL_DATA':
 			case 'POPULATE-FF-MATCHID_IMAGE':
 				if(confirm('Animate In?') == true){
 					switch(whatToProcess){
@@ -1827,6 +1830,9 @@ function processHockeyProcedures(whatToProcess, whichInput)
 						break;
 					case 'POPULATE-FF-POINTS_EXCEL_DATA':
 						processHockeyProcedures('ANIMATE-IN-POINTS_EXCEL_DATA');
+						break;
+					case 'POPULATE-FF-TOP_SCORER_EXCEL_DATA':
+						processHockeyProcedures('ANIMATE-IN-TOP_SCORER_EXCEL_DATA');
 						break;
 					case 'POPULATE-LT-MATCHID':
 						processHockeyProcedures('ANIMATE-IN-LT_MATCHID');			
@@ -4302,6 +4308,21 @@ function addItemsToList(whatToProcess, dataToProcess)
 							option.text = 'Tackles';
 							select.appendChild(option);
 							
+							option = document.createElement('option');
+							option.value = 'PENALTY_CORNERS';
+							option.text = 'Penalty Corners';
+							select.appendChild(option);
+							
+							option = document.createElement('option');
+							option.value = 'Standings';
+							option.text = 'Standings';
+							select.appendChild(option);
+							
+							option = document.createElement('option');
+							option.value = 'Green_Card';
+							option.text = 'Green Card';
+							select.appendChild(option);
+							
 							select.setAttribute('onchange',"processUserSelection(this)");
 							row.insertCell(cellCount).appendChild(select);
 							cellCount = cellCount + 1;
@@ -4633,10 +4654,15 @@ function addItemsToList(whatToProcess, dataToProcess)
 		option.value = 'own_goal';
 	    option.text = 'Own Goal';
 	    select.appendChild(option);
-		    
+		  
+		option = document.createElement('option');
+		option.value = 'penalty_Conversion';
+		option.text = 'Penalty Conversion';
+		select.appendChild(option);
+		  
 		option = document.createElement('option');
 		option.value = 'penalty';
-	    option.text = 'Penalty';
+	    option.text = 'Penalty Stroke';
 	    select.appendChild(option);
 		
 		header_text = document.createElement('label');
@@ -5209,10 +5235,6 @@ function addItemsToList(whatToProcess, dataToProcess)
 						option.id = 'goal';
 						option.value = 'Goal';
 						break;
-					/*case 1:
-						option.id = 'card';
-						option.value = 'Card';
-						break;*/
 					case 1:
 						option.id = 'replace';
 						option.value = 'Replace';
@@ -5341,7 +5363,7 @@ function addItemsToList(whatToProcess, dataToProcess)
 							
 						case 'goal':
 						
-							for(var ibound=1; ibound<=3; ibound++) 
+							for(var ibound=1; ibound<=4; ibound++) 
 							{
 						    	anchor = document.createElement('a');
 							    anchor.className = 'btn btn-success';
@@ -5352,9 +5374,12 @@ function addItemsToList(whatToProcess, dataToProcess)
 							    } else if(ibound == 2) {
 								    anchor.id = 'own_goal';
 								    anchor.innerText = 'Own goal';
-							    }else{
+							    }else if(ibound == 3) {
+								    anchor.id = 'penalty_Conversion';
+								    anchor.innerText = 'Penalty Conversion';
+								}else{
 									anchor.id = 'penalty';
-								    anchor.innerText = 'Penalty';
+								    anchor.innerText = 'Penalty Stroke';
 								}
 							    anchor.setAttribute('onclick','processWaitingButtonSpinner("START_WAIT_TIMER");processHockeyProcedures("LOG_EVENT",this);');
 							    anchor.style = 'display:block;';

@@ -827,6 +827,15 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 					break;
 				case "TACKLES":
 					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$Penalty_Corners_Grp$txt_Q*GEOM*TEXT SET TACKLES\0");
+					break;
+				case "PENALTY_CORNERS":
+					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$Penalty_Corners_Grp$txt_Q*GEOM*TEXT SET PENALTY CORNERS\0");
+					break;
+				case "STANDINGS":
+					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$Penalty_Corners_Grp$txt_Q*GEOM*TEXT SET STANDINGS\0");
+					break;
+				case "GREEN_CARD":
+					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$Penalty_Corners_Grp$txt_Q*GEOM*TEXT SET GREEN CARD\0");
 					break;	
 				}
 				
@@ -1058,7 +1067,8 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 						for(int i = match.getMatchStats().size()-1; i >= 0; i--) {
 							if(match.getMatchStats().get(i).getStats_type().equalsIgnoreCase(HockeyUtil.GOAL) || 
 									match.getMatchStats().get(i).getStats_type().equalsIgnoreCase(HockeyUtil.OWN_GOAL) ||
-									match.getMatchStats().get(i).getStats_type().equalsIgnoreCase(HockeyUtil.PENALTY)) {
+									match.getMatchStats().get(i).getStats_type().equalsIgnoreCase(HockeyUtil.PENALTY)
+									|| match.getMatchStats().get(i).getStats_type().equalsIgnoreCase("PENALTY_CONVERSION")) {
 								if(match.getMatchStats().get(i).getPlayerId() == hs.getPlayerId()) {
 									if(match.getMatchStats().get(i).getMatchHalves().equalsIgnoreCase("quarter1")) {
 										time = (((match.getMatchStats().get(i).getTotalMatchSeconds()/1000)/60) + 1);
@@ -1086,7 +1096,8 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 						for(int i = match.getMatchStats().size()-1; i >= 0; i--) {
 							if(match.getMatchStats().get(i).getStats_type().equalsIgnoreCase(HockeyUtil.GOAL) || 
 									match.getMatchStats().get(i).getStats_type().equalsIgnoreCase(HockeyUtil.OWN_GOAL) ||
-									match.getMatchStats().get(i).getStats_type().equalsIgnoreCase(HockeyUtil.PENALTY)) {
+									match.getMatchStats().get(i).getStats_type().equalsIgnoreCase(HockeyUtil.PENALTY)
+									|| match.getMatchStats().get(i).getStats_type().equalsIgnoreCase("PENALTY_CONVERSION")) {
 								if(match.getMatchStats().get(i).getPlayerId() == hsub.getPlayerId()) {
 									if(match.getMatchStats().get(i).getMatchHalves().equalsIgnoreCase("quarter1")) {
 										time = (15 - (((match.getMatchStats().get(i).getTotalMatchSeconds()/1000)/60) + 1));
@@ -1123,7 +1134,8 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 						for(int i = match.getMatchStats().size()-1; i >= 0; i--) {
 							if(match.getMatchStats().get(i).getStats_type().equalsIgnoreCase(HockeyUtil.GOAL) || 
 									match.getMatchStats().get(i).getStats_type().equalsIgnoreCase(HockeyUtil.OWN_GOAL) ||
-									match.getMatchStats().get(i).getStats_type().equalsIgnoreCase(HockeyUtil.PENALTY)) {
+									match.getMatchStats().get(i).getStats_type().equalsIgnoreCase(HockeyUtil.PENALTY)
+									|| match.getMatchStats().get(i).getStats_type().equalsIgnoreCase("PENALTY_CONVERSION")) {
 								if(match.getMatchStats().get(i).getPlayerId() == as.getPlayerId()) {
 									if(match.getMatchStats().get(i).getMatchHalves().equalsIgnoreCase("quarter1")) {
 										time = (15 - (((match.getMatchStats().get(i).getTotalMatchSeconds()/1000)/60) + 1));
@@ -1150,7 +1162,8 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 						for(int i = match.getMatchStats().size()-1; i >= 0; i--) {
 							if(match.getMatchStats().get(i).getStats_type().equalsIgnoreCase(HockeyUtil.GOAL) || 
 									match.getMatchStats().get(i).getStats_type().equalsIgnoreCase(HockeyUtil.OWN_GOAL) ||
-									match.getMatchStats().get(i).getStats_type().equalsIgnoreCase(HockeyUtil.PENALTY)) {
+									match.getMatchStats().get(i).getStats_type().equalsIgnoreCase(HockeyUtil.PENALTY)
+									|| match.getMatchStats().get(i).getStats_type().equalsIgnoreCase("PENALTY_CONVERSION")) {
 								if(match.getMatchStats().get(i).getPlayerId() == asub.getPlayerId()) {
 									if(match.getMatchStats().get(i).getMatchHalves().equalsIgnoreCase("quarter1")) {
 										time = (15 - (((match.getMatchStats().get(i).getTotalMatchSeconds()/1000)/60) + 1));
@@ -1198,7 +1211,8 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 				for(int i = match.getMatchStats().size()-1; i >= 0; i--) {
 					if(match.getMatchStats().get(i).getStats_type().equalsIgnoreCase(HockeyUtil.GOAL) || 
 							match.getMatchStats().get(i).getStats_type().equalsIgnoreCase(HockeyUtil.OWN_GOAL) ||
-							match.getMatchStats().get(i).getStats_type().equalsIgnoreCase(HockeyUtil.PENALTY)) {
+							match.getMatchStats().get(i).getStats_type().equalsIgnoreCase(HockeyUtil.PENALTY)
+							|| match.getMatchStats().get(i).getStats_type().equalsIgnoreCase("PENALTY_CONVERSION")) {
 						for(Player pl : hockeyserv.getAllPlayer()) {
 							if(pl.getPlayerId() == match.getMatchStats().get(i).getPlayerId()) {
 								if(match.getHomeTeamId() == pl.getTeamId()) {
@@ -1590,6 +1604,10 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 							player_goal_count = player_goal_count + 1;
 						}
 					}else if(ms.getStats_type().equalsIgnoreCase("penalty")) {
+						if(ms.getPlayerId() == playerId) {
+							player_goal_count = player_goal_count + 1;
+						}
+					}else if(ms.getStats_type().equalsIgnoreCase("penalty_Conversion")) {
 						if(ms.getPlayerId() == playerId) {
 							player_goal_count = player_goal_count + 1;
 						}
@@ -3281,14 +3299,16 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 			for(int i=0; i<=match.getMatchStats().size()-1; i++) {
 				
 				if((match.getMatchStats().get(i).getStats_type().equalsIgnoreCase(HockeyUtil.GOAL) 
-						|| match.getMatchStats().get(i).getStats_type().equalsIgnoreCase(HockeyUtil.PENALTY))) {
+						|| match.getMatchStats().get(i).getStats_type().equalsIgnoreCase(HockeyUtil.PENALTY)
+						|| match.getMatchStats().get(i).getStats_type().equalsIgnoreCase("PENALTY_CONVERSION"))) {
 					
 					plyr_exist = false;
 					for(Integer plyr_id : plyr_ids) {
 						if(match.getMatchStats().get(i).getPlayerId() == plyr_id && 
 								(match.getMatchStats().get(i).getStats_type().equalsIgnoreCase(HockeyUtil.GOAL) 
 										|| match.getMatchStats().get(i).getStats_type().equalsIgnoreCase(HockeyUtil.OWN_GOAL)
-										|| match.getMatchStats().get(i).getStats_type().equalsIgnoreCase(HockeyUtil.PENALTY))) {
+										|| match.getMatchStats().get(i).getStats_type().equalsIgnoreCase(HockeyUtil.PENALTY)
+										|| match.getMatchStats().get(i).getStats_type().equalsIgnoreCase("PENALTY_CONVERSION"))) {
 							plyr_exist = true;
 							break;
 						}
@@ -3304,7 +3324,8 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 						for(int j=i+1; j<=match.getMatchStats().size()-1; j++) {
 							if (match.getMatchStats().get(i).getPlayerId() == match.getMatchStats().get(j).getPlayerId()
 								&& (match.getMatchStats().get(j).getStats_type().equalsIgnoreCase(HockeyUtil.GOAL)
-								|| match.getMatchStats().get(j).getStats_type().equalsIgnoreCase(HockeyUtil.PENALTY))) {
+								|| match.getMatchStats().get(j).getStats_type().equalsIgnoreCase(HockeyUtil.PENALTY)
+								|| match.getMatchStats().get(j).getStats_type().equalsIgnoreCase("PENALTY_CONVERSION"))) {
 
 								stats_txt = stats_txt + "," + 
 										HockeyFunctions.calExtraTimeGoal(match.getMatchStats().get(j).getMatchHalves(), match.getMatchStats().get(j).getTotalMatchSeconds()) 
@@ -3439,14 +3460,16 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 			for(int i=0; i<=match.getMatchStats().size()-1; i++) {
 				
 				if((match.getMatchStats().get(i).getStats_type().equalsIgnoreCase(HockeyUtil.GOAL) 
-						|| match.getMatchStats().get(i).getStats_type().equalsIgnoreCase(HockeyUtil.PENALTY))) {
+						|| match.getMatchStats().get(i).getStats_type().equalsIgnoreCase(HockeyUtil.PENALTY)
+						|| match.getMatchStats().get(i).getStats_type().equalsIgnoreCase("PENALTY_CONVERSION"))) {
 					
 					plyr_exist = false;
 					for(Integer plyr_id : plyr_ids) {
 						if(match.getMatchStats().get(i).getPlayerId() == plyr_id && 
 								(match.getMatchStats().get(i).getStats_type().equalsIgnoreCase(HockeyUtil.GOAL) 
 										|| match.getMatchStats().get(i).getStats_type().equalsIgnoreCase(HockeyUtil.OWN_GOAL)
-										|| match.getMatchStats().get(i).getStats_type().equalsIgnoreCase(HockeyUtil.PENALTY))) {
+										|| match.getMatchStats().get(i).getStats_type().equalsIgnoreCase(HockeyUtil.PENALTY)
+										|| match.getMatchStats().get(i).getStats_type().equalsIgnoreCase("PENALTY_CONVERSION"))) {
 							plyr_exist = true;
 							break;
 						}
@@ -3462,7 +3485,8 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 						for(int j=i+1; j<=match.getMatchStats().size()-1; j++) {
 							if (match.getMatchStats().get(i).getPlayerId() == match.getMatchStats().get(j).getPlayerId()
 								&& (match.getMatchStats().get(j).getStats_type().equalsIgnoreCase(HockeyUtil.GOAL)
-								|| match.getMatchStats().get(j).getStats_type().equalsIgnoreCase(HockeyUtil.PENALTY))) {
+								|| match.getMatchStats().get(j).getStats_type().equalsIgnoreCase(HockeyUtil.PENALTY)
+								|| match.getMatchStats().get(j).getStats_type().equalsIgnoreCase("PENALTY_CONVERSION"))) {
 
 								stats_txt = stats_txt + "," + 
 										HockeyFunctions.calExtraTimeGoal(match.getMatchStats().get(j).getMatchHalves(), match.getMatchStats().get(j).getTotalMatchSeconds()) 

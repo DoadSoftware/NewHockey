@@ -569,7 +569,7 @@ public class IndexController
 				switch (valueToProcess.split(",")[1].toUpperCase()) {
 				case HockeyUtil.GOAL: case HockeyUtil.OWN_GOAL: case HockeyUtil.PENALTY: case HockeyUtil.YELLOW: case HockeyUtil.RED:
 				case HockeyUtil.SHOTS_ON_TARGET: case HockeyUtil.SHOTS: case HockeyUtil.CORNERS_CONVERTED: case HockeyUtil.CORNERS:
-				case HockeyUtil.ASSISTS: case HockeyUtil.OFF_SIDE: case HockeyUtil.FOULS: case HockeyUtil.GREEN:
+				case HockeyUtil.ASSISTS: case HockeyUtil.OFF_SIDE: case HockeyUtil.FOULS: case HockeyUtil.GREEN: case "PENALTY_CONVERSION":
 					
 					session_match.getMatchStats().add(new MatchStats(session_match.getMatchStats().size() + 1, Integer.valueOf(valueToProcess.split(",")[2]), 
 							session_match.getClock().getMatchHalves(),valueToProcess.split(",")[1], 1, session_match.getClock().getMatchTotalMilliSeconds()));
@@ -577,7 +577,7 @@ public class IndexController
 					for(Player plyr : session_match.getHomeSquad()) {
 						if(plyr.getPlayerId() == Integer.valueOf(valueToProcess.split(",")[2])) {
 							switch (valueToProcess.split(",")[1].toUpperCase()) {
-							case HockeyUtil.GOAL: case HockeyUtil.PENALTY:
+							case HockeyUtil.GOAL: case HockeyUtil.PENALTY: case "PENALTY_CONVERSION":
 								session_match.setHomeTeamScore(session_match.getHomeTeamScore() + 1);
 								break;
 							case HockeyUtil.OWN_GOAL: 
@@ -589,7 +589,7 @@ public class IndexController
 					for(Player plyr : session_match.getHomeSubstitutes()) {
 						if(plyr.getPlayerId() == Integer.valueOf(valueToProcess.split(",")[2])) {
 							switch (valueToProcess.split(",")[1].toUpperCase()) {
-							case HockeyUtil.GOAL: case HockeyUtil.PENALTY:
+							case HockeyUtil.GOAL: case HockeyUtil.PENALTY: case "PENALTY_CONVERSION":
 								session_match.setHomeTeamScore(session_match.getHomeTeamScore() + 1);
 								break;
 							case HockeyUtil.OWN_GOAL: 
@@ -601,7 +601,7 @@ public class IndexController
 					for(Player plyr : session_match.getAwaySquad()) {
 						if(plyr.getPlayerId() == Integer.valueOf(valueToProcess.split(",")[2])) {
 							switch (valueToProcess.split(",")[1].toUpperCase()) {
-							case HockeyUtil.GOAL: case HockeyUtil.PENALTY:
+							case HockeyUtil.GOAL: case HockeyUtil.PENALTY: case "PENALTY_CONVERSION":
 								session_match.setAwayTeamScore(session_match.getAwayTeamScore() + 1);
 								break;
 							case HockeyUtil.OWN_GOAL: 
@@ -613,7 +613,7 @@ public class IndexController
 					for(Player plyr : session_match.getAwaySubstitutes()) {
 						if(plyr.getPlayerId() == Integer.valueOf(valueToProcess.split(",")[2])) {
 							switch (valueToProcess.split(",")[1].toUpperCase()) {
-							case HockeyUtil.GOAL: case HockeyUtil.PENALTY:
+							case HockeyUtil.GOAL: case HockeyUtil.PENALTY: case "PENALTY_CONVERSION":
 								session_match.setAwayTeamScore(session_match.getAwayTeamScore() + 1);
 								break;
 							case HockeyUtil.OWN_GOAL: 
@@ -926,13 +926,13 @@ public class IndexController
 							switch (this_event.getEventType().toUpperCase()) {
 							case HockeyUtil.GOAL: case HockeyUtil.OWN_GOAL: case HockeyUtil.PENALTY: case HockeyUtil.YELLOW: case HockeyUtil.RED:
 							case HockeyUtil.ASSISTS: case HockeyUtil.SHOTS: case HockeyUtil.SHOTS_ON_TARGET: case HockeyUtil.OFF_SIDE: case HockeyUtil.FOULS:
-							case HockeyUtil.CORNERS_CONVERTED: case HockeyUtil.CORNERS: case HockeyUtil.SAVES: case HockeyUtil.GREEN:
+							case HockeyUtil.CORNERS_CONVERTED: case HockeyUtil.CORNERS: case HockeyUtil.SAVES: case HockeyUtil.GREEN: case "PENALTY_CONVERSION":
 								this_event = session_event.getEvents().get(session_event.getEvents().size() - 1);
 								session_match.getMatchStats().remove(session_match.getMatchStats().get(session_match.getMatchStats().size() - 1));
 								for(Player plyr : session_match.getHomeSquad()) {
 									if(plyr.getPlayerId() == this_event.getEventPlayerId()) {
 										switch (this_event.getEventType().toUpperCase()) {
-										case HockeyUtil.GOAL: case HockeyUtil.PENALTY:
+										case HockeyUtil.GOAL: case HockeyUtil.PENALTY: case "PENALTY_CONVERSION":
 											session_match.setHomeTeamScore(session_match.getHomeTeamScore() - 1);
 											break;
 										case HockeyUtil.OWN_GOAL: 
@@ -944,7 +944,7 @@ public class IndexController
 								for(Player plyr : session_match.getHomeSubstitutes()) {
 									if(plyr.getPlayerId() == this_event.getEventPlayerId()) {
 										switch (this_event.getEventType().toUpperCase()) {
-										case HockeyUtil.GOAL: case HockeyUtil.PENALTY:
+										case HockeyUtil.GOAL: case HockeyUtil.PENALTY: case "PENALTY_CONVERSION":
 											session_match.setHomeTeamScore(session_match.getHomeTeamScore() - 1);
 											break;
 										case HockeyUtil.OWN_GOAL: 
@@ -956,7 +956,7 @@ public class IndexController
 								for(Player plyr : session_match.getAwaySquad()) {
 									if(plyr.getPlayerId() == this_event.getEventPlayerId()) {
 										switch (this_event.getEventType().toUpperCase()) {
-										case HockeyUtil.GOAL: case HockeyUtil.PENALTY:
+										case HockeyUtil.GOAL: case HockeyUtil.PENALTY: case "PENALTY_CONVERSION":
 											session_match.setAwayTeamScore(session_match.getAwayTeamScore() - 1);
 											break;
 										case HockeyUtil.OWN_GOAL: 
@@ -968,7 +968,7 @@ public class IndexController
 								for(Player plyr : session_match.getAwaySubstitutes()) {
 									if(plyr.getPlayerId() == this_event.getEventPlayerId()) {
 										switch (this_event.getEventType().toUpperCase()) {
-										case HockeyUtil.GOAL: case HockeyUtil.PENALTY:
+										case HockeyUtil.GOAL: case HockeyUtil.PENALTY: case "PENALTY_CONVERSION":
 											session_match.setAwayTeamScore(session_match.getAwayTeamScore() - 1);
 											break;
 										case HockeyUtil.OWN_GOAL: 
