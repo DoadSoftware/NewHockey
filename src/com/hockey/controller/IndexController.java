@@ -1067,7 +1067,6 @@ public class IndexController
 					session_match.setClock(new Clock());
 				}
 				break;
-				
 			}
 			
 			switch (whatToProcess.toUpperCase()) {
