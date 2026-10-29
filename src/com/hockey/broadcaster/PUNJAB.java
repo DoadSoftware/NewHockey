@@ -964,18 +964,18 @@ public class PUNJAB extends Scene{
 				homeScoreChanged = false;
 				awayScoreChanged = false;
 				
-				if(match.getHomeTeamGKJerseyColor().equalsIgnoreCase("Jersey_1")) {
+				if(match.getHomeTeamJerseyColor().equalsIgnoreCase("Jersey_1")) {
 					hbase = HOCKEY_BASE1;
 					htext = HOCKEY_TEXT1;
-				}else if(match.getHomeTeamGKJerseyColor().equalsIgnoreCase("Jersey_2")) {
+				}else if(match.getHomeTeamJerseyColor().equalsIgnoreCase("Jersey_2")) {
 					hbase = HOCKEY_BASE2;
 					htext = HOCKEY_TEXT2;
 				}
 				
-				if(match.getAwayTeamGKJerseyColor().equalsIgnoreCase("Jersey_1")) {
+				if(match.getAwayTeamJerseyColor().equalsIgnoreCase("Jersey_1")) {
 					abase = HOCKEY_BASE1;
 					atext = HOCKEY_TEXT1;
-				}else if(match.getAwayTeamGKJerseyColor().equalsIgnoreCase("Jersey_2")) {
+				}else if(match.getAwayTeamJerseyColor().equalsIgnoreCase("Jersey_2")) {
 					abase = HOCKEY_BASE2;
 					atext = HOCKEY_TEXT2;
 				}
@@ -1533,10 +1533,10 @@ public class PUNJAB extends Scene{
 //									print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$Goal_Scorer$Home_Team$Player_Data$img_Base2*TEXTURE*IMAGE SET " + HOCKEY_BASE2 + 
 //											match.getHomeTeam().getTeamBadge() + "\0");
 									
-									if(match.getHomeTeamGKJerseyColor().equalsIgnoreCase("Jersey_1")) {
+									if(match.getHomeTeamJerseyColor().equalsIgnoreCase("Jersey_1")) {
 										hbase = HOCKEY_BASE1;
 										htext = HOCKEY_TEXT1;
-									}else if(match.getHomeTeamGKJerseyColor().equalsIgnoreCase("Jersey_2")) {
+									}else if(match.getHomeTeamJerseyColor().equalsIgnoreCase("Jersey_2")) {
 										hbase = HOCKEY_BASE2;
 										htext = HOCKEY_TEXT2;
 									}
@@ -1585,10 +1585,10 @@ public class PUNJAB extends Scene{
 //									print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$Goal_Scorer$Away_Team$Player_Data$img_Base2*TEXTURE*IMAGE SET " + HOCKEY_BASE2 + 
 //											match.getAwayTeam().getTeamBadge() + "\0");
 									
-									if(match.getAwayTeamGKJerseyColor().equalsIgnoreCase("Jersey_1")) {
+									if(match.getAwayTeamJerseyColor().equalsIgnoreCase("Jersey_1")) {
 										abase = HOCKEY_BASE1;
 										atext = HOCKEY_TEXT1;
-									}else if(match.getAwayTeamGKJerseyColor().equalsIgnoreCase("Jersey_2")) {
+									}else if(match.getAwayTeamJerseyColor().equalsIgnoreCase("Jersey_2")) {
 										abase = HOCKEY_BASE2;
 										atext = HOCKEY_TEXT2;
 									}
@@ -1778,10 +1778,10 @@ public class PUNJAB extends Scene{
 			
 			if(TeamId == match.getHomeTeamId()) {
 				
-				if(match.getHomeTeamGKJerseyColor().equalsIgnoreCase("Jersey_1")) {
+				if(match.getHomeTeamJerseyColor().equalsIgnoreCase("Jersey_1")) {
 					hbase = HOCKEY_BASE1;
 					htext = HOCKEY_TEXT1;
-				}else if(match.getHomeTeamGKJerseyColor().equalsIgnoreCase("Jersey_2")) {
+				}else if(match.getHomeTeamJerseyColor().equalsIgnoreCase("Jersey_2")) {
 					hbase = HOCKEY_BASE2;
 					htext = HOCKEY_TEXT2;
 				}
@@ -1836,10 +1836,10 @@ public class PUNJAB extends Scene{
 			}
 			else {
 
-				if(match.getAwayTeamGKJerseyColor().equalsIgnoreCase("Jersey_1")) {
+				if(match.getAwayTeamJerseyColor().equalsIgnoreCase("Jersey_1")) {
 					abase = HOCKEY_BASE1;
 					atext = HOCKEY_TEXT1;
-				}else if(match.getAwayTeamGKJerseyColor().equalsIgnoreCase("Jersey_2")) {
+				}else if(match.getAwayTeamJerseyColor().equalsIgnoreCase("Jersey_2")) {
 					abase = HOCKEY_BASE2;
 					atext = HOCKEY_TEXT2;
 				}
@@ -2775,13 +2775,29 @@ public class PUNJAB extends Scene{
 		}else {
 			print_writer = new PrintWriter(session_socket.getOutputStream(), true);
 			
+			if(match.getHomeTeamJerseyColor().equalsIgnoreCase("Jersey_1")) {
+				hbase = HOCKEY_BASE1;
+				htext = HOCKEY_TEXT1;
+			}else if(match.getHomeTeamJerseyColor().equalsIgnoreCase("Jersey_2")) {
+				hbase = HOCKEY_BASE2;
+				htext = HOCKEY_TEXT2;
+			}
+			
+			if(match.getAwayTeamJerseyColor().equalsIgnoreCase("Jersey_1")) {
+				abase = HOCKEY_BASE1;
+				atext = HOCKEY_TEXT1;
+			}else if(match.getAwayTeamJerseyColor().equalsIgnoreCase("Jersey_2")) {
+				abase = HOCKEY_BASE2;
+				atext = HOCKEY_TEXT2;
+			}
+			
 			if(TeamId == match.getHomeTeamId()) {
 				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LineUp$TEAM$txt_TeamName*GEOM*TEXT SET " + match.getHomeTeam().getTeamName1() + "\0");
 				
 				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LineUp$TEAM$TeamAll$ANIM-Line$img_Base*TEXTURE*IMAGE SET " + 
-						HOCKEY_BASE1 + match.getHomeTeam().getTeamBadge() +"\0");
+						hbase + match.getHomeTeam().getTeamBadge() +"\0");
 				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LineUp$TEAM$TeamAll$ANIM-Line$img_Base*TEXTURE*IMAGE SET " + 
-						HOCKEY_BASE1 + match.getHomeTeam().getTeamBadge() +"\0");
+						hbase + match.getHomeTeam().getTeamBadge() +"\0");
 				
 				for(int i = 0; i <= match.getHomeSubstitutesPerTeam()-1; i++) {
 					
@@ -2792,9 +2808,9 @@ public class PUNJAB extends Scene{
 					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LineUp$select_PlayerNumber$Pos-" + (i+1) + "$Flags$select-ActiveFlag$select_Number*FUNCTION*Omo*vis_con SET 1\0");
 					
 					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LineUp$select_PlayerNumber$Pos-" + (i+1) + "$Group1$img_Text*TEXTURE*IMAGE SET " + 
-							HOCKEY_TEXT1 + match.getHomeTeam().getTeamBadge() +"\0");
+							htext + match.getHomeTeam().getTeamBadge() +"\0");
 					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LineUp$select_PlayerNumber$Pos-" + (i+1) + "$Group1$img_Base*TEXTURE*IMAGE SET " + 
-							HOCKEY_BASE1 + match.getHomeTeam().getTeamBadge() +"\0");
+							hbase + match.getHomeTeam().getTeamBadge() +"\0");
 					
 					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LineUp$select_PlayerNumber$Pos-" + (i+1) + "$Flags$txt_Number*GEOM*TEXT SET " + match.getHomeSubstitutes().get(i).getJersey_number() + "\0");
 					
@@ -2807,9 +2823,9 @@ public class PUNJAB extends Scene{
 								HOCKEY_LOCAL_PHOTO_PATH + "Blank" + ".png" +"\0");
 						
 						print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LineUp$select_PlayerNumber$Pos-" + (i+1) + "$Image$Photo-1-s*TEXTURE*IMAGE SET " + 
-								HOCKEY_LOCAL_PHOTO_PATH + match.getHomeTeam().getTeamName4() + "\\\\" + match.getHomeTeamGKJerseyColor() + "\\\\" + match.getHomeSubstitutes().get(i).getPhoto() + ".png" +"\0");
+								HOCKEY_LOCAL_PHOTO_PATH + match.getHomeTeam().getTeamName4() + "\\\\" + match.getHomeTeamJerseyColor() + "\\\\" + match.getHomeSubstitutes().get(i).getPhoto() + ".png" +"\0");
 						print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LineUp$select_PlayerNumber$Pos-" + (i+1) + "$Image$img_Player*TEXTURE*IMAGE SET " + 
-								HOCKEY_LOCAL_PHOTO_PATH + match.getHomeTeam().getTeamName4() + "\\\\" + match.getHomeTeamGKJerseyColor() + "\\\\" + match.getHomeSubstitutes().get(i).getPhoto() + ".png" +"\0");
+								HOCKEY_LOCAL_PHOTO_PATH + match.getHomeTeam().getTeamName4() + "\\\\" + match.getHomeTeamJerseyColor() + "\\\\" + match.getHomeSubstitutes().get(i).getPhoto() + ".png" +"\0");
 						
 					}else {
 						
@@ -2820,10 +2836,10 @@ public class PUNJAB extends Scene{
 						
 						print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LineUp$select_PlayerNumber$Pos-" + (i+1) + "$Image$Photo-1-s*TEXTURE*IMAGE SET " + 
 								"\\\\" + IndexController.session_configurations.getIpAddress() + HOCKEY_PHOTO_PATH + 
-								match.getHomeTeam().getTeamName4() + "\\\\" + match.getHomeTeamGKJerseyColor() + "\\\\" + match.getHomeSubstitutes().get(i).getPhoto() + ".png" +"\0");
+								match.getHomeTeam().getTeamName4() + "\\\\" + match.getHomeTeamJerseyColor() + "\\\\" + match.getHomeSubstitutes().get(i).getPhoto() + ".png" +"\0");
 						print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LineUp$select_PlayerNumber$Pos-" + (i+1) + "$Image$img_Player*TEXTURE*IMAGE SET " + 
 								"\\\\" + IndexController.session_configurations.getIpAddress() + HOCKEY_PHOTO_PATH + 
-								match.getHomeTeam().getTeamName4() + "\\\\" + match.getHomeTeamGKJerseyColor() + "\\\\" + match.getHomeSubstitutes().get(i).getPhoto() + ".png" +"\0");
+								match.getHomeTeam().getTeamName4() + "\\\\" + match.getHomeTeamJerseyColor() + "\\\\" + match.getHomeSubstitutes().get(i).getPhoto() + ".png" +"\0");
 					}
 					
 					if(match.getHomeSubstitutes().get(i).getSurname() != null) {
@@ -2838,9 +2854,9 @@ public class PUNJAB extends Scene{
 				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LineUp$TEAM$txt_TeamName*GEOM*TEXT SET " + match.getAwayTeam().getTeamName1() + "\0");
 				
 				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LineUp$TEAM$TeamAll$ANIM-Line$img_Base*TEXTURE*IMAGE SET " + 
-						HOCKEY_BASE1 + match.getAwayTeam().getTeamBadge() +"\0");
+						abase + match.getAwayTeam().getTeamBadge() +"\0");
 				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LineUp$TEAM$TeamAll$ANIM-Line$img_Base*TEXTURE*IMAGE SET " + 
-						HOCKEY_BASE1 + match.getAwayTeam().getTeamBadge() +"\0");
+						abase + match.getAwayTeam().getTeamBadge() +"\0");
 				
 				for(int i = 0; i <= match.getAwaySubstitutesPerTeam()-1; i++) {
 					
@@ -2854,9 +2870,9 @@ public class PUNJAB extends Scene{
 					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LineUp$select_PlayerNumber$Pos-" + (i+1) + "$Flags$txt_Number*GEOM*TEXT SET " + match.getAwaySubstitutes().get(i).getJersey_number() + "\0");
 					
 					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LineUp$select_PlayerNumber$Pos-" + (i+1) + "$Group1$img_Text*TEXTURE*IMAGE SET " + 
-							HOCKEY_TEXT1 + match.getAwayTeam().getTeamBadge() +"\0");
+							atext + match.getAwayTeam().getTeamBadge() +"\0");
 					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LineUp$select_PlayerNumber$Pos-" + (i+1) + "$Group1$img_Base*TEXTURE*IMAGE SET " + 
-							HOCKEY_BASE1 + match.getAwayTeam().getTeamBadge() +"\0");
+							abase + match.getAwayTeam().getTeamBadge() +"\0");
 					
 					if(IndexController.session_configurations.getIpAddress().equalsIgnoreCase("LOCALHOST")) {
 						
@@ -2866,9 +2882,9 @@ public class PUNJAB extends Scene{
 								HOCKEY_LOCAL_PHOTO_PATH + "Blank" + ".png" +"\0");
 						
 						print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LineUp$select_PlayerNumber$Pos-" + (i+1) + "$Image$Photo-1-s*TEXTURE*IMAGE SET " + 
-								HOCKEY_LOCAL_PHOTO_PATH + match.getAwayTeam().getTeamName4()  + "\\\\" + match.getAwayTeamGKJerseyColor() + "\\\\" + match.getAwaySubstitutes().get(i).getPhoto() + ".png" +"\0");
+								HOCKEY_LOCAL_PHOTO_PATH + match.getAwayTeam().getTeamName4()  + "\\\\" + match.getAwayTeamJerseyColor() + "\\\\" + match.getAwaySubstitutes().get(i).getPhoto() + ".png" +"\0");
 						print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LineUp$select_PlayerNumber$Pos-" + (i+1) + "$Image$img_Player*TEXTURE*IMAGE SET " + 
-								HOCKEY_LOCAL_PHOTO_PATH + match.getAwayTeam().getTeamName4()  + "\\\\" + match.getAwayTeamGKJerseyColor() + "\\\\" + match.getAwaySubstitutes().get(i).getPhoto() + ".png" +"\0");
+								HOCKEY_LOCAL_PHOTO_PATH + match.getAwayTeam().getTeamName4()  + "\\\\" + match.getAwayTeamJerseyColor() + "\\\\" + match.getAwaySubstitutes().get(i).getPhoto() + ".png" +"\0");
 						
 					}else {
 						
@@ -2879,10 +2895,10 @@ public class PUNJAB extends Scene{
 						
 						print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LineUp$select_PlayerNumber$Pos-" + (i+1) + "$Image$Photo-1-s*TEXTURE*IMAGE SET " + 
 								"\\\\" + IndexController.session_configurations.getIpAddress() + HOCKEY_PHOTO_PATH + 
-								match.getAwayTeam().getTeamName4()  + "\\\\" + match.getAwayTeamGKJerseyColor() + "\\\\" +match.getAwaySubstitutes().get(i).getPhoto() + ".png" +"\0");
+								match.getAwayTeam().getTeamName4()  + "\\\\" + match.getAwayTeamJerseyColor() + "\\\\" +match.getAwaySubstitutes().get(i).getPhoto() + ".png" +"\0");
 						print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LineUp$select_PlayerNumber$Pos-" + (i+1) + "$Image$img_Player*TEXTURE*IMAGE SET " + 
 								"\\\\" + IndexController.session_configurations.getIpAddress() + HOCKEY_PHOTO_PATH + 
-								match.getAwayTeam().getTeamName4()  + "\\\\" + match.getAwayTeamGKJerseyColor() + "\\\\" +match.getAwaySubstitutes().get(i).getPhoto() + ".png" +"\0");
+								match.getAwayTeam().getTeamName4()  + "\\\\" + match.getAwayTeamJerseyColor() + "\\\\" +match.getAwaySubstitutes().get(i).getPhoto() + ".png" +"\0");
 					}
 					
 					
@@ -3053,18 +3069,18 @@ public class PUNJAB extends Scene{
 					}
 				}
 				
-				if(match.getHomeTeamGKJerseyColor().equalsIgnoreCase("Jersey_1")) {
+				if(match.getHomeTeamJerseyColor().equalsIgnoreCase("Jersey_1")) {
 					hbase = HOCKEY_BASE1;
 					htext = HOCKEY_TEXT1;
-				}else if(match.getHomeTeamGKJerseyColor().equalsIgnoreCase("Jersey_2")) {
+				}else if(match.getHomeTeamJerseyColor().equalsIgnoreCase("Jersey_2")) {
 					hbase = HOCKEY_BASE2;
 					htext = HOCKEY_TEXT2;
 				}
 				
-				if(match.getAwayTeamGKJerseyColor().equalsIgnoreCase("Jersey_1")) {
+				if(match.getAwayTeamJerseyColor().equalsIgnoreCase("Jersey_1")) {
 					abase = HOCKEY_BASE1;
 					atext = HOCKEY_TEXT1;
-				}else if(match.getAwayTeamGKJerseyColor().equalsIgnoreCase("Jersey_2")) {
+				}else if(match.getAwayTeamJerseyColor().equalsIgnoreCase("Jersey_2")) {
 					abase = HOCKEY_BASE2;
 					atext = HOCKEY_TEXT2;
 				}
@@ -3094,7 +3110,7 @@ public class PUNJAB extends Scene{
 						
 						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Formation$Formation$Player-Grp$Side" + whichSide 
 								+ "$Player"+ row_id + "$img_Player*TEXTURE*IMAGE SET " + HOCKEY_LOCAL_PHOTO_PATH +
-								match.getHomeTeam().getTeamName4() + "\\\\" + match.getHomeTeamGKJerseyColor() + "\\\\" + hs.getPhoto() + ".png" +"\0");
+								match.getHomeTeam().getTeamName4() + "\\\\" + match.getHomeTeamJerseyColor() + "\\\\" + hs.getPhoto() + ".png" +"\0");
 						
 					}else {
 						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Formation$Formation$Player-Grp$Side" + whichSide 
@@ -3102,7 +3118,7 @@ public class PUNJAB extends Scene{
 						
 						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Formation$Formation$Player-Grp$Side" + whichSide 
 								+ "$Player"+ row_id + "$img_Player*TEXTURE*IMAGE SET "  + "\\\\" + IndexController.session_configurations.getIpAddress() + HOCKEY_PHOTO_PATH + 
-								match.getHomeTeam().getTeamName4() + "\\\\" + match.getHomeTeamGKJerseyColor() + "\\\\" + hs.getPhoto() + ".png" +"\0");
+								match.getHomeTeam().getTeamName4() + "\\\\" + match.getHomeTeamJerseyColor() + "\\\\" + hs.getPhoto() + ".png" +"\0");
 						
 					}
 					
@@ -3523,18 +3539,18 @@ public class PUNJAB extends Scene{
 			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Playing_11_And_Substitutes$Data"
 					+ "$Head_Coach_Out$Assistant_Coach*ACTIVE SET 0\0");
 			
-			if(match.getHomeTeamGKJerseyColor().equalsIgnoreCase("Jersey_1")) {
+			if(match.getHomeTeamJerseyColor().equalsIgnoreCase("Jersey_1")) {
 				hbase = HOCKEY_BASE1;
 				htext = HOCKEY_TEXT1;
-			}else if(match.getHomeTeamGKJerseyColor().equalsIgnoreCase("Jersey_2")) {
+			}else if(match.getHomeTeamJerseyColor().equalsIgnoreCase("Jersey_2")) {
 				hbase = HOCKEY_BASE2;
 				htext = HOCKEY_TEXT2;
 			}
 			
-			if(match.getAwayTeamGKJerseyColor().equalsIgnoreCase("Jersey_1")) {
+			if(match.getAwayTeamJerseyColor().equalsIgnoreCase("Jersey_1")) {
 				abase = HOCKEY_BASE1;
 				atext = HOCKEY_TEXT1;
-			}else if(match.getAwayTeamGKJerseyColor().equalsIgnoreCase("Jersey_2")) {
+			}else if(match.getAwayTeamJerseyColor().equalsIgnoreCase("Jersey_2")) {
 				abase = HOCKEY_BASE2;
 				atext = HOCKEY_TEXT2;
 			}
@@ -5204,18 +5220,18 @@ public class PUNJAB extends Scene{
 			
 			print_writer = new PrintWriter(session_socket.getOutputStream(), true);
 			
-			if(match.getHomeTeamGKJerseyColor().equalsIgnoreCase("Jersey_1")) {
+			if(match.getHomeTeamJerseyColor().equalsIgnoreCase("Jersey_1")) {
 				hbase = HOCKEY_BASE1;
 				htext = HOCKEY_TEXT1;
-			}else if(match.getHomeTeamGKJerseyColor().equalsIgnoreCase("Jersey_2")) {
+			}else if(match.getHomeTeamJerseyColor().equalsIgnoreCase("Jersey_2")) {
 				hbase = HOCKEY_BASE2;
 				htext = HOCKEY_TEXT2;
 			}
 			
-			if(match.getAwayTeamGKJerseyColor().equalsIgnoreCase("Jersey_1")) {
+			if(match.getAwayTeamJerseyColor().equalsIgnoreCase("Jersey_1")) {
 				abase = HOCKEY_BASE1;
 				atext = HOCKEY_TEXT1;
-			}else if(match.getAwayTeamGKJerseyColor().equalsIgnoreCase("Jersey_2")) {
+			}else if(match.getAwayTeamJerseyColor().equalsIgnoreCase("Jersey_2")) {
 				abase = HOCKEY_BASE2;
 				atext = HOCKEY_TEXT2;
 			}
@@ -5412,18 +5428,18 @@ public class PUNJAB extends Scene{
 		} else {
 			print_writer = new PrintWriter(session_socket.getOutputStream(), true);
 			
-			if(match.getHomeTeamGKJerseyColor().equalsIgnoreCase("Jersey_1")) {
+			if(match.getHomeTeamJerseyColor().equalsIgnoreCase("Jersey_1")) {
 				hbase = HOCKEY_BASE1;
 				htext = HOCKEY_TEXT1;
-			}else if(match.getHomeTeamGKJerseyColor().equalsIgnoreCase("Jersey_2")) {
+			}else if(match.getHomeTeamJerseyColor().equalsIgnoreCase("Jersey_2")) {
 				hbase = HOCKEY_BASE2;
 				htext = HOCKEY_TEXT2;
 			}
 			
-			if(match.getAwayTeamGKJerseyColor().equalsIgnoreCase("Jersey_1")) {
+			if(match.getAwayTeamJerseyColor().equalsIgnoreCase("Jersey_1")) {
 				abase = HOCKEY_BASE1;
 				atext = HOCKEY_TEXT1;
-			}else if(match.getAwayTeamGKJerseyColor().equalsIgnoreCase("Jersey_2")) {
+			}else if(match.getAwayTeamJerseyColor().equalsIgnoreCase("Jersey_2")) {
 				abase = HOCKEY_BASE2;
 				atext = HOCKEY_TEXT2;
 			}
