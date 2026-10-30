@@ -340,6 +340,9 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 		case 52:
 			processHockeyProcedures('POPULATE-FF-POINTS_EXCEL_DATA');
 			break;
+		case 54:
+			processHockeyProcedures('POPULATE-TOP_TXT_DATA');
+			break;	
 		case 55:
 			processHockeyProcedures('POPULATE-FF-TOP_SCORER_EXCEL_DATA');
 			break;
@@ -1765,6 +1768,10 @@ function processHockeyProcedures(whatToProcess, whichInput)
 					alert("SCOREBUG IS NOT ON SCREEN");
 				}
 				break;
+			case 'POPULATE-TOP_TXT_DATA':
+				alert('File Created');
+				break;
+					
 			case 'POPULATE-FF-MATCHID': case 'POPULATE-FF-PLAYINGXI': case 'POPULATE-L3-MATCHSTATUS': case 'POPULATE-L3-MATCHPROMO': case 'POPULATE-FF-MATCHSTATS':
 			case 'POPULATE-FF-PROMO': case 'POPULATE-DOUBLE_PROMO': case 'POPULATE-HERO-SPONSOR': case 'POPULATE-POINTS_TABLE': case 'POPULATE-FF-FORMATION':
 			case 'POPULATE-DOUBLE_SUBS': case 'POPULATE-OFFICIALS': case 'POPULATE-HIGHLIGHT': case 'POPULATE-PENALTY': case 'POPULATE-FF-PLAYINGXI_CHANGEON':

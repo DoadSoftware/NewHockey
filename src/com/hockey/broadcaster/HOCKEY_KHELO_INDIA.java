@@ -3896,14 +3896,7 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 					
 					
 					
-					if( fix.get(i).getMatchfilename().contains("FINAL")) {
-						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Match_Id_Double$Match" + row
-								+ "$Match_Number_Out$Match$Druk-Trial-Medium*GEOM*TEXT SET "+ "FINAL  " +"\0");
-						
-						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Match_Id_Double$Match" + row
-								+ "$Match_Number_Out$Number$txt_Match_Number*GEOM*TEXT SET "+ "" +"\0");
-						
-					}else if(fix.get(i).getMatchfilename().contains("SEMI FINAL 1")) {
+					if(fix.get(i).getMatchfilename().contains("SEMI FINAL 1")) {
 						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Match_Id_Double$Match" + row
 								+ "$Match_Number_Out$Match$Druk-Trial-Medium*GEOM*TEXT SET "+ "S-FINAL   " +"\0");
 						
@@ -3915,6 +3908,13 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 						
 						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Match_Id_Double$Match" + row
 								+ "$Match_Number_Out$Number$txt_Match_Number*GEOM*TEXT SET "+ "2" +"\0");
+					}else if(fix.get(i).getMatchfilename().contains("FINAL")) {
+						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Match_Id_Double$Match" + row
+								+ "$Match_Number_Out$Match$Druk-Trial-Medium*GEOM*TEXT SET "+ "FINAL  " +"\0");
+						
+						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Match_Id_Double$Match" + row
+								+ "$Match_Number_Out$Number$txt_Match_Number*GEOM*TEXT SET "+ "" +"\0");
+						
 					}else if(fix.get(i).getMatchfilename().contains("EXHIBITION")) {
 						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$Match_Id_Double$Match" + row
 								+ "$Match_Number_Out$Match$Druk-Trial-Medium*GEOM*TEXT SET "+ "WOMENS   " +"\0");

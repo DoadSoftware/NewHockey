@@ -11,6 +11,7 @@ import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.text.Normalizer;
 import java.text.SimpleDateFormat;
 import java.time.Month;
 import java.util.ArrayList;
@@ -306,7 +307,7 @@ public class PUNJAB extends Scene{
 		case "POPULATE-SCOREBUG-GOAL_SCORER": case "POPULATE-LT-MATCHID": case "POPULATE-FF-PLAYINGXISUB": case "POPULATE-FF-MATCHSUMMARY": case "POPULATE-FF-PLAYINGXIBOTHTEAMS":
 		case "POPULATE-FF-MATCHID_IMAGE": case "POPULATE-SCORECARD": case "POPULATE-FF-HEADTOHEAD_DATA": case "POPULATE-FF-POINTS_EXCEL_DATA":
 		case "POPULATE-LAST_GOAL":	case "POPULATE-RED_CARD": case "POPULATE-QUARTER": case "POPULATE-LT-PENALTY_SCORES": case "POPULATE-FF-TOP_SCORER_EXCEL_DATA":
-		case "POPULATE-FF_PROMO":	case "POPULATE-FF-MATCHSTAT": case "POPULATE-CHANGE_PENALTY": case "POPULATE-SCORETEAM":
+		case "POPULATE-FF_PROMO":	case "POPULATE-FF-MATCHSTAT": case "POPULATE-CHANGE_PENALTY": case "POPULATE-SCORETEAM": case "POPULATE-TOP_TXT_DATA":
 		case "POPULATE-FF-PLAYINGXI_WITH_SUBSANDCOACH": case "POPULATE-HIGHLIGHT": case "POPULATE-PLAYING-CHANGE":
 	
 			
@@ -372,6 +373,9 @@ public class PUNJAB extends Scene{
 				break;
 			case "POPULATE-HIGHLIGHT":
 				populateHighlight(session_socket, match, session_selected_broadcaster,hockeyService);
+				break;
+			case "POPULATE-TOP_TXT_DATA":
+				writeScorersFile("C:/Sports/Hockey/Matches", "C:/Sports/Hockey/TopScorers.txt");
 				break;
 			case "POPULATE-L3-NAMESUPER":
 				for(NameSuper ns : hockeyService.getNameSupers()) {
@@ -2297,16 +2301,18 @@ public class PUNJAB extends Scene{
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$select_Graphics$Standings"
 				+ "$select_LineNumber*FUNCTION*Omo*vis_con SET 5\0");
 		
-	    List<Scorer> scorers = getAllGoalScorers("C:/Sports/Hockey/Matches");
+		List<Scorers> scorers = new Scorers().getScorers("C:/Sports/Hockey/IndividualGoalScorers.json", hockeyService);
+		//List<Scorers> scorers = readIndividualGoalScorers("C:/Sports/Hockey/IndividualGoalScorers.json");
+//	    List<Scorer> scorers = getAllGoalScorers("C:/Sports/Hockey/Matches");
 
 	    for (int i = 0; i < Math.min(scorers.size(), 5); i++) {   // top 5, change as needed
-	        Scorer s = scorers.get(i);
+	        Scorers s = scorers.get(i);
 	        
 	        print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$select_Graphics"
 					+ "$Standings$select_LineNumber$Line" + (i+1) + "$select_Highlight*FUNCTION*Omo*vis_con SET 0\0");
 	        
 	        print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$select_Graphics$Standings"
-					+ "$select_LineNumber$Line" + (i+1) + "$select_Highlight$Dehighlight$Text$txt_TeamName*GEOM*TEXT SET "+ s.name +"\0");
+					+ "$select_LineNumber$Line" + (i+1) + "$select_Highlight$Dehighlight$Text$txt_TeamName*GEOM*TEXT SET "+ s.name.toUpperCase() +"\0");
 	        print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$select_Graphics$Standings"
 					+ "$select_LineNumber$Line" + (i+1) + "$select_Highlight$Dehighlight$Text$txt_Play*GEOM*TEXT SET "+ s.fieldGoals +"\0");
 	        print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$select_Graphics$Standings"
@@ -2322,12 +2328,21 @@ public class PUNJAB extends Scene{
 	        print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$select_Graphics$Standings"
 					+ "$select_LineNumber$Line" + (i+1) + "$select_Highlight$Dehighlight$Text$txt_Points*GEOM*TEXT SET \0");
 	        
-	        for(Team tm : hockeyService.getTeams()) {
-				if(tm.getTeamId() == s.teamId) {
-					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$select_Graphics$Standings"
-							+ "$select_LineNumber$Line" + (i+1) + "$select_Highlight$Dehighlight$img_Flag*TEXTURE*IMAGE SET " + HOCKEY_LOGO 
-							+ tm.getTeamBadge() +"\0");
-				}
+//	        for(Team tm : hockeyService.getTeams()) {
+//				if(tm.getTeamId() == s.teamId) {
+//					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$select_Graphics$Standings"
+//							+ "$select_LineNumber$Line" + (i+1) + "$select_Highlight$Dehighlight$img_Flag*TEXTURE*IMAGE SET " + HOCKEY_LOGO 
+//							+ tm.getTeamBadge() +"\0");
+//				}
+//			}
+	        
+	        for (Team tm : hockeyService.getTeams()) {
+			    if (s.teamCode.equalsIgnoreCase(tm.getTeamName4())) {   // use whichever Team getter holds IND/MAS/CHN
+			        print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$select_Graphics$Standings"
+			            + "$select_LineNumber$Line" + (i+1) + "$select_Highlight$Dehighlight$img_Flag*TEXTURE*IMAGE SET " + HOCKEY_LOGO
+			            + tm.getTeamBadge() + "\0");
+			        break;
+			    }
 			}
 	        
 	        // s.name(), s.team(), s.fieldGoals(), s.pcGoals(), s.psGoals(), s.total()
@@ -3055,21 +3070,7 @@ public class PUNJAB extends Scene{
 							+ "$Player" + i + "*TRANSFORMATION*POSITION*Y SET " + "0" + "\0");
 				}
 			
-			if(TeamId == match.getHomeTeamId()) {
-				
-				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Formation$Header$Side" + whichSide + "$Text-1"
-						+ "$img_Flag*TEXTURE*IMAGE SET " + HOCKEY_LOGO + match.getHomeTeam().getTeamBadge() +"\0");
-				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Formation$Header$Side" + whichSide + "$Text-1"
-						+ "$img_Text$txt_TeamName*GEOM*TEXT SET "+ match.getHomeTeam().getTeamName1() +"\0");
-				
-				for(Staff st: hockeyService.getStaffs()) {
-					if(st.getClubId() == TeamId && st.getRole().equalsIgnoreCase("HEAD COACH")) {
-						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Formation$Header$Side" + whichSide + "$Text-2"
-								+ "$txt_Info*GEOM*TEXT SET "+ "HEAD COACH: " + st.getName()+"\0");
-					}
-				}
-				
-				if(match.getHomeTeamJerseyColor().equalsIgnoreCase("Jersey_1")) {
+			 if(match.getHomeTeamJerseyColor().equalsIgnoreCase("Jersey_1")) {
 					hbase = HOCKEY_BASE1;
 					htext = HOCKEY_TEXT1;
 				}else if(match.getHomeTeamJerseyColor().equalsIgnoreCase("Jersey_2")) {
@@ -3083,6 +3084,20 @@ public class PUNJAB extends Scene{
 				}else if(match.getAwayTeamJerseyColor().equalsIgnoreCase("Jersey_2")) {
 					abase = HOCKEY_BASE2;
 					atext = HOCKEY_TEXT2;
+				}
+				
+			if(TeamId == match.getHomeTeamId()) {
+				
+				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Formation$Header$Side" + whichSide + "$Text-1"
+						+ "$img_Flag*TEXTURE*IMAGE SET " + HOCKEY_LOGO + match.getHomeTeam().getTeamBadge() +"\0");
+				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Formation$Header$Side" + whichSide + "$Text-1"
+						+ "$img_Text$txt_TeamName*GEOM*TEXT SET "+ match.getHomeTeam().getTeamName1() +"\0");
+				
+				for(Staff st: hockeyService.getStaffs()) {
+					if(st.getClubId() == TeamId && st.getRole().equalsIgnoreCase("HEAD COACH")) {
+						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Formation$Header$Side" + whichSide + "$Text-2"
+								+ "$txt_Info*GEOM*TEXT SET "+ "HEAD COACH: " + st.getName()+"\0");
+					}
 				}
 				
 				for(Player hs : match.getHomeSquad()) {
@@ -3214,20 +3229,18 @@ public class PUNJAB extends Scene{
 					}
 				}
 				
+				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Formation$Header$Side" + whichSide + "$L3$Text-1"
+						+ "$img_Text*TEXTURE*IMAGE SET "+ atext + match.getAwayTeam().getTeamBadge() +"\0");
+				
+				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Formation$Header$Side" + whichSide + "$L3$BG_Left"
+						+ "$img_Base*TEXTURE*IMAGE SET "+ abase + match.getAwayTeam().getTeamBadge() +"\0");
+				
+				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Formation$Header$Side" + whichSide + "$L3$Bg_Right"
+						+ "$img_Base*TEXTURE*IMAGE SET "+ abase + match.getAwayTeam().getTeamBadge() +"\0");
+				
 				for(Player hs : match.getAwaySquad()) {
 					row_id = row_id + 1;
-					
-					
-
 					//forbase
-					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Formation$Header$Side" + whichSide + "$L3$Text-1"
-							+ "$img_Text*TEXTURE*IMAGE SET "+ atext + match.getAwayTeam().getTeamBadge() +"\0");
-					
-					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Formation$Header$Side" + whichSide + "$L3$BG_Left"
-							+ "$img_Base*TEXTURE*IMAGE SET "+ abase + match.getAwayTeam().getTeamBadge() +"\0");
-					
-					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Formation$Header$Side" + whichSide + "$L3$Bg_Right"
-							+ "$img_Base*TEXTURE*IMAGE SET "+ abase + match.getAwayTeam().getTeamBadge() +"\0");
 					
 					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Formation$Formation$Player-Grp$Side" + whichSide 
 							+ "$Player"+ row_id + "$Info-P1$Text-P1$txt_Name*GEOM*TEXT SET "+ hs.getFull_name() +"\0");
@@ -5255,7 +5268,7 @@ public class PUNJAB extends Scene{
 							+ match.getHomeTeam().getTeamBadge() + "\0");
 					
 					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreTicker$02=TeamCrawler$txt_TeamName*GEOM*TEXT SET " + match.getHomeTeam().getTeamName1() + "\0");
-					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreTicker$02=TeamCrawler$Head1$txt_Head*GEOM*TEXT SET PLAYING XI\0");
+					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreTicker$02=TeamCrawler$Head1$txt_Head*GEOM*TEXT SET STARTING XI\0");
 					
 					for(Player hs : match.getHomeSquad()) {
 						pName = pName + ", " + hs.getTicker_name();
@@ -5641,6 +5654,90 @@ public class PUNJAB extends Scene{
 //		}
 //	}
 	
+//	public class Scorers {
+//	    public String name, teamCode;
+//	    public int teamId, fieldGoals, pcGoals, psGoals, total;
+//	}
+//
+//	public List<Scorers> readIndividualGoalScorers(String jsonPath) throws IOException {
+//	    List<Scorers> list = new ArrayList<>();
+//	    JsonNode arr = new ObjectMapper().readTree(new File(jsonPath)).path("individualGoalScorers");
+//
+//	    for (JsonNode n : arr) {
+//	        Scorers s = new Scorers();
+//	        s.name       = n.path("player").asText();
+//	        s.teamCode   = n.path("team").asText();
+//	        s.fieldGoals = n.path("fieldGoals").asInt();
+//	        s.pcGoals    = n.path("penaltyCornerGoals").asInt();
+//	        s.psGoals    = n.path("penaltyStrokeGoals").asInt();
+//	        s.total      = n.path("goals").asInt();
+//	        list.add(s);
+//	    }
+//	    list.sort(Comparator.comparingInt((Scorers s) -> s.total).reversed());
+//	    return list;
+//	}
+	
+	public static class Scorers {
+	    public String name, teamCode;
+	    public int teamId, fieldGoals, pcGoals, psGoals, total;
+
+	    // ---------- 1. read JSON ----------
+	    public List<Scorers> readIndividualGoalScorers(String jsonPath) throws IOException {
+	        List<Scorers> list = new ArrayList<>();
+	        JsonNode arr = new ObjectMapper().readTree(new File(jsonPath)).path("individualGoalScorers");
+
+	        for (JsonNode n : arr) {
+	            Scorers s = new Scorers();
+	            s.name       = n.path("player").asText();
+	            s.teamCode   = n.path("team").asText();
+	            s.fieldGoals = n.path("fieldGoals").asInt();
+	            s.pcGoals    = n.path("penaltyCornerGoals").asInt();
+	            s.psGoals    = n.path("penaltyStrokeGoals").asInt();
+	            s.total      = n.path("goals").asInt();
+	            list.add(s);
+	        }
+	        list.sort(Comparator.comparingInt((Scorers s) -> s.total).reversed());
+	        return list;
+	    }
+
+	    // ---------- 2. name key (word order does not matter) ----------
+	    // "SINGH Harmanpreet" and "HARMANPREET SINGH" both become "HARMANPREET SINGH"
+	    private static String nameKey(String name) {
+	        String n = Normalizer.normalize(name, Normalizer.Form.NFD).replaceAll("\\p{M}", "");   // remove accents
+	        String[] parts = n.toUpperCase().replaceAll("[^A-Z0-9 ]", " ").trim().split("\\s+");
+	        Arrays.sort(parts);
+	        return String.join(" ", parts);
+	    }
+
+	    // ---------- 3. match JSON names with DB players ----------
+	    public void matchWithDb(List<Scorers> list, HockeyService hockeyService) {
+	        Map<String, Player> dbPlayers = new HashMap<>();   // key -> Player
+
+	        for (Player pl : hockeyService.getAllPlayer()) {
+	            String full = pl.getFull_name();               // <-- change to your real getter
+	            if (full != null && !full.isBlank()) {
+	                dbPlayers.putIfAbsent(nameKey(full), pl);
+	            }
+	        }
+
+	        for (Scorers s : list) {
+	            Player pl = dbPlayers.get(nameKey(s.name));
+	            if (pl != null) {
+	                s.name = pl.getFull_name().trim();         // DB name
+	                // s.teamId = pl.getTeamId();              // optional, if your Player class has it
+	            } else {
+	                System.out.println("NOT FOUND IN DB: " + s.name + " (" + s.teamCode + ")");
+	            }
+	        }
+	    }
+
+	    // ---------- 4. usage ----------
+	    public List<Scorers> getScorers(String jsonPath, HockeyService hockeyService) throws IOException {
+	        List<Scorers> list = readIndividualGoalScorers(jsonPath);
+	        matchWithDb(list, hockeyService);
+	        return list;
+	    }
+	}
 	public record Scorer(int playerId, String name, int teamId, String team,
 	        int fieldGoals, int pcGoals, int psGoals, int total) {}
 
@@ -5741,6 +5838,20 @@ public class PUNJAB extends Scene{
 	        goalsById.computeIfAbsent(pid, k -> new int[3])[idx] += ms.path("statsCount").asInt(1);
 	        firstMatchById.merge(pid, order, Math::min);
 	    }
+	}
+	
+	public static void writeScorersFile(String folderPath, String outputFilePath) throws IOException {
+	    List<Scorer> scorers = getAllGoalScorers(folderPath);   // already sorted
+
+	    List<String> lines = new ArrayList<>();
+	    for (int i = 0; i < scorers.size(); i++) {
+	        Scorer s = scorers.get(i);
+	        lines.add("playerId=" + s.playerId()
+	                + ",Name=" + s.name()
+	                + ",FudgeFactor=" + (i + 1));               // rank in sorted order: 1 = top scorer
+	    }
+
+	    Files.write(Paths.get(outputFilePath), lines, StandardCharsets.UTF_8);
 	}
 	
 	private static long quarterMinute(long seconds) {   // seconds = remaining time
