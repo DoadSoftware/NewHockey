@@ -2242,7 +2242,7 @@ public class PUNJAB extends Scene{
 			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_MatchId$Header$Data"
 					+ "$txt_Footer*GEOM*TEXT SET "+ match.getVenueName() +"\0");
 			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_MatchId$Header$Data"
-					+ "$txt_Hashtag*GEOM*TEXT SET #HeroACT2026\0");
+					+ "$txt_Hashtag*GEOM*TEXT SET #MPWACT2026\0");
 			
 			
 //			for(VariousText vt : hockeyService.getVariousTexts()) {
@@ -2536,7 +2536,7 @@ public class PUNJAB extends Scene{
 				}
 			
 			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side1$select_Graphics"
-					+ "$MatchStatsNew$txt_Footer*GEOM*TEXT SET "+ "#HeroACT2026" + "\0");
+					+ "$MatchStatsNew$txt_Footer*GEOM*TEXT SET "+ "#MPWACT2026" + "\0");
 	        
 			previewCommand = "anim_FullFrames$In_Out 1.800 anim_FullFrames$In_Out$Essentials 1.800 anim_FullFrames$In_Out$Essentials$In 1.800 anim_FullFrames$In_Out$Header$In 1.800 "
 					+ "anim_FullFrames$In_Out$Flags 1.800 anim_FullFrames$In_Out$Flags$In 1.800 anim_FullFrames$In_Out$Main 1.800 anim_FullFrames$In_Out$Main$In 1.800";
@@ -2630,7 +2630,7 @@ public class PUNJAB extends Scene{
 					+ "$MatchStatsNew$Line1$MatchStatsData$Team2$txt_Stats*GEOM*TEXT SET "+ match.getAwayTeamScore() + "\0");
 			
 			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side1$select_Graphics"
-					+ "$MatchStatsNew$txt_Footer*GEOM*TEXT SET #HeroACT2026\0");
+					+ "$MatchStatsNew$txt_Footer*GEOM*TEXT SET #MPWACT2026\0");
 			
 			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side1$select_Graphics"
 					+ "$MatchStatsNew$StatsAll$Line1*ACTIVE SET 1\0");
@@ -2745,7 +2745,7 @@ public class PUNJAB extends Scene{
 					+ "$txt_TeamName*GEOM*TEXT SET "+ hockeyService.getTeams().get(fixture.getAwayteamid() - 1).getTeamName1() +"\0");
 			
 			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_MatchId$Header$Data"
-					+ "$txt_Hashtag*GEOM*TEXT SET #HeroACT2026\0");
+					+ "$txt_Hashtag*GEOM*TEXT SET #MPWACT2026\0");
 			
 //			for(VariousText vt : hockeyService.getVariousTexts()) {
 //				if(vt.getVariousType().equalsIgnoreCase("MATCHIDENTFOOTER") && vt.getUseThis().equalsIgnoreCase("YES") ) {
@@ -4191,7 +4191,7 @@ public class PUNJAB extends Scene{
 				}
 			}
 			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$select_Graphics"
-					+ "$Results_with_Scorers_V2$txt_Footer*GEOM*TEXT SET #HeroACT2026\0");
+					+ "$Results_with_Scorers_V2$txt_Footer*GEOM*TEXT SET #MPWACT2026\0");
 			
 			previewCommand = "anim_FullFrames$In_Out 1.800 anim_FullFrames$In_Out$Essentials 1.800 anim_FullFrames$In_Out$Essentials$In 1.800 anim_FullFrames$In_Out$Header$In 1.800 "
 					+ "anim_FullFrames$In_Out$Flags 1.800 anim_FullFrames$In_Out$Flags$In 1.800 anim_FullFrames$In_Out$Main 1.800 anim_FullFrames$In_Out$Main$In 1.800";
@@ -4797,7 +4797,7 @@ public class PUNJAB extends Scene{
 				}
 			}
 			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$select_Graphics$Fixtures"
-					+ "$txt_Footer*GEOM*TEXT SET #HeroACT2026\0");
+					+ "$txt_Footer*GEOM*TEXT SET #MPWACT2026\0");
 			
 			if(whichSide == 1) {
 				previewCommand = "anim_FullFrames$In_Out 1.800 anim_FullFrames$In_Out$Essentials 1.800 anim_FullFrames$In_Out$Essentials$In 1.800 anim_FullFrames$In_Out$Header$In 1.800 "
