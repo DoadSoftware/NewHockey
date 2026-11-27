@@ -1360,7 +1360,7 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 	        print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LT_Quaters$Designation_Out$Text_Data$Quaters$Select*FUNCTION*Omo*vis_con SET " + (quarters.size() - 1) + "\0");
 	        
 	        print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LT_Quaters$HomeTeam_Logo$img_Logo*TEXTURE*IMAGE SET " + HOCKEY_LOGO + match.getHomeTeam().getTeamBadge() + "\0");
-        	print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LT_Quaters$AwayTeam_Logo$img_Logo*TEXTURE*IMAGE SET " + HOCKEY_LOGO + match.getAwayTeam().getTeamBadge() + "\0");
+        	print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LT_Quaters$AwayTeam_Logo$Logo*TEXTURE*IMAGE SET " + HOCKEY_LOGO + match.getAwayTeam().getTeamBadge() + "\0");
         	
         	
 	        print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LT_Quaters$Name_Out$Text_Data$txt_Name*GEOM*TEXT SET " + match.getHomeTeam().getTeamName2() + "\0");
@@ -2352,8 +2352,17 @@ public class HOCKEY_KHELO_INDIA extends Scene{
 				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$TeamList_Both$Data"
 						+ "$Match_Summary_Out$Summary$Summary*GEOM*TEXT SET "+ "LIST" +"\0");
 			}else {
-				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$TeamList_Both$Data"
-						+ "$Match_Summary_Out$Druk-Trial-Medium*GEOM*TEXT SET "+ "M-" + match.getMatchId() +"\0");
+				if(match.getMatchId() == 1) {
+					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$TeamList_Both$Data"
+							+ "$Match_Summary_Out$Druk-Trial-Medium*GEOM*TEXT SET SF " + match.getMatchId() +"\0");
+				}else if(match.getMatchId() == 2) {
+					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$TeamList_Both$Data"
+							+ "$Match_Summary_Out$Druk-Trial-Medium*GEOM*TEXT SET SF " + match.getMatchId() +"\0");
+				}else {
+					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$TeamList_Both$Data"
+							+ "$Match_Summary_Out$Druk-Trial-Medium*GEOM*TEXT SET FINAL\0");
+				}
+				
 				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$Data_All$Main$Side" + whichSide + "$TeamList_Both$Data"
 						+ "$Match_Summary_Out$Summary$Summary*GEOM*TEXT SET "+ "PLAYING XI" +"\0");
 			}
